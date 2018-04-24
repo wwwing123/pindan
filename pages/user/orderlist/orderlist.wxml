@@ -1,0 +1,30 @@
+<view class="page">
+    <view class="page__bd">
+        <scroll-view class="weui-form-preview" scroll-y="true"  bindscrolltolower="loadmore" bindtouchstart="start" bindtouchend="end" tapscroll="scroll" style="bottom:{{loadMoreHeight}}rpx;height:{{windowHeight}}px">
+          <view class="content" wx:for="{{orderlist}}" wx:key="ordernum" wx:for-item="orderlist">
+            <view class="weui-form-preview__hd">
+                <view class="weui-form-preview__label">付款金额</view>
+                <view class="weui-form-preview__value_in-hd">￥{{orderlist.totalprice}}</view>
+            </view>
+            <view class="weui-form-preview__bd">
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">下单时间</view>
+                    <view class="weui-form-preview__value">{{orderlist.orderdate}}</view>
+                </view>
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">订单号</view>
+                    <view class="weui-form-preview__value">{{orderlist.ordernum}}</view>
+                </view>
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">订单状态</view>
+                    <view class="weui-form-preview__value">{{orderlist.status}}</view>
+                </view>
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">商品</view>
+                    <view class="weui-form-preview__value" wx:for="{{orderlist.foods}}" wx:key="ordernum" wx:for-item="foods">{{foods.name}} ×{{foods.count}}</view>
+                </view>
+            </view>
+          </view>
+        </scroll-view>
+    </view>
+</view>

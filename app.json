@@ -1,0 +1,49 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/classify/classify",
+    "pages/shopcar/shopcar",
+    "pages/user/user",
+    "pages/user/Information/Information",
+    "pages/user/orderlist/orderlist",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#222",
+    "navigationBarTitleText": "品啖鲜餐饮服务",
+    "navigationBarTextStyle": "#fff"
+  },
+  "tabBar": {
+    "color": "#000",
+    "selectedColor": "#0096FF",
+    "borderStyle": "black",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/tabBar/index.png",
+        "selectedIconPath": "images/tabBar/indexSelect.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/classify/classify",
+        "iconPath": "images/tabBar/classify.png",
+        "selectedIconPath": "images/tabBar/classifySelect.png",
+        "text": "分类"
+      },
+      {
+        "pagePath": "pages/shopcar/shopcar",
+        "iconPath": "images/tabBar/shopcar.png",
+        "selectedIconPath": "images/tabBar/shopcarSelect.png",
+        "text": "购物车"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "iconPath": "images/tabBar/user.png",
+        "selectedIconPath": "images/tabBar/userSelect.png",
+        "text": "个人中心"
+      }
+    ]
+  }
+}

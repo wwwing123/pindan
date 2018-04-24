@@ -1,0 +1,58 @@
+<view class="container">
+  <view class="userinfo">
+    <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+    <view class="nickName">{{userInfo.nickName}}</view>
+    <view class="balance">账户余额: {{balance}} 品币</view>
+  </view>
+  <view class="list">
+    <view class="weui-cells weui-cells_after-title">
+        <navigator url="/pages/user/orderlist/orderlist" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+          <view class="weui-cell__hd">
+              <view class="iconfont icon-orderlist"></view>
+          </view>
+          <view class="weui-cell__bd">我的订单</view>
+          <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+        </navigator>
+        <navigator url="/pages/user/Information/Information" class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:if="{{!showInformation}}">
+          <view class="weui-cell__hd">
+              <view class="iconfont icon-userinfo"></view>
+          </view>
+          <view class="weui-cell__bd">个人信息填写</view>
+          <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+        </navigator> 
+    </view>  
+  </view>
+  <view class="person" wx:if="{{showInformation}}">
+    <view class="weui-cells__title">个人信息中心</view>
+    <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+            <view class="weui-cell__hd">
+                <image src="{{icon}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+            </view>
+            <view class="weui-cell__bd">真实姓名</view>
+            <view class="weui-cell__ft">{{userInformation.name}}</view>
+        </view>
+        <view class="weui-cell">
+            <view class="weui-cell__hd">
+                <image src="{{icon}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+            </view>
+            <view class="weui-cell__bd">公司名称</view>
+            <view class="weui-cell__ft">{{userInformation.company}}</view>
+        </view>
+        <view class="weui-cell">
+            <view class="weui-cell__hd">
+                <image src="{{icon}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+            </view>
+            <view class="weui-cell__bd">办公地址</view>
+            <view class="weui-cell__ft">{{userInformation.address}}</view>
+        </view>
+        <view class="weui-cell">
+            <view class="weui-cell__hd">
+                <image src="{{icon}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+            </view>
+            <view class="weui-cell__bd">手机号码</view>
+            <view class="weui-cell__ft">{{userInformation.tel}}</view>
+        </view>
+    </view>
+  </view>
+</view>

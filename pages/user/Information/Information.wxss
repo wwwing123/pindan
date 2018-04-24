@@ -1,0 +1,23 @@
+
+
+
+.weui-cells__title{
+  position:relative;
+  font-size:18px;
+}
+
+form .tip{
+  position:absolute;
+  font-size:8pt;
+  color:#f00;
+  top:7px;
+  right:12px;
+}
+
+.weui-input.noselect{
+  color:#808080;
+}
+
+.weui-input{
+  color:#000;
+}

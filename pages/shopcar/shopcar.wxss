@@ -1,0 +1,90 @@
+.container {
+  height: 100%;
+  border-radius:20rpx;
+}
+
+.empty{
+  width:100%;
+  padding-top:150rpx;
+}
+
+.empty .icon-gouwuche1{
+  font-size:80pt;
+  color:#B5B5B5;
+  text-align:center;
+}
+
+.empty .text{
+  font-size:15pt;
+  text-align:center;
+  color:#B5B5B5;
+  margin-top:30rpx; 
+}
+
+.empty button{
+  width:70%;
+  text-align:center;
+  background:#0096FF;
+  color:#fff;
+  margin-top:90rpx; 
+}
+
+.main{
+  margin-top:60rpx;
+  padding:0 0 20rpx 0;
+  width:94%;
+  box-shadow: 4px 4px 10px #ccc;
+  border-radius: 20rpx;
+}
+
+.main .title{
+  display:flex;
+  background:#0096FF;
+  padding:20rpx;
+  color:#fff; 
+  border-radius: 20rpx 20rpx 0rpx 0rpx; 
+}
+
+.main .time{
+  font-size:10pt;
+  flex:1;
+  text-align:right;
+}
+
+.main .orderNum{
+  font-size:10pt;
+  flex:1;
+}
+
+.table {
+  border-right: 0;
+  border-bottom: 0;
+  width: 100%;
+  background:#fff;
+}
+
+.tr {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.th,.td {
+  text-align:left;
+  font-size:12pt;
+  padding:10rpx;
+  flex:1;
+}
+
+.th{
+  font-size:12pt;
+  color:#999;
+}
+
+.total{
+  text-align:right;
+  font-size:16pt;
+  color:#FF0000;
+  padding:0 20rpx;
+  margin-top:30rpx;
+}

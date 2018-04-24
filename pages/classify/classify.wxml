@@ -1,0 +1,57 @@
+<view class="container">
+  <view class="main">
+    <scroll-view class="classifySelect" scroll-y>
+      <view class="classifyItem {{classifySeleted==classify.type ? 'active' : ''}}" wx:for="{{goods}}" wx:for-item="classify" wx:key="type" data-id="{{classify.type}}" bindtap="tapClassify">
+        {{classify.name}}
+      </view>
+    </scroll-view>
+    <view class="foodSelect">
+      <block wx:for="{{goods}}" wx:key="type" wx:for-item="goods">
+        <scroll-view class="foodSelectItem {{classifySeleted!=goods.type ? 'hide' : ''}}" scroll-y="ture">
+        <view class="foods" wx:for="{{goods.foods}}" wx:key="id" wx:for-item="foods">
+          <view class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" data-id="{{foods.id}}">
+            <view class="weui-media-box__hd weui-media-box__hd_in-appmsg" catchtap='_onShowModal' data-id="{{foods.id}}">
+                <image class="weui-media-box__thumb" src="{{foods.image}}" />
+            </view>
+            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                <view class="weui-media-box__title">{{foods.name}}</view>
+                <view class="weui-media-box__desc">￥{{foods.price}}</view>
+            </view>
+            <view class="countBar">
+              <view class="reduceCart icon-jian iconfont {{!shopcarlist[foods.id] ? 'hide' : ''}}" catchtap="tapReduceCart" data-id="{{foods.id}}" data-price="foods.price">
+              </view>
+              <view class="count">{{shopcarlist[foods.id]}}</view>
+              <view class="addCart icon-jia iconfont" catchtap="tapAddCart" data-id="{{foods.id}}">
+              </view>             
+            </view>
+          </view>
+        </view>
+        </scroll-view>
+      </block>
+    </view>
+    <view class="shopcar {{count>=1 ? 'active' : ''}}">
+      <view class="icon">
+        <view class="iconfont icon-gouwuche"></view>
+        <view class="count" wx:if="{{count>=1}}">{{count}}</view>
+      </view>
+      <view class="price">
+        <view class="num" wx:if="{{count >= 1}}">￥{{total}}</view>
+        <view wx:else>未选购商品</view>
+      </view>
+      <view class="pay" catchtap="goToPay">去结算</view>
+    </view>
+    <dialog id="modal">    
+        <view class='modal-body'>
+            <image src="{{foodsSeleted.source}}"></image>
+            <view class="descript">
+              <view class="name">{{foodsSeleted.name}}</view>
+              <view class="info">{{foodsSeleted.description}}</view>
+              <view class="addCart">
+                <view class="price">￥{{foodsSeleted.price}}</view>
+                <view class="add" data-id="{{foodsSeleted.id}}" catchtap="tapAddCart" data-cart="1">加入购物车</view>
+              </view>
+            </view>            
+        </view>
+    </dialog>
+  </view>
+</view>

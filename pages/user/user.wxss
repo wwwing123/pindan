@@ -1,0 +1,58 @@
+.container {
+  height: 100%;
+  overflow: hidden;
+  background:#EEEEEE;
+}
+
+.userinfo{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  background:#1B1B1B;
+  padding:30rpx 0;
+}
+
+.userinfo .avatar{
+  width:128rpx;
+  height:128rpx;
+  border-radius:50%;
+  margin:20rpx;
+}
+
+.userinfo .nickName{
+  font-size:14pt;
+  color:#FBFBFB;
+}
+
+.userinfo .balance{
+  font-size:12pt;
+  color:#FBFBFB;
+  margin-top:20rpx;
+}
+
+.list{
+  width:100%;
+  margin-top:20rpx;
+}
+
+.icon-userinfo{
+  font-size:14pt;
+  margin-right:10pt;
+  color:#0096FF;
+}
+
+.icon-orderlist{
+  font-size:14pt;
+  margin-right:10pt;
+  color:#0096FF;
+}
+
+.person{
+  width:100%;
+  margin-top:20prx;
+}
+
+.weui-cells__title{
+  font-size:16px;
+}
