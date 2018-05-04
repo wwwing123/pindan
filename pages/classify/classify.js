@@ -6,12 +6,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    "goods": app.globalData.goods,
+    "goods": [],
     "allFoodList": app.globalData.allFoodList,
     "shopcarlist": app.globalData.shopcar.list,
     "count": app.globalData.shopcar.count,
     "total": app.globalData.shopcar.total,
-    "classifySeleted":0,
+    "classifySeleted":1,
     "foodsSeleted":{}
   },
 
@@ -19,7 +19,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    this.setData({
+      goods: app.globalData.goods,
+      allFoodList: app.globalData.allFoodList
+    })
   },
 
   /**
@@ -34,7 +37,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    console.log(this.data.allFoodList);
   },
 
   /**
@@ -128,8 +131,8 @@ Page({
         id: goodsItem.id,
         name: goodsItem.name,
         price: goodsItem.price,
-        description: goodsItem.description,
-        source: goodsItem.image
+        description: goodsItem.illustration,
+        source: goodsItem.img
       }
     })
     this.Modal.showModal();

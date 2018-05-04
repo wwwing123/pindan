@@ -1,17 +1,17 @@
 <view class="container">
   <view class="main">
     <scroll-view class="classifySelect" scroll-y>
-      <view class="classifyItem {{classifySeleted==classify.type ? 'active' : ''}}" wx:for="{{goods}}" wx:for-item="classify" wx:key="type" data-id="{{classify.type}}" bindtap="tapClassify">
+      <view class="classifyItem {{classifySeleted==classify.id ? 'active' : ''}}" wx:for="{{goods}}" wx:for-item="classify" wx:key="id" data-id="{{classify.id}}" bindtap="tapClassify">
         {{classify.name}}
       </view>
     </scroll-view>
     <view class="foodSelect">
-      <block wx:for="{{goods}}" wx:key="type" wx:for-item="goods">
-        <scroll-view class="foodSelectItem {{classifySeleted!=goods.type ? 'hide' : ''}}" scroll-y="ture">
-        <view class="foods" wx:for="{{goods.foods}}" wx:key="id" wx:for-item="foods">
+      <block wx:for="{{goods}}" wx:key="id" wx:for-item="goods">
+        <scroll-view class="foodSelectItem {{classifySeleted!=goods.id ? 'hide' : ''}}" scroll-y="ture">
+        <view class="foods" wx:for="{{goods.goodslist}}" wx:key="id" wx:for-item="foods">
           <view class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" data-id="{{foods.id}}">
             <view class="weui-media-box__hd weui-media-box__hd_in-appmsg" catchtap='_onShowModal' data-id="{{foods.id}}">
-                <image class="weui-media-box__thumb" src="{{foods.image}}" />
+                <image class="weui-media-box__thumb" src="http://{{foods.img}}" />
             </view>
             <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                 <view class="weui-media-box__title">{{foods.name}}</view>
@@ -42,7 +42,7 @@
     </view>
     <dialog id="modal">    
         <view class='modal-body'>
-            <image src="{{foodsSeleted.source}}"></image>
+            <image src="http://{{foodsSeleted.source}}" mode="widthFix"></image>
             <view class="descript">
               <view class="name">{{foodsSeleted.name}}</view>
               <view class="info">{{foodsSeleted.description}}</view>

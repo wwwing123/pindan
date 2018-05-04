@@ -26,7 +26,7 @@ page {
   text-align:center;
   font-size:10pt;
   color:#2A2A2A;
-  padding:14rpx;
+  padding:30rpx;
   border-bottom:1px dotted #aaa;
 }
 

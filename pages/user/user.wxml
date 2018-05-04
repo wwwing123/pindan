@@ -2,7 +2,7 @@
   <view class="userinfo">
     <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
     <view class="nickName">{{userInfo.nickName}}</view>
-    <view class="balance">账户余额: {{balance}} 品币</view>
+    <view class="balance">账户余额: {{userInformation.balance}} 品币</view>
   </view>
   <view class="list">
     <view class="weui-cells weui-cells_after-title">
@@ -13,7 +13,7 @@
           <view class="weui-cell__bd">我的订单</view>
           <view class="weui-cell__ft weui-cell__ft_in-access"></view>
         </navigator>
-        <navigator url="/pages/user/Information/Information" class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:if="{{!showInformation}}">
+        <navigator url="/pages/user/Information/Information" class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:if="{{!userInformation.idcard}}">
           <view class="weui-cell__hd">
               <view class="iconfont icon-userinfo"></view>
           </view>
@@ -22,7 +22,7 @@
         </navigator> 
     </view>  
   </view>
-  <view class="person" wx:if="{{showInformation}}">
+  <view class="person" wx:if="{{userInformation.idcard}}">
     <view class="weui-cells__title">个人信息中心</view>
     <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell">
@@ -31,6 +31,13 @@
             </view>
             <view class="weui-cell__bd">真实姓名</view>
             <view class="weui-cell__ft">{{userInformation.name}}</view>
+        </view>
+        <view class="weui-cell">
+            <view class="weui-cell__hd">
+                <image src="{{icon}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+            </view>
+            <view class="weui-cell__bd">身份证号</view>
+            <view class="weui-cell__ft">{{userInformation.idcard}}</view>
         </view>
         <view class="weui-cell">
             <view class="weui-cell__hd">
@@ -51,7 +58,7 @@
                 <image src="{{icon}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
             </view>
             <view class="weui-cell__bd">手机号码</view>
-            <view class="weui-cell__ft">{{userInformation.tel}}</view>
+            <view class="weui-cell__ft">{{userInformation.phone}}</view>
         </view>
     </view>
   </view>

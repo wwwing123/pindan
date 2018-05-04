@@ -5,29 +5,32 @@ Page({
    * 页面的初始数据
    */
   data: {
-    company: ['广州市文化传播事务所东莞分所', '穗龙建材贸易发展公司', '广州福龙卫生筷子厂', '广州裕华织造厂佛冈分厂'],
-    companyIndex: '-1',
+    userid: wx.getStorageSync('userid'),
+    company: [],
+    companyID: [],
+    currentID: -1,
     companyname: '请选择所属公司名称',
     messages: {
       name: {
         required: '请输入您的真实姓名',
         error: '请输入正确的姓名'
       },
-      tel: {
+      phone: {
         required: '请输入您的手机号',
         error: '请输入正确的手机号'
       },
-      address: {
-        required: '请输入您的办公地址'
+      idcard: {
+        required: '请输入您的身份证号',
+        error: '请输入正确的身份证号'
       },
-      company: {
+      companyid: {
         required: '请选择所属公司名称'
       },
     },
-    showTopTips:false,
-    errorMsg:{
-      'msg':'',
-      'type':''     
+    showTopTips: false,
+    errorMsg: {
+      'msg': '',
+      'type': ''
     }
   },
 
@@ -35,39 +38,58 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    //获取公司名称,id
+    const that = this;
+    wx.request({
+      url: 'http://123.207.56.139/api/get/company/',
+      method: 'get',
+      success: function (msg) {
+        console.log(msg)
+        let company = [], companyID = [];
+        const data = msg.data.data;
+        for (let i in data) {
+          company.push(data[i].name);
+          companyID.push(data[i].id);
+        }
+
+        that.setData({
+          company,
+          companyID
+        })
+      }
+    })
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    
+
   },
   bindPickerChange: function (e) {
     this.setData({
-      companyIndex: e.detail.value,
+      currentID: this.data.companyID[e.detail.value],
       companyname: this.data.company[e.detail.value]
     })
   },
@@ -76,7 +98,7 @@ Page({
     this.setData({
       showTopTips: true
     });
-    setTimeout(() =>{
+    setTimeout(() => {
       this.setData({
         showTopTips: false
       });
@@ -86,55 +108,100 @@ Page({
     wx.showToast({
       title: '已完成',
       icon: 'success',
-      duration: 2000
+      duration: 1000
     });
   },
   openLoading: function () {
-    wx.showToast({
+    wx.showLoading({
       title: '正在提交信息',
-      icon: 'loading',
-      duration: 2000
+      icon: 'loading'
+    });
+  },
+  submitData: function (formData) {
+    
+    wx.showModal({
+      title: '是否确认提交此信息',
+      content: '个人信息一旦填写后无法修改,请再次确保自己的个人信息无误',
+      confirmText: "确定",
+      cancelText: "取消",
+      success: (res) => {
+        if (res.confirm) {
+          console.log(formData)
+          this.openLoading();
+          wx.request({
+            url:"http://123.207.56.139/api/user/perfect_info/",
+            method:"POST",
+            header: { 'et': wx.getStorageSync('et')},
+            data: formData,
+            success: (msg) => {
+              console.log(msg);
+              if(msg.data.code == 1){
+                wx.hideLoading();
+                this.openToast();
+                setTimeout(() => {
+                  getApp().globalData.getuserInfo = true;
+                  wx.switchTab({
+                    url: "/pages/user/user"
+                  })
+                }, 1500)
+              }  
+            }
+          })
+        } else {
+          return false;
+        }
+      }
     });
   },
 
   
 
-  formSubmit:function(e){
-    const { formData, rules, messages} = {
-      formData: e.detail.value,
-      rules: Util.rules,
-      messages: this.data.messages
-    };
-    let errorMsg = '';    
-    for (let i in formData){
-      if (!rules.required(formData[i],i)){
+  formSubmit:function (e) {
+    const { formData, rules, messages } = {
+          formData: e.detail.value,
+          rules: Util.rules,
+          messages: this.data.messages
+        };
+    let errorMsg = '';
+    for (let i in formData) {
+      if (!rules.required(formData[i], i)) {
         this.setData({
-          errorMsg:{
+          errorMsg: {
             'msg': messages[i].required,
-            'type':i
+            'type': i
           }
-        })
+        });
         this.showTopTips();
         console.log(this.data.errorMsg)
-        return false; 
-      } else{
-        if (rules[i] && !rules[i](formData[i])){
+        return false;
+      } else {
+        if (rules[i] && !rules[i](formData[i])) {
           this.setData({
             errorMsg: {
               'msg': messages[i].error,
-              'type':i
+              'type': i
             }
           })
           this.showTopTips();
           console.log(this.data.errorMsg)
           return false;
         }
-      }     
+      }
     }
     console.log("检验成功");
-    this.openLoading();
-    setTimeout(() => {
-      this.openToast()
-    }, 2000)  
+    this.submitData(formData);
+
+  },
+
+  click:function(){
+    getApp().globalData.getuserInfo = true;
+    wx.switchTab({
+      url: '/pages/user/user'
+    })
   }
+
+
+
+
+
 })
