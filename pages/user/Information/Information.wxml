@@ -65,6 +65,4 @@
         <button class="weui-btn" type="primary" formType="submit">保存</button>
     </view>
   </form>
-
-  <button bindtap="click">aaa</button>
 </view>

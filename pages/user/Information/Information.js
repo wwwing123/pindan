@@ -1,4 +1,5 @@
 const Util = require("../../../utils/util.js");
+const urlList = require("../../../config.js");
 Page({
 
   /**
@@ -39,51 +40,28 @@ Page({
    */
   onLoad: function (options) {
     //获取公司名称,id
-    const that = this;
     wx.request({
-      url: 'http://123.207.56.139/api/get/company/',
+      url: urlList.getcompany,
       method: 'get',
-      success: function (msg) {
-        console.log(msg)
-        let company = [], companyID = [];
-        const data = msg.data.data;
-        for (let i in data) {
-          company.push(data[i].name);
-          companyID.push(data[i].id);
+      success: (msg) => {
+        if(msg.data.code==1){
+          let company = [], companyID = [];
+          const data = msg.data.data;
+          for (let i in data) {
+            company.push(data[i].name);
+            companyID.push(data[i].id);
+          }
+          this.setData({
+            company,
+            companyID
+          })
+        }else{
+          Util.errorHandle(urlList.getcompany, msg.data.code);
         }
-
-        that.setData({
-          company,
-          companyID
-        })
+        
       }
     })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
   onUnload: function () {
 
   },
@@ -104,9 +82,9 @@ Page({
       });
     }, 3000);
   },
-  openToast: function () {
+  openToast: function (text) {
     wx.showToast({
-      title: '已完成',
+      title: text,
       icon: 'success',
       duration: 1000
     });
@@ -129,21 +107,24 @@ Page({
           console.log(formData)
           this.openLoading();
           wx.request({
-            url:"http://123.207.56.139/api/user/perfect_info/",
+            url: urlList.submitUserinfo,
             method:"POST",
-            header: { 'et': wx.getStorageSync('et')},
+            header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
             data: formData,
             success: (msg) => {
-              console.log(msg);
               if(msg.data.code == 1){
                 wx.hideLoading();
-                this.openToast();
+                this.openToast('已完成');
                 setTimeout(() => {
                   getApp().globalData.getuserInfo = true;
                   wx.switchTab({
                     url: "/pages/user/user"
                   })
                 }, 1500)
+              }else{
+                wx.hideLoading();
+                this.openToast('提交失败');
+                Util.errorHandle(urlList.submitUserinfo, msg.data.code);
               }  
             }
           })
@@ -191,14 +172,9 @@ Page({
     console.log("检验成功");
     this.submitData(formData);
 
-  },
-
-  click:function(){
-    getApp().globalData.getuserInfo = true;
-    wx.switchTab({
-      url: '/pages/user/user'
-    })
   }
+
+
 
 
 

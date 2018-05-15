@@ -1,16 +1,21 @@
-var Util = require("../../utils/util.js");
+const Util = require("../../utils/util.js");
+const urlList = require("../../config.js");
+
 const app = getApp();
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-    "goods": [],
+    "tabs": ["早餐", "午餐", "晚餐"],
+    "activeIndex": 0,
+    "sliderOffset": 0,
+    "sliderLeft": 0,
+    
+    "breakfastGoods": [],
+    "lunchGoods": [],
+    "dinnerGoods": [],
     "allFoodList": app.globalData.allFoodList,
-    "shopcarlist": app.globalData.shopcar.list,
-    "count": app.globalData.shopcar.count,
-    "total": app.globalData.shopcar.total,
+    "shopcar": app.globalData.shopcar,
+    "count": 0,//购物车总件数
+    "total": 0,//购物车总价
     "classifySeleted":1,
     "foodsSeleted":{}
   },
@@ -19,8 +24,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
     this.setData({
-      goods: app.globalData.goods,
+      breakfastGoods: app.globalData.breakfastGoods,
+      lunchGoods: app.globalData.lunchGoods,
+      dinnerGoods: app.globalData.dinnerGoods,
       allFoodList: app.globalData.allFoodList
     })
   },
@@ -37,17 +45,20 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    console.log(this.data.allFoodList);
+    this.setData({
+      shopcar: app.globalData.shopcar,//更新总件数
+    });
+    this.setData({
+      count: this.getAllCountPrice('count'),//更新总件数
+      total: this.getAllCountPrice('total').toFixed(2)//更新总价
+    });
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    app.globalData.shopcar.list = this.data.shopcarlist;
-    app.globalData.shopcar.count = this.data.count;
-    app.globalData.shopcar.total = this.data.total;
-    app.globalData.shopcar.status = 0;
+    app.globalData.shopcar = this.data.shopcar;
   },
 
   /**
@@ -64,19 +75,24 @@ Page({
   },
   //商品加入购物车
   tapAddCart:function(e){
-    if (this.data.count>=10){
-      this.overCount();
+    let kind = e.currentTarget.dataset.type,
+        shopcar = this.data.shopcar, 
+        id = e.currentTarget.dataset.id;
+    if (shopcar[kind].status != 3) {
       return false;
-    } 
-    let shopcarlist = this.data.shopcarlist, id = e.currentTarget.dataset.id;
-    if (!shopcarlist[id]){
-      shopcarlist[id] = 1;
-    }else{
-      shopcarlist[id] += 1;
     }
-    this.totalCount();
+    if (this.data.shopcar[kind].count>=10){
+      this.overCount(kind);
+      return false;
+    }
+    if (!shopcar[kind].list[id]){
+      shopcar[kind].list[id] = 1;
+    }else{
+      shopcar[kind].list[id] += 1;
+    }
+    this.totalCount(kind);
     this.setData({
-      shopcarlist
+      shopcar
     })
     //隐藏商品详情
     if (e.currentTarget.dataset.cart){
@@ -85,32 +101,44 @@ Page({
   },
   //商品移除购物车
   tapReduceCart:function(e){
-    let shopcarlist = this.data.shopcarlist, id = e.currentTarget.dataset.id; 
-    if (shopcarlist[id] <= 1) {
-      delete shopcarlist[id];
+    let kind = e.currentTarget.dataset.type,
+        shopcar = this.data.shopcar, 
+        id = e.currentTarget.dataset.id; 
+    if (shopcar[kind].list[id] <= 1) {
+      delete shopcar[kind].list[id];
     } else {
-      shopcarlist[id] -= 1;
+      shopcar[kind].list[id] -= 1;
     }
-    this.totalCount();
+    this.totalCount(kind);
     this.setData({
-      shopcarlist
+      shopcar
     })
   },
   //商品件数统计、总价计算
-  totalCount:function(){
+  totalCount:function(kind){
     let count = 0,
         total = 0,
         allFoodList = this.data.allFoodList;//所有商品的列表放到同一数组中
-    const shopcarlist = this.data.shopcarlist;
+    const shopcar = this.data.shopcar;
+    let shopcarlist = shopcar[kind].list;
     for (let i in shopcarlist) {
       const goodsItem = Util.findFoods(i, allFoodList);
       const price = goodsItem.price;
       count += shopcarlist[i]
       total += price * shopcarlist[i]
     }
+    shopcar[kind].count = count;
+    shopcar[kind].total = total.toFixed(2);
+      
     this.setData({
-      count,
-      total
+      shopcar
+    })  
+    let allcount = this.getAllCountPrice("count"),
+      price = this.getAllCountPrice("total").toFixed(2);
+
+    this.setData({
+      count: allcount,
+      total: price 
     })  
   },
   //去结算，页面跳转
@@ -137,15 +165,30 @@ Page({
     })
     this.Modal.showModal();
   },
-  overCount: function () {
+  overCount: function (kind) {
     wx.showModal({
-      content: '每个订单最多只能添加10份菜式',
+      content: this.data.tabs[kind] + '订单最多只能添加10份菜式',
       showCancel: false,
       success: function (res) {
         if (res.confirm) {
-          console.log('用户点击确定')
+          return false;
         }
       }
     });
+  },
+  tabClick: function (e) {  
+    this.setData({
+      sliderOffset: e.currentTarget.offsetLeft,
+      activeIndex: e.currentTarget.id
+    });
+  },
+  getAllCountPrice(name){
+    const shopcar = this.data.shopcar;
+    let total = shopcar.filter((item) => {
+      return item.status == 3
+    }).reduce((total, b) => {
+      return Number(total) + Number(b[name]);
+    },0)
+    return total;
   }
 })

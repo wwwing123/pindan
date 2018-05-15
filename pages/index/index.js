@@ -1,6 +1,8 @@
 //index.js
 //获取应用实例
-const app = getApp()
+const app = getApp();
+const urlList = require("../../config.js");
+const Util = require("../../utils/util.js");
 
 Page({
   data: {
@@ -8,13 +10,19 @@ Page({
   },
   onLoad: function () {
     wx.request({
-      url: 'http://123.207.56.139/api/get/ad/?',
+      url: urlList.indexImg,
       method:'get',
       success:(msg) => {
-        this.setData({
-          indexImage:'http://'+msg.data.data.img
-        })
+        if (msg.data.code == 1){
+          this.setData({
+            indexImage: msg.data.data.img
+          })
+        }else{
+          Util.errorHandle(urlList.indexImg, msg.data.code);
+        }
+        
       }
     })
+
   },
 })

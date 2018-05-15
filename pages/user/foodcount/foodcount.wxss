@@ -1,0 +1,31 @@
+.container{
+  height:100%;
+}
+
+.page__bd{
+  width:100%;
+}
+
+.title{
+  font-size:12pt;
+  color:#999;
+  background:#fff;
+  display:flex;
+}
+
+.title>view{
+  flex:1;
+  text-align:center;
+}
+
+.orderlist .box{
+  display:flex;
+  font-size:12pt;
+}
+
+.orderlist .name,
+.orderlist .count{
+  flex:1;
+  text-align:center;
+  padding:14rpx 0;
+}

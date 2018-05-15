@@ -1,7 +1,8 @@
 <view class="container">
   <view class="userinfo">
-    <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
-    <view class="nickName">{{userInfo.nickName}}</view>
+    <!-- <image class="avatar" src="{{userInfo.avatarUrl}}"></image> -->
+    <view class="avatar"><open-data type="userAvatarUrl" ></open-data></view> 
+    <view class="nickName"><open-data type="userNickName" ></open-data></view>
     <view class="balance">账户余额: {{userInformation.balance}} 品币</view>
   </view>
   <view class="list">
@@ -19,7 +20,14 @@
           </view>
           <view class="weui-cell__bd">个人信息填写</view>
           <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-        </navigator> 
+        </navigator>
+        <navigator url="/pages/user/getorder/getorder?companyid={{userInformation.companyid}}&company={{userInformation.company}}&level={{userInformation.level}}&authority={{userInformation.authority}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:if='{{userInformation.admin}}'>
+          <view class="weui-cell__hd">
+              <view class="iconfont icon-admin"></view>
+          </view>
+          <view class="weui-cell__bd">管理员入口</view>
+          <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+        </navigator>
     </view>  
   </view>
   <view class="person" wx:if="{{userInformation.idcard}}">

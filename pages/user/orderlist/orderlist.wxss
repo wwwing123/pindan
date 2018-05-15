@@ -8,7 +8,34 @@
   font-weight:400;
 }
 
+.content{
+  margin:50rpx 0;
+}
+
+.weui-form-preview__item{
+  line-height:76rpx;
+}
+
 
 .weui-form-preview{
     margin-bottom: 25px;
+}
+
+.icon-up{
+  margin-top:10rpx;
+}
+
+.gotoTop{
+  position:fixed;
+  right:30rpx;
+  bottom:48rpx;
+  width:100rpx;
+  height:100rpx;
+  border-radius:50%;
+  background:#868686;
+  opacity:0.9;
+  color:#fff;
+  font-size:12pt;
+  text-align:center;
+  line-height:40rpx;
 }

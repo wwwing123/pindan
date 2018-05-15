@@ -1,10 +1,10 @@
 <view class="page">
     <view class="page__bd">
-        <scroll-view class="weui-form-preview" scroll-y="true"  bindscrolltolower="loadmore" bindtouchstart="start" bindtouchend="end" tapscroll="scroll" style="bottom:{{loadMoreHeight}}rpx;height:{{windowHeight}}px">
+        <scroll-view class="weui-form-preview" scroll-y="true"  bindscrolltolower="loadmore" bindtouchstart="start" bindtouchend="end" style="bottom:{{loadMoreHeight}}rpx;height:{{windowHeight}}px" scroll-top="{{scrollTop}}" scroll-with-animation="true" bindscroll="scrolling">
           <view class="content" wx:for="{{orderlist}}" wx:key="ordernum" wx:for-item="orderlist">
             <view class="weui-form-preview__hd">
-                <view class="weui-form-preview__label">付款金额</view>
-                <view class="weui-form-preview__value_in-hd">￥{{orderlist.totalprice}}</view>
+                <view class="weui-form-preview__label">个人余额</view>
+                <view class="weui-form-preview__value_in-hd">{{orderlist.totalprice}}</view>
             </view>
             <view class="weui-form-preview__bd">
                 <view class="weui-form-preview__item">
@@ -21,10 +21,17 @@
                 </view>
                 <view class="weui-form-preview__item">
                     <view class="weui-form-preview__label">商品</view>
-                    <view class="weui-form-preview__value" wx:for="{{orderlist.foods}}" wx:key="ordernum" wx:for-item="foods">{{foods.name}} ×{{foods.count}}</view>
+                    <view class="weui-form-preview__value" wx:if="{{orderlist.ordertype!=1}}">
+                      <view wx:for="{{orderlist.foods}}" wx:key="id" wx:for-item="foods">{{foods.name}} × {{foods.count}}</view>
+                    </view>
+                    <view class="weui-form-preview__value" wx:else>{{orderlist.foods}}</view>
                 </view>
             </view>
           </view>
         </scroll-view>
     </view>
+    <view class="gotoTop" hidden="{{showTop}}"  bindtap="goTop">
+      <view class=".icon-up iconfont"></view>
+      顶部
+    </view>  
 </view>

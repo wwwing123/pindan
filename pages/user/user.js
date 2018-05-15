@@ -1,4 +1,6 @@
 // pages/user/user.js
+const Util = require("../../utils/util.js");
+const urlList = require("../../config.js");
 const app = getApp();
 Page({
 
@@ -6,8 +8,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo:{},
-    hasUserInfo:false,
     userInformation:{},
   },
 
@@ -15,33 +15,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(app.globalData.userInfo)
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
-    }
     //获取个人信息中心
     this.getUserinfo();
   },
@@ -61,6 +34,7 @@ Page({
     if (app.globalData.getuserInfo) {
       this.getUserinfo();
     }
+    this.getbalance();
   },
 
   /**
@@ -99,22 +73,48 @@ Page({
   },
   getUserinfo:function(){
     wx.request({
-      url: "http://123.207.56.139/api/admin/get_userinfo/?id=" + wx.getStorageSync('userid'),
+      url: urlList.getuserinfo,
+      header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
       method: 'GET',
       success: (msg) => {
         if (msg.data.code == 1) {          
-          const data = msg.data.data
-          console.log(msg.data.data);
+          const data = msg.data.data;
+          let userInformation = {
+            name: data.name,
+            idcard: data.idcard,
+            company: data.company,
+            address: data.address,
+            phone: data.phone,
+            balance: data.balance,
+            companyid: data.companyid,
+            authority: data.authority,
+            level: data.level,
+            admin: data.level != 3 ? true : false
+          }
           this.setData({
-            userInformation: {
-              name: data.name,
-              idcard: data.idcard,
-              company: data.company,
-              address: data.address,
-              phone: data.phone,
-              balance: data.balance
-            }
+            userInformation,
           })
+          console.log(this.data.userInformation.level==3)
+        }else{
+          Util.errorHandle(urlList.getuserinfo, msg.data.code);
+        }
+      }
+    });
+  },
+  getbalance:function(){
+    wx.request({
+      url: urlList.getbalance,
+      header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
+      method: 'GET',
+      success: (msg) => {
+        if (msg.data.code == 1) {
+          let userInformation = this.data.userInformation;
+          userInformation.balance = msg.data.data.balancce;
+          this.setData({
+            userInformation
+          })
+        }else{
+          Util.errorHandle(urlList.getbalance, msg.data.code);
         }
       }
     });

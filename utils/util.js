@@ -1,3 +1,5 @@
+const urlList = require("../config.js");
+
 const formatTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -61,10 +63,9 @@ const getSessionKey = () => {
         appid: 'wx7075e58a4c005dfc',
         secret: 'fc16d0ece9e687713336509fe95791a6'
       }
-      console.log(data);
       if (res.code) {
         wx.request({
-          url: 'http://123.207.56.139/api/register/wx/',
+          url: urlList.login,
           data: data,
           method: 'POST',
           header: { 'Content-Type': 'application/json' },
@@ -74,7 +75,7 @@ const getSessionKey = () => {
               wx.setStorageSync('userid', msg.data.data.userid)
             } else {
               console.log(msg.data.msg)
-            }   
+            }
           }
         })
       } else {
@@ -84,9 +85,72 @@ const getSessionKey = () => {
   });
 }
 
+const openAlert = (title='',content,callback) => {
+  wx.showModal({
+    title: title,
+    content: content,
+    showCancel: false,
+    success: function (res) {
+      if (res.confirm) {
+        callback && callback();
+      }
+    }
+  });
+}
+
+const errorHandle = (url,code,callback) => {
+  if (code == '1003' || code == '1004'){
+    getSessionKey();
+    callback && callback();
+  } else if (code == '2' || code == '4' || code == '1008' || code == '1010'){
+    openAlert('提示',errorCode[code]);
+  }else{
+    console.log(`${url}接口错误码:${code},\n${errorCode[code]}`);
+  }
+}
+
+const errorCode = {
+  "2": "网络错误，请稍后再试",
+  "3": "参数错误",
+  "4": "服务器错误，请稍后再试",
+  "5": "数据库错误，请稍后再试",
+  "6": "空数据",
+  "1001": "后台管理员无效登录信息",
+  "1002": "后台管理员登录信息过期",
+  "1003": "用户无效登录信息",
+  "1004": "用户登录信息过期",
+  "1005": "用户信息异常",
+  "1006": "用户信息为空",
+  "1007": "用户相关请求异常",
+  "1008": "用户在不同设备登录",
+  "1009": "管理员账号还在锁定期间",
+  "1010": "用户权限不足",
+  "1011": "管理员信息异常",
+
+  "2001": "用户余额不足",
+
+  "3001": "没有该商品信息",
+  "3002": "超过商品总数",
+  "3003": "商品不支持",
+  "3004": "还有订单未完成",
+  "3005": "商品不能为空",
+  "3006": "订单已完成了",
+  "3007": "订单类型异常",
+  "3008": "订单时间异常",
+
+  "4001": "公司名字变更异常",
+  "4002": "公司信息删除失败",
+  "4003": "没有此公司信息"
+
+}
+
 
 module.exports = {
   formatTime,
   findFoods,
-  rules
+  rules,
+  getSessionKey,
+  openAlert,
+  errorCode,
+  errorHandle
 }

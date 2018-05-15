@@ -1,3 +1,5 @@
+const urlList = require("../../../config.js");
+const Util = require("../../../utils/util.js");
 Page({
 
   /**
@@ -5,9 +7,14 @@ Page({
    */
   data: {
     orderlist:[],
+    orderType:['冻结','完成','进行中'],
     loadMoreHeight:0,
     windowHeight:0,
-    currentSize:0
+    scrollTop:0,//滚动高度
+    showTop:true,//回到顶部显示
+    size:10,
+    currentPage:1,
+    totalsize:0
   },
 
   /**
@@ -15,9 +22,7 @@ Page({
    */
   onLoad: function (options) {
     //订单状态处理
-    this.orderStatus();
-    this.getHeight();
-    this.doLoadData(0, 3);
+    this.getHeight();    
   },
 
   /**
@@ -31,7 +36,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    this.doLoadData();
   },
 
   /**
@@ -52,27 +57,18 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   loadmore:function(){
-    console.log('滚动到底部啦')
-  },
-  start:function(){
-    console.log('start')
-  },
-  end:function(){
-    console.log('end')
-  },
-  scroll: function () {
-    console.log("scroll...");
-  },
-
-  orderStatus: function(){
-    const status = ['已取消', '已取餐'];
-    let orderlist = this.data.orderlist;
-    for (let i in orderlist) {
-      orderlist[i].status = status[orderlist[i].status]
+    if ((this.data.totalsize - this.data.currentPage * this.data.size)<=0){
+      return false;
     }
     this.setData({
-      orderlist
-    })
+      currentPage:this.data.currentPage+1
+    });
+    this.doLoadData();
+  },
+  start:function(){
+  },
+  end:function(e){
+
   },
   getHeight(){
     let _this = this;
@@ -86,30 +82,55 @@ Page({
     })
   },
   doLoadData(currendSize, PAGE_SIZE) {
-    setTimeout(()=>{
-      let length = currentSize + PAGE_SIZE;
-      let orderlist = this.data.orderlist;
-      const data = wx.getStorageSync('orderlist');
-      console.log('currendSize:', currendSize);
-      for (var i = currendSize; i < length; i++) {
-        orderlist.push(data[i]);
+    wx.request({
+      url: `${urlList.getPersonOrder}`,
+      header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
+      data:{
+        "page": this.data.currentPage,
+        "size": this.data.size
+      },
+      success:(msg) => {
+        if(msg.data.code == 1){
+          const data = msg.data.data.balance_changes;
+          let orderlist = this.data.orderlist;
+          for (let i in data){
+            let obj = {
+              orderdate: Util.formatTime(new Date(data[i].finish_at * 1000)),
+              ordernum: data[i].order_number,
+              status: this.data.orderType[data[i].order_status],
+              ordertype: data[i].order_type,
+              totalprice: data[i].order_type == 1 ? `+￥${data[i].balance_change}` : `-￥${data[i].balance_change}`,
+              id: data[i].id
+            };
+            obj.foods = data[i].order_type == 1 ? data[i].illustration : JSON.parse(data[i].illustration);
+            orderlist.push(obj);
+          }
+          this.setData({
+            orderlist,
+            totalsize: msg.data.data.totalsize
+          })
+        }else{
+          Util.errorHandle(urlList.getPersonOrder, msg.data.code);
+        }
       }
-      currentSize += PAGE_SIZE
-      this.setData({
-        orderlist,
-        currentSize
-      })
-      that.loadFinish();
-    },2000)
+    })
   },
 
-  loadFinish: function () {
-    setTimeout(() => {
-      //2s后刷新结束
-      this.setData({
-        loading: false
-      })
-    }, 1000);
+  scrolling:function(e){
+    if(e.detail.scrollTop<300){
+      return;
+    }
+    this.setData({
+      showTop:false
+    });
+  },
+
+  goTop: function (e) {  // 一键回到顶部
+    this.setData({
+      scrollTop: 0,
+      showTop:true
+    });
+
   }
 
 

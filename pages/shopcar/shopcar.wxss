@@ -30,28 +30,40 @@
 }
 
 .main{
-  margin-top:60rpx;
-  padding:0 0 20rpx 0;
   width:94%;
+}
+
+.order{
+  margin:60rpx 0;
+  padding:0 0 20rpx 0; 
   box-shadow: 4px 4px 10px #ccc;
   border-radius: 20rpx;
 }
 
-.main .title{
-  display:flex;
+.order .title{  
   background:#0096FF;
   padding:20rpx;
   color:#fff; 
   border-radius: 20rpx 20rpx 0rpx 0rpx; 
 }
 
-.main .time{
+.order .title .text{
+  font-size:14pt;
+  text-align:center;
+  padding-bottom:20rpx;
+}
+
+.order .title .box{
+  display:flex;
+}
+
+.order .time{
   font-size:10pt;
   flex:1;
   text-align:right;
 }
 
-.main .orderNum{
+.order .orderNum{
   font-size:10pt;
   flex:1;
 }
