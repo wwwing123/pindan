@@ -177,6 +177,7 @@ page {
 
 .modal-body image{
   width:100%;
+  height:280px;
 }
 
 .modal-body .descript{
@@ -251,13 +252,27 @@ page {
   margin-top:8rpx;
 }
 
+.nodata{
+  position:absolute;
+  width:100%;
+  left:0;
+  top:50%;
+  margin-top:-120px;
+}
+
 .nodata .icon-nodata{
-  font-size:100pt;
+  font-size:76pt;
   text-align:center;
+  color:#B5B5B5;
 }
 
 .nodata .tip{
   text-align:center;
-  font-size:14pt;
+  font-size:12pt;
+  color:#B5B5B5;
+}
+
+.weui-tab__content{
+  height:100%;
 }
 

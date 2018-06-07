@@ -20,7 +20,7 @@ Page({
       Type: options.type
     });
     this.getordercount();
-  }, 
+  },
   getordercount: function () {
     wx.request({
       url: `${urlList.foodcount}?companyid=${this.data.companyid}&type=${this.data.Type}`,

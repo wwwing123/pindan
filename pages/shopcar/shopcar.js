@@ -16,7 +16,7 @@ Page({
    */
   onLoad: function (options) {
     //获取个人余额信息
-    this.getbalance();
+    
   },
 
   /**
@@ -31,6 +31,7 @@ Page({
   onShow: function () {
     //根据全局的shopcar变量,整合成需要用到商品列表
     this.IntegrationData();
+    this.getbalance();//获取个人余额信息
   },
 
   /**
@@ -86,7 +87,7 @@ Page({
         kind = 2;
         break;
     };
-    //检查余额是否足够支付
+    //检查餐券是否足够支付
     if (!this.checkBalance(this.data.shopcar[kind].total)) {
       return;
     }
@@ -188,28 +189,38 @@ Page({
       "id": e.currentTarget.dataset.id,
       "finish_type": e.currentTarget.dataset.finishtype
     }
-    wx.request({
-      url: urlList.finish,
-      data: data,
-      header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
-      method: 'POST',
-      dataType: 'json',
-      success:(msg) => {
-        if (msg.data.code==1){
-          this.refreshShopcar(e.currentTarget.dataset.ordertype);
-          if (data.finish_type == 'confirm'){
-            Util.openAlert('提示', '取餐成功');
-          }else{
-            Util.openAlert('提示', '放弃成功');
-          }          
+    wx.showModal({
+      title:'提示',
+      content: `是否确认${data.finish_type == 'confirm' ? '取餐' : '放弃'}`,
+      confirmText: "确定",
+      cancelText: "取消",
+      success: (res) => {
+        if (res.confirm) {          
+          wx.request({
+            url: urlList.finish,
+            data: data,
+            header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
+            method: 'POST',
+            dataType: 'json',
+            success: (msg) => {
+              if (msg.data.code == 1) {
+                this.refreshShopcar(e.currentTarget.dataset.ordertype);   
+                this.gotoMsg(data.finish_type);
+              } else {
+                Util.errorHandle(urlList.finish, msg.data.code);
+              }
+            }
+          })
         }else{
-          Util.errorHandle(urlList.finish, msg.data.code);
+          return false;
         }
       }
-    })
+    });
+    
+    
   },
 
-  //获取个人余额
+  //获取个人餐券
   getbalance: function () {
     wx.request({
       url: urlList.getbalance,
@@ -225,7 +236,7 @@ Page({
     });
   },
 
-  //检查余额是否足够支付
+  //检查餐券是否足够支付
   checkBalance: function (needMoney){
     const balance = Number(app.globalData.balance);
     if (balance >= Number(needMoney)){
@@ -236,10 +247,10 @@ Page({
     }
   },
 
-  //余额不足提示
+  //餐券不足提示
   showNoBalance:function(){
     wx.showModal({
-      content:  '您的余额不足以支付当前订单，请联系管理员进行充值。',
+      content:  '您的餐券不足以支付当前订单，请联系管理员进行充值。',
       showCancel: false,
       success: function (res) {
         if (res.confirm) {
@@ -252,12 +263,85 @@ Page({
   //下单时间异常提示
   errorTime:function(kind){
     if(kind == 0){
-      Util.openAlert('下单失败','早餐下单时间为22点至次日6点前');
+      Util.openAlert('下单失败','早餐下单时间为19点至次日7点前');
     } else if (kind == 1){
       Util.openAlert('下单失败', '午餐下单时间为今天10点前');
     }else{
-      Util.openAlert('下单失败', '晚餐下单时间为今天15点前');
+      Util.openAlert('下单失败', '晚餐下单时间为今天17点前');
     }
+  },
+
+  gotoMsg:function(type){
+    wx.navigateTo({
+      url:`/pages/msg/msg?type=${type}`
+    })
+  },
+
+  //商品加入购物车
+  tapAddCart: function (e) {
+    if (!app.globalData.getuserInfo) {
+      Util.checkInformation();//检查用户是否完善个人信息
+      return;
+    }
+    let kind = e.currentTarget.dataset.type,
+      shopcar = app.globalData.shopcar,
+      id = e.currentTarget.dataset.id;
+    if (shopcar[kind].status != 3) {
+      return false;
+    }
+    if (shopcar[kind].count >= 10) {
+      this.overCount(kind);
+      return false;
+    }
+    if (!shopcar[kind].list[id]) {
+      shopcar[kind].list[id] = 1;
+    } else {
+      shopcar[kind].list[id] += 1;
+    }
+    this.totalCount(kind);
+    this.IntegrationData();
+  },
+  //商品移除购物车
+  tapReduceCart: function (e) {
+    let kind = e.currentTarget.dataset.type,
+      shopcar = app.globalData.shopcar,
+      id = e.currentTarget.dataset.id;
+    if (shopcar[kind].list[id] <= 1) {
+      delete shopcar[kind].list[id];
+    } else {
+      shopcar[kind].list[id] -= 1;
+    }
+    this.totalCount(kind);
+    this.IntegrationData();
+  },
+
+  totalCount: function (kind) {
+    let count = 0,
+      total = 0,
+      allFoodList = app.globalData.allFoodList;//所有商品的列表放到同一数组中
+    const shopcar = app.globalData.shopcar;
+    let shopcarlist = shopcar[kind].list;
+    for (let i in shopcarlist) {
+      const goodsItem = Util.findFoods(i, allFoodList);
+      const price = goodsItem.price;
+      count += shopcarlist[i]
+      total += price * shopcarlist[i]
+    }
+    shopcar[kind].count = count;
+    shopcar[kind].total = total.toFixed(2);
+  },
+
+  overCount: function (kind) {
+    const tabs = ["早餐", "午餐", "晚餐"]
+    wx.showModal({
+      content: tabs[kind] + '订单最多只能添加10份菜式',
+      showCancel: false,
+      success: function (res) {
+        if (res.confirm) {
+          return false;
+        }
+      }
+    });
   }
   
 

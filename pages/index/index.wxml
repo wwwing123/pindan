@@ -1,3 +1,13 @@
 <view class="container">
   <image src="{{indexImage}}" mode="widthFix"></image>
+  <dialog id="modal">    
+      <view class='modal-body'> 
+        <view class="top">
+          <view class="title">{{notice.title}}</view>
+          <image src="../../images/indexmenu/indexBg.png"></image>
+        </view>
+        <scroll-view class="content" scroll-y="true" style="height:480rpx;"><text space="nbsp" decode="true">{{notice.content}}</text></scroll-view>
+        <button class="confirm" bindtap="hide">确 定</button>       
+      </view>
+  </dialog>
 </view>

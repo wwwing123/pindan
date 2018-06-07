@@ -1,9 +1,9 @@
 <view class="page">
     <view class="page__bd">
-        <scroll-view class="weui-form-preview" scroll-y="true"  bindscrolltolower="loadmore" bindtouchstart="start" bindtouchend="end" style="bottom:{{loadMoreHeight}}rpx;height:{{windowHeight}}px" scroll-top="{{scrollTop}}" scroll-with-animation="true" bindscroll="scrolling">
+        <scroll-view class="weui-form-preview" scroll-y="true"  bindscrolltolower="loadmore" bindtouchstart="start" bindtouchend="end" style="bottom:{{loadMoreHeight}}rpx;height:{{windowHeight}}px;background:#EEEEEE;" scroll-top="{{scrollTop}}" scroll-with-animation="true" bindscroll="scrolling">
           <view class="content" wx:for="{{orderlist}}" wx:key="ordernum" wx:for-item="orderlist">
             <view class="weui-form-preview__hd">
-                <view class="weui-form-preview__label">个人余额</view>
+                <view class="weui-form-preview__label">消费餐券</view>
                 <view class="weui-form-preview__value_in-hd">{{orderlist.totalprice}}</view>
             </view>
             <view class="weui-form-preview__bd">
@@ -21,10 +21,14 @@
                 </view>
                 <view class="weui-form-preview__item">
                     <view class="weui-form-preview__label">商品</view>
-                    <view class="weui-form-preview__value" wx:if="{{orderlist.ordertype!=1}}">
+                    <view class="weui-form-preview__value" wx:if="{{orderlist.ordertype==1 || orderlist.ordertype==0}}">{{orderlist.foods}}</view>
+                    <view class="weui-form-preview__value" wx:else>
                       <view wx:for="{{orderlist.foods}}" wx:key="id" wx:for-item="foods">{{foods.name}} × {{foods.count}}</view>
-                    </view>
-                    <view class="weui-form-preview__value" wx:else>{{orderlist.foods}}</view>
+                    </view>                    
+                </view>
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">剩余餐券</view>
+                    <view class="weui-form-preview__value">{{orderlist.remain}}</view>
                 </view>
             </view>
           </view>

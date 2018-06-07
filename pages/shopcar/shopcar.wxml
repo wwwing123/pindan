@@ -15,16 +15,20 @@
       </view>
       <view class="table">
           <view class="tr">
-              <view class="th">菜名</view>
+              <view class="th name">菜名</view>
               <view class="th">数量</view>
-              <view class="th">价格</view>
+              <view class="th">单价</view>
           </view>
           <view class="tr" wx:for="{{shopcar[0].list}}" wx:key="id" wx:for-item="foods">
-              <view class="td">{{foods.name}}</view>
-              <view class="td">{{foods.count}}</view>
+              <view class="td name">{{foods.name}}</view>
+              <view class="td count" style="position:relative;">
+                {{foods.count}}
+                <view class="reduceCart icon-jian iconfont" catchtap="tapReduceCart" data-id="{{foods.id}}" data-price="foods.price" data-type="0" wx:if="{{shopcar[0].status==3}}"></view>
+                <view class="addCart icon-jia iconfont" catchtap="tapAddCart" data-id="{{foods.id}}" data-type="0" wx:if="{{shopcar[0].status==3}}"></view>
+              </view>
               <view class="td">{{foods.price}}</view>
           </view>
-          <view class="total">总计: ￥{{shopcar[0].total}}</view>   
+          <view class="total">总计: {{shopcar[0].total}}</view>   
       </view>
       <view class="page__bd page__bd_spacing">
         <button class="weui-btn" type="primary" wx:if="{{shopcar[0].status==3}}" style="background:#0096FF;width:96%;margin-top:20rpx;" data-type="breakfast" bindtap="goToOrder">下单</button>
@@ -42,16 +46,20 @@
       </view>
       <view class="table">
           <view class="tr">
-              <view class="th">菜名</view>
+              <view class="th name">菜名</view>
               <view class="th">数量</view>
-              <view class="th">价格</view>
+              <view class="th">单价</view>
           </view>
           <view class="tr" wx:for="{{shopcar[1].list}}" wx:key="id" wx:for-item="foods">
-              <view class="td">{{foods.name}}</view>
-              <view class="td">{{foods.count}}</view>
+              <view class="td name">{{foods.name}}</view>
+              <view class="td count" style="position:relative;">
+                {{foods.count}}
+                <view class="reduceCart icon-jian iconfont" catchtap="tapReduceCart" data-id="{{foods.id}}" data-price="foods.price" data-type="1" wx:if="{{shopcar[1].status==3}}"></view>
+                <view class="addCart icon-jia iconfont" catchtap="tapAddCart" data-id="{{foods.id}}" data-type="1" wx:if="{{shopcar[1].status==3}}"></view>
+              </view>
               <view class="td">{{foods.price}}</view>
           </view>
-          <view class="total">总计: ￥{{shopcar[1].total}}</view>   
+          <view class="total">总计: {{shopcar[1].total}}</view>   
       </view>
       <view class="page__bd page__bd_spacing">
         <button class="weui-btn" type="primary" wx:if="{{shopcar[1].status==3}}" style="background:#0096FF;width:96%;margin-top:20rpx;" data-type="lunch" bindtap="goToOrder">下单</button>
@@ -69,16 +77,20 @@
       </view>
       <view class="table">
           <view class="tr">
-              <view class="th">菜名</view>
+              <view class="th name">菜名</view>
               <view class="th">数量</view>
-              <view class="th">价格</view>
+              <view class="th">单价</view>
           </view>
           <view class="tr" wx:for="{{shopcar[2].list}}" wx:key="id" wx:for-item="foods">
-              <view class="td">{{foods.name}}</view>
-              <view class="td">{{foods.count}}</view>
+              <view class="td name">{{foods.name}}</view>
+              <view class="td count" style="position:relative;">
+                {{foods.count}}
+                <view class="reduceCart icon-jian iconfont" catchtap="tapReduceCart" data-id="{{foods.id}}" data-price="foods.price" data-type="2" wx:if="{{shopcar[2].status==3}}"></view>
+                <view class="addCart icon-jia iconfont" catchtap="tapAddCart" data-id="{{foods.id}}" data-type="2" wx:if="{{shopcar[2].status==3}}"></view>
+              </view>
               <view class="td">{{foods.price}}</view>
           </view>
-          <view class="total">总计: ￥{{shopcar[2].total}}</view>   
+          <view class="total">总计: {{shopcar[2].total}}</view>   
       </view>
       <view class="page__bd page__bd_spacing">
         <button class="weui-btn" type="primary" wx:if="{{shopcar[2].status==3}}" style="background:#0096FF;width:96%;margin-top:20rpx;" data-type="dinner" bindtap="goToOrder">下单</button>

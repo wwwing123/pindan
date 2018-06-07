@@ -1,11 +1,11 @@
 <view class="container">
-  <view class="page__bd">
-        <view>
+  <view class="page__bd" style="height:100%;">
+        <view style="height:100%;">
             <view class="title">
               <view class="name">菜名</view>
               <view class="count">数量</view>
             </view>
-            <scroll-view class="orderlist" scroll-y>
+            <scroll-view class="orderlist" scroll-y style="height:100%;">
               <block wx:for="{{list}}" wx:key="id" wx:for-item="list">
                   <view class="box">
                     <view class="name">{{list.name}}</view>

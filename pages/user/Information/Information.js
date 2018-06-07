@@ -40,6 +40,9 @@ Page({
    */
   onLoad: function (options) {
     //获取公司名称,id
+    this.setData({
+      userid: wx.getStorageSync('userid')
+    })
     wx.request({
       url: urlList.getcompany,
       method: 'get',
@@ -115,8 +118,8 @@ Page({
               if(msg.data.code == 1){
                 wx.hideLoading();
                 this.openToast('已完成');
+                this.getUserinfo();
                 setTimeout(() => {
-                  getApp().globalData.getuserInfo = true;
                   wx.switchTab({
                     url: "/pages/user/user"
                   })
@@ -138,6 +141,7 @@ Page({
   
 
   formSubmit:function (e) {
+    console.log(1111111111111111111111);
     const { formData, rules, messages } = {
           formData: e.detail.value,
           rules: Util.rules,
@@ -153,7 +157,6 @@ Page({
           }
         });
         this.showTopTips();
-        console.log(this.data.errorMsg)
         return false;
       } else {
         if (rules[i] && !rules[i](formData[i])) {
@@ -164,7 +167,6 @@ Page({
             }
           })
           this.showTopTips();
-          console.log(this.data.errorMsg)
           return false;
         }
       }
@@ -172,6 +174,38 @@ Page({
     console.log("检验成功");
     this.submitData(formData);
 
+  },
+
+  getUserinfo: function () {
+    wx.request({
+      url: urlList.getuserinfo,
+      header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
+      method: 'GET',
+      success: (msg) => {
+        if (msg.data.code == 1) {
+          const data = msg.data.data;
+          let userInformation = {
+            name: data.name,
+            idcard: data.idcard,
+            company: data.company,
+            address: data.address,
+            phone: data.phone,
+            balance: data.balance,
+            companyid: data.companyid,
+            authority: data.authority,
+            userid: data.id,
+            level: data.level,
+            admin: data.level != 3 ? true : false,
+
+          }
+          getApp().globalData.userInformation = userInformation;
+          getApp().globalData.getuserInfo = true;
+          wx.setStorageSync('userInformation', userInformation);
+        } else {
+          Util.errorHandle(urlList.getuserinfo, msg.data.code);
+        }
+      }
+    });
   }
 
 

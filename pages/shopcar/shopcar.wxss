@@ -81,11 +81,20 @@
   justify-content: space-between;
 }
 
-.th,.td {
+.tr .name{
+  width:54%;
+}
+
+.tr .name.th,
+.tr .name.td{
   text-align:left;
+}
+
+.th,.td {
+  text-align:center;
   font-size:12pt;
   padding:10rpx;
-  flex:1;
+  width:23%;
 }
 
 .th{
@@ -99,4 +108,28 @@
   color:#FF0000;
   padding:0 20rpx;
   margin-top:30rpx;
+}
+
+.addCart,
+.reduceCart{
+  width:40rpx;
+  height:40rpx;
+  position:absolute;
+  color:#0096FF;
+  font-size:16pt;
+  text-align:center;
+  top:0;
+
+}
+
+.addCart{
+  right:0;
+}
+
+.reduceCart{
+  left:0;
+}
+
+table tr .count{
+  position:relative;
 }

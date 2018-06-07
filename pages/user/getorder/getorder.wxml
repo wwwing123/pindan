@@ -4,7 +4,7 @@
         <view class="weui-cell">
             <view class="company">
               <view class='comlabel'>公司:</view>
-              <picker bindchange="bindPickerChange" range="{{company}}">
+              <picker bindchange="companyPickerChange" range="{{company}}">
                 <view class="{{currentID == -1 ? 'noselect' : ''}}">{{currentName}}</view>
               </picker> 
             </view>
@@ -28,24 +28,22 @@
       </navigator>     
     </view> 
     <view class="page__bd">
-        <view>
-            <view class="title">
-              <view class="name">姓名</view>
-              <view class="ordernum">订单号</view>
-              <view class="food">菜品</view>
-            </view>
-            <scroll-view class="orderlist" scroll-y>
-              <block wx:for="{{list}}" wx:key="id" wx:for-item="list">
-                  <view class="listobox">
-                      <view class="name">{{list.name}}</view>
-                      <view class="ordernum">{{list.order_number}}</view>
-                      <view class="food" wx:for="{{list.goods}}" wx:key="id" wx:for-item="food">
-                        <view>{{food.name}} × {{food.count}}</view>
-                      </view>
-                  </view>
-              </block>
-            </scroll-view>
+        <view class="title">
+          <view class="name">姓名</view>
+          <view class="phone">手机号</view>
+          <view class="food">菜品</view>
         </view>
+        <scroll-view class="orderlist" scroll-y="true" bindscrolltolower="loadmore" bindtouchstart="start" bindtouchend="end" style="bottom:{{loadMoreHeight}}rpx;height:{{windowHeight}}px" scroll-with-animation="true" scroll-top="{{scrollTop}}" scroll-with-animation="true">
+          <block wx:for="{{list}}" wx:key="id" wx:for-item="list">
+              <view class="listobox">
+                  <view class="name">{{list.name}}</view>
+                  <view class="phone">{{list.phone}}</view>
+                  <view class="food">
+                    <view wx:for="{{list.goods}}" wx:key="id" wx:for-item="food">{{food.name}} × {{food.count}}</view> 
+                  </view>
+              </view>
+          </block>
+        </scroll-view>
     </view>
   </view>
 </view>

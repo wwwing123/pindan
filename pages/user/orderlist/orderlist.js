@@ -21,7 +21,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    //订单状态处理
     this.getHeight();    
   },
 
@@ -95,14 +94,15 @@ Page({
           let orderlist = this.data.orderlist;
           for (let i in data){
             let obj = {
-              orderdate: Util.formatTime(new Date(data[i].finish_at * 1000)),
+              orderdate: data[i].order_status == 2 ? Util.formatTime(new Date(data[i].created_at * 1000)) : Util.formatTime(new Date(data[i].finish_at * 1000)),
               ordernum: data[i].order_number,
               status: this.data.orderType[data[i].order_status],
               ordertype: data[i].order_type,
-              totalprice: data[i].order_type == 1 ? `+￥${data[i].balance_change}` : `-￥${data[i].balance_change}`,
-              id: data[i].id
+              totalprice: data[i].order_type == 1 ? `+${data[i].balance_change}` : `-${data[i].balance_change}`,
+              id: data[i].id,
+              remain: data[i].remain
             };
-            obj.foods = data[i].order_type == 1 ? data[i].illustration : JSON.parse(data[i].illustration);
+            obj.foods = (data[i].order_type == 0 || data[i].order_type == 1) ? data[i].illustration : JSON.parse(data[i].illustration);
             orderlist.push(obj);
           }
           this.setData({

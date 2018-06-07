@@ -34,7 +34,7 @@ const rules = {
   required: (value, name) => {
     if (name == 'companyid' && value == '-1') {
       return false;
-    } else if (name == 'address'){
+    } else if (name == 'address' || name == 'userid'){
       return true;
     }else{
       if (value === '' || value === null) {
@@ -60,8 +60,8 @@ const getSessionKey = () => {
     success: res => {
       let data = {
         code: res.code,
-        appid: 'wx7075e58a4c005dfc',
-        secret: 'fc16d0ece9e687713336509fe95791a6'
+        appid: 'wx48f6b8eb475538fb',
+        secret: '8f07853ccc608ae00d88c8efb6ad6cd8'
       }
       if (res.code) {
         wx.request({
@@ -102,7 +102,7 @@ const errorHandle = (url,code,callback) => {
   if (code == '1003' || code == '1004'){
     getSessionKey();
     callback && callback();
-  } else if (code == '2' || code == '4' || code == '1008' || code == '1010'){
+  } else if (code == '2' || code == '4' || code == '1008' || code == '1010', code == '3001'){
     openAlert('提示',errorCode[code]);
   }else{
     console.log(`${url}接口错误码:${code},\n${errorCode[code]}`);
@@ -129,7 +129,7 @@ const errorCode = {
 
   "2001": "用户余额不足",
 
-  "3001": "没有该商品信息",
+  "3001": "该商品已被管理员取消",
   "3002": "超过商品总数",
   "3003": "商品不支持",
   "3004": "还有订单未完成",
@@ -141,7 +141,16 @@ const errorCode = {
   "4001": "公司名字变更异常",
   "4002": "公司信息删除失败",
   "4003": "没有此公司信息"
+}
 
+const checkInformation = () =>{
+  if(!getApp().globalData.getuserInfo){
+    openAlert('','请先完善个人信息后再进行点餐',()=>{
+      wx.switchTab({
+        url: '/pages/user/user'
+      })
+    });
+  }
 }
 
 
@@ -152,5 +161,6 @@ module.exports = {
   getSessionKey,
   openAlert,
   errorCode,
-  errorHandle
+  errorHandle,
+  checkInformation,
 }

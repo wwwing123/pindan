@@ -45,12 +45,19 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.getGoodlist();//更新菜单接口数据
     this.setData({
       shopcar: app.globalData.shopcar,//更新总件数
     });
     this.setData({
       count: this.getAllCountPrice('count'),//更新总件数
       total: this.getAllCountPrice('total').toFixed(2)//更新总价
+    });
+    this.tabClick({
+      currentTarget:{
+        id:0,
+        offsetLeft:0
+      }
     });
   },
 
@@ -75,6 +82,10 @@ Page({
   },
   //商品加入购物车
   tapAddCart:function(e){
+    if (!app.globalData.getuserInfo){
+      Util.checkInformation();//检查用户是否完善个人信息
+      return;
+    }    
     let kind = e.currentTarget.dataset.type,
         shopcar = this.data.shopcar, 
         id = e.currentTarget.dataset.id;
@@ -176,7 +187,25 @@ Page({
       }
     });
   },
-  tabClick: function (e) {  
+  tabClick: function (e) {
+    this.Modal && this.Modal.hideModal();//隐藏商品详情
+    //当点击tab时，默认选中第一个分类处理
+    let good;
+    if (e.currentTarget.id == 0){
+      good = this.data.breakfastGoods     
+    } else if (e.currentTarget.id == 1){
+      good = this.data.lunchGoods
+    }else{
+      good = this.data.dinnerGoods
+    }
+    for(let i in good){
+      if(good[i].goodslist.length>0){
+        this.setData({
+          classifySeleted: good[i].id
+        });
+        break;
+      }
+    }
     this.setData({
       sliderOffset: e.currentTarget.offsetLeft,
       activeIndex: e.currentTarget.id
@@ -190,5 +219,67 @@ Page({
       return Number(total) + Number(b[name]);
     },0)
     return total;
+  },
+
+  getGoodlist: function () {
+    let goodPromise = new Promise((resolve, reject) => {
+      wx.request({
+        url: urlList.goods,
+        method: 'get',
+        success: (msg) => {
+          if (msg.data.code == 1) {
+            //写入所有商品数组
+            let allFoodList = [];
+            const goods = msg.data.data;
+            for (let i in goods) {
+              allFoodList = allFoodList.concat(goods[i].goodslist);
+            }
+            app.globalData.allFoodList = allFoodList;
+            this.setData({
+              allFoodList
+            })
+            resolve();
+          } else {
+            Util.errorHandle(urlList.goods, msg.data.code);
+          };
+        }
+      });
+    })
+    goodPromise.then(() => {
+      this.getShopcarData();
+    });
+  },
+
+  getShopcarData: function () {
+    const typename = ["breakfast", "lunch", "dinner"];
+    for (let i in typename) {
+      //获取商品信息
+      wx.request({
+        url: `${urlList.goods}?type=${typename[i]}`,
+        method: 'get',
+        success: (msg) => {
+          if (msg.data.code == 1) {
+            if (typename[i] == 'breakfast') {
+              app.globalData.breakfastGoods = msg.data.data
+              this.setData({
+                breakfastGoods: msg.data.data
+              })
+            } else if (typename[i] == 'lunch') {
+              app.globalData.lunchGoods = msg.data.data
+              this.setData({
+                lunchGoods: msg.data.data
+              })
+            } else {
+              app.globalData.dinnerGoods = msg.data.data
+              this.setData({
+                dinnerGoods: msg.data.data
+              })
+            }
+          } else {
+            Util.errorHandle(urlList.goods, msg.data.code);
+          }
+        }
+      });
+    }
   }
 })

@@ -8,6 +8,7 @@
     "pages/user/orderlist/orderlist",
     "pages/user/getorder/getorder",
     "pages/user/foodcount/foodcount",
+    "pages/msg/msg",
     "pages/logs/logs"
   ],
   "window": {
