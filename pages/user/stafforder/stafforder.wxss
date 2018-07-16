@@ -18,9 +18,9 @@
 }
 
 
-.weui-form-preview{
+/* .weui-form-preview{
     margin-bottom: 25px;
-}
+} */
 
 .icon-up{
   margin-top:10rpx;
@@ -59,4 +59,14 @@
   text-align:center;
   font-size:12pt;
   color:#B5B5B5;
+}
+
+.noMoreData{
+  width:100%;
+  height:80rpx;
+  text-align:center;
+  line-height:80rpx;
+  background:#fff;
+  color:#ACACAC;
+  font-size:12pt;
 }

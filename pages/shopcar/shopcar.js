@@ -183,7 +183,7 @@ Page({
     this.IntegrationData();//再次整合数据
   },
 
-  //取餐或放弃
+  //取餐或待餐
   completeOrder:function(e){
     let data = {
       "id": e.currentTarget.dataset.id,
@@ -191,7 +191,7 @@ Page({
     }
     wx.showModal({
       title:'提示',
-      content: `是否确认${data.finish_type == 'confirm' ? '取餐' : '放弃'}`,
+      content: `是否确认${data.finish_type == 'confirm' ? '取餐' : '待餐'}`,
       confirmText: "确定",
       cancelText: "取消",
       success: (res) => {
@@ -263,11 +263,11 @@ Page({
   //下单时间异常提示
   errorTime:function(kind){
     if(kind == 0){
-      Util.openAlert('下单失败','早餐下单时间为19点至次日7点前');
+      Util.openAlert('下单失败','早餐下单时间为19点~22点');
     } else if (kind == 1){
       Util.openAlert('下单失败', '午餐下单时间为今天10点前');
     }else{
-      Util.openAlert('下单失败', '晚餐下单时间为今天17点前');
+      Util.openAlert('下单失败', '晚餐下单时间为今天16点前');
     }
   },
 

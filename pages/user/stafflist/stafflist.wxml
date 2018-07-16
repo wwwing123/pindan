@@ -1,0 +1,49 @@
+<view class="container">
+  <view class="select page__bd">
+    <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+            <view class="company">
+              <view class='comlabel'>公司:</view>
+              <picker bindchange="companyPickerChange" range="{{company}}">
+                <view class="{{currentID == -1 ? 'noselect' : ''}}">{{currentName}}</view>
+              </picker> 
+            </view>
+        </view>
+    </view>
+  </view> 
+  <view class="content">
+    <view class="page__bd">
+        <scroll-view class="orderlist" scroll-y="true" bindscrolltolower="loadmore" style="bottom:{{loadMoreHeight}}rpx;height:{{windowHeight}}px" scroll-with-animation="true" scroll-top="{{scrollTop}}" scroll-with-animation="true" >
+            <block wx:for="{{list}}" wx:key="userid" wx:for-item="list">
+                <view class="listbox">
+                    <view class="title">
+                      <view class="circle">
+                        <view class="iconfont icon-account"></view>
+                      </view>
+                      <view class="name">{{list.name}}
+                        <view class="userid">id:{{list.userid}}</view>
+                      </view>
+                      <navigator url="/pages/user/stafforder/stafforder?staffId={{list.userid}}&title={{list.name}}订单记录">
+                        <view class="more">
+                          <view class="iconfont icon-list"></view>
+                          <view class="text">订单记录</view>
+                          <view class="iconfont icon-more"></view>
+                        </view>
+                      </navigator> 
+                    </view>
+                    <view class="bottom">
+                      <view class="balance">
+                        <view>{{list.balance}}</view>
+                        <view>剩余餐券</view>
+                      </view>
+                      <view class="phone">
+                        <view>{{list.phone}}</view>
+                        <view>手机号</view>
+                      </view>
+                    </view>
+                </view>
+            </block>
+        </scroll-view>
+    </view>
+  </view>
+</view>

@@ -16,7 +16,7 @@ Page({
     "shopcar": app.globalData.shopcar,
     "count": 0,//购物车总件数
     "total": 0,//购物车总价
-    "classifySeleted":1,
+    "classifySeleted":-1,
     "foodsSeleted":{}
   },
 
@@ -190,23 +190,47 @@ Page({
   tabClick: function (e) {
     this.Modal && this.Modal.hideModal();//隐藏商品详情
     //当点击tab时，默认选中第一个分类处理
-    let good;
-    if (e.currentTarget.id == 0){
-      good = this.data.breakfastGoods     
-    } else if (e.currentTarget.id == 1){
-      good = this.data.lunchGoods
+    let good,data;
+    if (this.data.activeIndex == 0){
+      data = this.data.breakfastGoods.filter((item) => {
+        return item.goodslist.length>0
+      })  
+    } else if (this.data.activeIndex == 1){
+      data = this.data.lunchGoods.filter((item) => {
+        return item.goodslist.length > 0
+      })
     }else{
-      good = this.data.dinnerGoods
+      data = this.data.dinnerGoods.filter((item) => {
+        return item.goodslist.length > 0
+      })
     }
-    for(let i in good){
-      if(good[i].goodslist.length>0){
-        this.setData({
-          classifySeleted: good[i].id
-        });
-        break;
-      }
+    const item = data.find((x) => {
+      return x.id == this.data.classifySeleted
+    })
+    let activeIdIndex = item ? item.id : data[0].id;
+    
+    if (e.currentTarget.id == 0){
+      good = this.data.breakfastGoods.filter((item) => {
+        return item.goodslist.length > 0
+      })     
+    } else if (e.currentTarget.id == 1){
+      good = this.data.lunchGoods.filter((item) => {
+        return item.goodslist.length > 0
+      })
+    }else{
+      good = this.data.dinnerGoods.filter((item) => {
+        return item.goodslist.length > 0
+      })
     }
+
+    let nowitem = good.find((x) => {
+      return x.id == activeIdIndex
+    })
+    // if (parseInt(activeIdIndex) + 1 > good.length){
+    //   activeIdIndex = good.length-1
+    // }
     this.setData({
+      classifySeleted: nowitem ? nowitem.id : good[0].id,
       sliderOffset: e.currentTarget.offsetLeft,
       activeIndex: e.currentTarget.id
     });

@@ -1,0 +1,40 @@
+<view class="container">
+  <view class="select page__bd">
+    <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+            <view class="company">
+              <view class='comlabel'>公司:</view>
+              <picker bindchange="companyPickerChange" range="{{company}}">
+                <view class="{{currentID == -1 ? 'noselect' : ''}}">{{currentName}}</view>
+              </picker> 
+            </view>
+        </view>
+    </view>
+  </view> 
+  <view class="content">
+    <view class="page__bd">
+        <scroll-view class="orderlist" scroll-y="true" bindscrolltolower="loadmore" style="bottom:{{loadMoreHeight}}rpx;height:{{windowHeight}}px" scroll-with-animation="true" scroll-top="{{scrollTop}}" scroll-with-animation="true" >
+            
+                <view class="weui-cell__bd box" style='padding:80rpx 40rpx;'>
+                  <view class='name'>{{currentName}}</view>
+                  <view class='label'>月消费累计额</view>
+                  <navigator url="/pages/user/consumetotal/consumetotal?companyid={{currentID}}&name={{currentName}}&title=公司月消费累计额">
+                    <view class="more">查看详情</view>
+                  </navigator>
+                </view>           
+            <block wx:for="{{list}}" wx:key="userid" wx:for-item="list">                            
+                  <view class="weui-cell__bd box">
+                    <view class='name'>{{list.name}}</view>
+                    <view class='label'>当月充值:{{list.recharge}}</view>
+                    <view class='label'>当月误餐:{{list.frozen}}</view>
+                    <view class='label'>当月消费:{{list.consume}}</view> 
+                    <navigator url="/pages/user/consumetotal/consumetotal?userid={{list.userid}}&name={{list.name}}&title=个人月消费累计额">
+                      <view class="more">查看详情</view>
+                    </navigator> 
+                  </view>
+                
+            </block>
+        </scroll-view>
+    </view>
+  </view>
+</view>

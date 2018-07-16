@@ -5,8 +5,11 @@
             <view class="company">
               <view class='comlabel'>公司:</view>
               <picker bindchange="companyPickerChange" range="{{company}}">
-                <view class="{{currentID == -1 ? 'noselect' : ''}}">{{currentName}}</view>
+                <view class="{{currentID == -1 ? 'noselect' : ''}}" style='font-size:11pt;'>{{currentName}}</view>
               </picker> 
+            </view>
+            <view class="number">
+              <view class='numberlabel'>订餐: {{totalsize}}</view>
             </view>
             <view class="type">
               <view class='foodlabel'>餐类:</view>
@@ -33,16 +36,22 @@
           <view class="phone">手机号</view>
           <view class="food">菜品</view>
         </view>
-        <scroll-view class="orderlist" scroll-y="true" bindscrolltolower="loadmore" bindtouchstart="start" bindtouchend="end" style="bottom:{{loadMoreHeight}}rpx;height:{{windowHeight}}px" scroll-with-animation="true" scroll-top="{{scrollTop}}" scroll-with-animation="true">
-          <block wx:for="{{list}}" wx:key="id" wx:for-item="list">
-              <view class="listobox">
-                  <view class="name">{{list.name}}</view>
-                  <view class="phone">{{list.phone}}</view>
-                  <view class="food">
-                    <view wx:for="{{list.goods}}" wx:key="id" wx:for-item="food">{{food.name}} × {{food.count}}</view> 
-                  </view>
-              </view>
-          </block>
+        <view class="refresh-block" style="height:{{refreshHeight}}rpx"> 
+          <image  class="{{loading?'roate':(pull?'':'pull')}}" src="{{loading ?           '../../../images/getorder/icon_loading.png':'../../../images/getorder/icon_arrow.png'}}"></image>
+          <text  class="refreshing_text" >{{refreshing_text}}</text> 
+        </view>  
+        <scroll-view class="orderlist" scroll-y="true" bindscrolltolower="loadmore" bindscrolltoupper="refreshData" bindtouchstart="start" bindtouchend="end" style="bottom:{{loadMoreHeight}}rpx;height:{{windowHeight}}px" scroll-with-animation="true" scroll-top="{{scrollTop}}" scroll-with-animation="true" bindscroll="scroll">
+          <view class="content" bindtouchmove="move" style="">
+            <block wx:for="{{list}}" wx:key="id" wx:for-item="list">
+                <view class="listobox">
+                    <view class="name">{{list.name}}</view>
+                    <view class="phone">{{list.phone}}</view>
+                    <view class="food">
+                      <view wx:for="{{list.goods}}" wx:key="id" wx:for-item="food">{{food.name}} × {{food.count}}</view> 
+                    </view>
+                </view>
+            </block>
+          </view>
         </scroll-view>
     </view>
   </view>

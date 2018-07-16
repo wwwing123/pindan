@@ -12,16 +12,24 @@ Page({
     windowHeight:0,
     scrollTop:0,//滚动高度
     showTop:true,//回到顶部显示
-    size:10,
+    size:3,
     currentPage:1,
-    totalsize:0
+    totalsize:0,
+    dataUserid:'',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getHeight();    
+    this.getHeight();
+    this.setData({
+      dataUserid: options.staffId
+    })
+    this.doLoadData();
+    wx.setNavigationBarTitle({
+      title: options.title
+    });  
   },
 
   /**
@@ -35,7 +43,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.doLoadData();
+    
   },
 
   /**
@@ -82,7 +90,7 @@ Page({
   },
   doLoadData(currendSize, PAGE_SIZE) {
     wx.request({
-      url: `${urlList.getPersonOrder}`,
+      url: `${urlList.getPersonOrder}?userid=${this.data.dataUserid}`,
       header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
       data:{
         "page": this.data.currentPage,

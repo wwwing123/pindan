@@ -12,10 +12,16 @@ const urlList = {
   getbalance: `${baseUrl}/api/user/get_balance/`,//获取个人余额
   getAdminOrder: `${baseUrl}/api/user/admin/get_company_order/`,//管理员菜品统计
   foodcount: `${baseUrl}/api/user/admin/get_goods_statistics/`,//管理员菜品统计
+  foodcount2: `${baseUrl}/api/user/admin/get_goods_statistics_v2/`,//管理员菜品统计(含总餐券)
   submitUserinfo: `${baseUrl}/api/user/perfect_info/`,//提交个人信息
   getuserinfo: `${baseUrl}/api/user/get_userinfo/`,//个人信息
   getcompany: `${baseUrl}/api/get/company/`,//获取公司信息
-  getAdminCompany: `${baseUrl}/api/user/get_authority/`//获取管理员查看的公司
+  getAdminCompany: `${baseUrl}/api/user/get_authority/`,//获取管理员查看的公司
+  getStaff: `${baseUrl}/api/user/get_company_member/`,//获取员工列表
+  getStaffComsume: `${baseUrl}/api/user/get_company_member_v2/`,//获取消费员工列表
+  getCompanyBill: `${baseUrl}/api/user/get_company_month_bill/`,//获取公司月总账
+  getUserBill: `${baseUrl}/api/user/get_user_month_bill/`,//获取个人用户月总账
+
 }
 
 module.exports = urlList

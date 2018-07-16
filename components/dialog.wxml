@@ -3,7 +3,7 @@
     
     <view  data-type="mask"  catchtap='hideModal' class='modal-mask' ></view>
 
-    <view  class='modal-layer  modal-layer-radius {{modalSize == "sm" ? " modal-layer-sm" : " modal-layer-md" }} ' >
+    <view  class='modal-layer  modal-layer-radius {{modalSize == "sm" ? " modal-layer-sm" : " modal-layer-md" }} ' style='border-radius:20rpx;overflow:hidden;'>
 
         <!-- 内容区域 -->
         <view class='modal-body'>         

@@ -1,0 +1,32 @@
+<view class="container" style='height:{{windowHeight}}px;'>
+  <view class="select page__bd">
+    <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+            <view class="datebox">
+              <view class='date'>请选择日期:</view>
+              <picker class="dateSelect" bindchange="bindDateChange" value="{{date}}" mode="date" fields="month">
+                <view>{{date}}</view>
+              </picker> 
+            </view>
+        </view>
+    </view>
+  </view>  
+  <view class="content">
+    <view class="page__bd">
+        <view class='top'>
+          <view>{{name}}</view>
+        </view>
+        <view class="listBox">
+          <view class='text'>早餐:{{data.breakfast_count}}人次<view class='num'>{{data.breakfast}}</view><view class='tip'>*包含误餐和消费</view></view>
+          <view class='text'>午餐:{{data.lunch_count}}人次<view class='num'>{{data.lunch}}</view><view class='tip'>*包含误餐和消费</view></view>
+          <view class='text'>晚餐:{{data.dinner_count}}人次<view class='num'>{{data.dinner}}</view><view class='tip'>*包含误餐和消费</view></view>
+          <view class='text'>月初总余额<view class='num'>{{data.before_balance}}</view></view>
+          <view class='text'>该月总充值<view class='num'>{{data.recharge}}</view></view>
+          <view class='text'>该月总扣除<view class='num'>{{data.deduction}}</view></view>
+          <view class='text'>该月总误餐<view class='num'>{{data.frozen}}</view></view>
+          <view class='text'>该月总消费<view class='num'>{{data.consume}}</view></view>
+          <view class='text'>该月总剩余<view class='num'>{{data.after_balance}}</view></view>
+        </view>
+    </view>
+  </view>
+</view>

@@ -33,7 +33,7 @@
       <view class="page__bd page__bd_spacing">
         <button class="weui-btn" type="primary" wx:if="{{shopcar[0].status==3}}" style="background:#0096FF;width:96%;margin-top:20rpx;" data-type="breakfast" bindtap="goToOrder">下单</button>
         <button class="weui-btn" type="primary" wx:if="{{shopcar[0].status==2}}" style="width:96%;" data-id="{{shopcar[0].id}}" data-finishtype="confirm" data-ordertype="0" bindtap="completeOrder">取餐</button>
-        <button class="weui-btn" type="primary" wx:if="{{shopcar[0].status==2}}" style="background:#2B343C;width:96%;" data-id="{{shopcar[0].id}}" data-finishtype="cancel" data-ordertype="0" bindtap="completeOrder">放弃</button>    
+        <button class="weui-btn" type="primary" wx:if="{{shopcar[0].status==2}}" style="background:#2B343C;width:96%;" data-id="{{shopcar[0].id}}" data-finishtype="cancel" data-ordertype="0" bindtap="completeOrder">待餐</button>    
       </view>
     </view>
     <view class="order lunch" wx:if="{{shopcar[1].count>0}}">     
@@ -64,7 +64,7 @@
       <view class="page__bd page__bd_spacing">
         <button class="weui-btn" type="primary" wx:if="{{shopcar[1].status==3}}" style="background:#0096FF;width:96%;margin-top:20rpx;" data-type="lunch" bindtap="goToOrder">下单</button>
         <button class="weui-btn" type="primary" wx:if="{{shopcar[1].status==2}}" style="width:96%;" data-id="{{shopcar[1].id}}" data-finishtype="confirm" data-ordertype="1" bindtap="completeOrder">取餐</button>
-        <button class="weui-btn" type="primary" wx:if="{{shopcar[1].status==2}}" style="background:#2B343C;width:96%;" data-id="{{shopcar[1].id}}" data-finishtype="cancel" data-ordertype="1" bindtap="completeOrder">放弃</button>    
+        <button class="weui-btn" type="primary" wx:if="{{shopcar[1].status==2}}" style="background:#2B343C;width:96%;" data-id="{{shopcar[1].id}}" data-finishtype="cancel" data-ordertype="1" bindtap="completeOrder">待餐</button>    
       </view>
     </view>
     <view class="order dinner" wx:if="{{shopcar[2].count>0}}">    
@@ -95,7 +95,7 @@
       <view class="page__bd page__bd_spacing">
         <button class="weui-btn" type="primary" wx:if="{{shopcar[2].status==3}}" style="background:#0096FF;width:96%;margin-top:20rpx;" data-type="dinner" bindtap="goToOrder">下单</button>
         <button class="weui-btn" type="primary" wx:if="{{shopcar[2].status==2}}" style="width:96%;" data-id="{{shopcar[2].id}}" data-finishtype="confirm" data-ordertype="2" bindtap="completeOrder">取餐</button>
-        <button class="weui-btn" type="primary" wx:if="{{shopcar[2].status==2}}" style="background:#2B343C;width:96%;" data-id="{{shopcar[2].id}}" data-finishtype="cancel" data-ordertype="2" data-name bindtap="completeOrder">放弃</button>    
+        <button class="weui-btn" type="primary" wx:if="{{shopcar[2].status==2}}" style="background:#2B343C;width:96%;" data-id="{{shopcar[2].id}}" data-finishtype="cancel" data-ordertype="2" data-name bindtap="completeOrder">待餐</button>    
       </view>
     </view>
   </view>

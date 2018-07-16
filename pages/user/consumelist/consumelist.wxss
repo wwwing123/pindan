@@ -1,0 +1,78 @@
+.container {
+  height: 100%;
+  padding-top:84rpx; 
+}
+
+.page__bd {
+  width: 100%;
+}
+
+.select{
+  position:fixed;
+  top:0;
+  left:0; 
+  background:#fff;
+  height:84rpx;
+  z-index:2;
+}
+
+.page__bd .company{
+  -webkit-box-flex:1;
+  -webkit-flex:1;
+  flex:1;
+  display:flex;
+  font-size:12pt;
+}
+
+.weui-cell .weui-label{
+  width:40px;
+  text-align:center;
+  font-size:12pt;
+}
+
+.content{
+  width:100%;
+  padding-bottom:20rpx;
+}
+
+.box{
+  width:92%;
+  height:280rpx;
+  border-radius:20rpx;
+  overflow:hidden;
+  margin:30rpx auto 0;
+  padding:30rpx 40rpx;
+  position:relative;
+  background: -webkit-linear-gradient(#0096FF , #40AFFA);
+  box-sizing:border-box;
+  box-shadow: 4px 4px 10px #ccc;
+}
+
+.box .name{
+  font-size:14pt;
+  color:#fff;
+}
+
+.box .label{
+  font-size:12pt;
+  color:#fff;
+}
+
+.box .more{
+  position:absolute;
+  width:180rpx;
+  height:70rpx;
+  top:106rpx;
+  right:40rpx;
+  color:#0096FF;
+  background:#fff;
+  border-radius:10rpx;
+  overflow:hidden;
+  line-height:70rpx;
+  text-align:center;
+  font-size:11pt;
+}
+
+
+
+  

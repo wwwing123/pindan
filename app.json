@@ -8,6 +8,10 @@
     "pages/user/orderlist/orderlist",
     "pages/user/getorder/getorder",
     "pages/user/foodcount/foodcount",
+    "pages/user/stafflist/stafflist",
+    "pages/user/stafforder/stafforder",
+    "pages/user/consumelist/consumelist",
+    "pages/user/consumetotal/consumetotal",
     "pages/msg/msg",
     "pages/logs/logs"
   ],

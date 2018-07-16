@@ -21,7 +21,16 @@ Page({
     totalsize: 0,
     loadMoreHeight: 0,
     windowHeight: 0,//列表数据
-    scrollTop: 0//滚动高度
+    scrollTop: 0,//滚动高度
+    refreshing_text: '下拉刷新',
+    loadingHeight: 50,
+    refreshHeight: 0,
+    pull: true,//下拉刷新状态 false释放刷新状态
+    scrolling: false,//滚动中
+    isUpper: true,//scroll-view 滚动条默认在最上
+    isLower: false,
+    loading: false,//是否在加载中
+    downY: 0,//触摸时Y轴坐标  
   },
   
 
@@ -34,14 +43,14 @@ Page({
       authority: options.authority,
       level: options.level
     })
-    
+    this.getCompany();
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.getCompany();
+
   },
 
   /**
@@ -55,11 +64,25 @@ Page({
     let _this = this;
     wx.getSystemInfo({
       success: function (res) {
+        console.log(res.windowHeight);
         _this.setData({
           windowHeight: res.windowHeight
         })
       }
-    })
+    });
+    this.setHeight();
+  },
+
+  setHeight:function(){
+    var query = wx.createSelectorQuery();
+    query.select('.select').boundingClientRect((rect)=> {
+      // console.log(rect.width)
+      console.log(rect.height);
+      this.setData({
+        windowHeight: this.data.windowHeight - (rect.height + 35 )
+      })
+      
+    }).exec();
   },
 
   loadmore: function () {
@@ -82,12 +105,13 @@ Page({
         wx.hideLoading();
         if (msg.data.code == 1) {
           let data = msg.data.data.datas,
-              list = reflesh ? [] : this.data.list
+          list = reflesh ? [] : this.data.list
           let newdata = this.distinct(this.data.list, data)         
           this.setData({
             list: list.concat(newdata),
             totalsize: msg.data.data.totalsize
-          })
+          });
+          this.loadFinish();
         }else{
           Util.errorHandle(urlList.getAdminOrder, msg.data.code);
         }
@@ -125,21 +149,21 @@ Page({
   companyPickerChange: function (e) {
     this.setData({
       currentID: this.data.companyid[e.detail.value],
-      currentName: this.data.company[e.detail.value]
+      currentName: this.data.company[e.detail.value],
+      list:[],
+      page:1
     });
     this.getorderList(true);
+    this.getHeight();
   },
 
   foodPickerChange:function(e){
     this.setData({
       currentType: e.detail.value,
+      list: [],
+      page: 1
     });
     this.getorderList(true);
-  },
-  start: function (e) {
-  },
-  end: function (e) {
-
   },
   openLoading: function () {
     wx.showLoading({
@@ -156,14 +180,13 @@ Page({
     if(oldList.length == 0){
       return newList;
     }
-    for (var i in newList){
-      for(var j in oldList){
-        if (oldList[j].id != newList[i].id){
-          array.push(newList[i])
-        }else{
+    for (let i in newList){
+      let distinctItem = Util.findFoods(newList[i].id, oldList)
+      if (!distinctItem){
+        array.push(newList[i])
+      }else{
           listcount += 1
           bool = true;
-        }
       }
     }
     if (bool && listcount != this.data.size){
@@ -172,5 +195,92 @@ Page({
       })
     }
     return array;
-  }
+  },
+  refreshData:function(){
+    this.data.isUpper = true;
+    this.data.scrolling = false; 
+  },
+  scroll: function () {
+    this.data.scrolling = true;
+    this.data.isLower = false;
+    this.data.isUpper = false;
+  },
+  start: function (e) {
+    console.log('start')
+    if (this.data.scrolling || this.data.loading) {
+      return;
+    }
+    var startPoint = e.touches[0]
+    var clientY = startPoint.clientY;
+    this.setData({
+      downY: clientY,
+      refreshHeight: 0,
+      loadMoreHeight: 0,
+      pull: true,
+      refreshing_text: '下拉刷新'
+    });
+  },
+  end: function (e) {
+    console.log('end')
+    this.data.scrolling = false;
+    if (this.data.refreshing) {
+      return;
+    }
+    //释放开始刷新
+    var height = this.data.loadingHeight;
+    console.log(this.data.refreshHeight);
+    console.log(this.data.loadingHeight)
+    if (this.data.refreshHeight > this.data.loadingHeight) {
+      this.setData({
+        refreshHeight: height,
+        loading: true,
+        pull: false,
+        refreshing_text: '正在刷新...'
+      });
+      this.setData({
+        list:[],
+        page:1
+      })
+      this.getorderList();
+    } else {
+      this.setData({
+        refreshHeight: 0,
+        loadMoreHeight: 0,
+        loading: false,
+        pull: true
+      })
+    }
+  },
+  move: function (e) {
+    console.log('move')
+    if (this.data.scrolling || this.data.loading) {
+      return;
+    }
+    var movePoint = e.changedTouches[0]
+    var moveY = (movePoint.clientY - this.data.downY) * 0.6;
+    //1.下拉刷新
+    if (this.data.isUpper && moveY > 0) {
+      this.setData({
+        refreshHeight: moveY
+      })
+      if (this.data.refreshHeight > this.data.loadingHeight) {
+        this.setData({
+          pull: false,
+          refreshing_text: '释放立即刷新'
+        })
+      } else {
+        this.setData({
+          pull: true,
+          refreshing_text: '下拉刷新'
+        })
+      }
+    }
+  },
+  loadFinish: function () {
+    this.setData({
+        refreshHeight: 0,
+        loadMoreHeight: 0,
+        loading: false
+      })
+  },
 })

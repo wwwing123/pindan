@@ -8,7 +8,8 @@ Page({
   data: {
     companyid:null,
     Type:null,
-    list:[]
+    list:[],
+    totalPrice:"0.00"
   },
 
   /**
@@ -23,22 +24,23 @@ Page({
   },
   getordercount: function () {
     wx.request({
-      url: `${urlList.foodcount}?companyid=${this.data.companyid}&type=${this.data.Type}`,
+      url: `${urlList.foodcount2}?companyid=${this.data.companyid}&type=${this.data.Type}`,
       header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
       method: 'GET',
       success: (msg) => {
         if (msg.data.code == 1) {
           console.log(msg)
-          let data = msg.data.data,
+          let data = msg.data.data.datas,
             list = []
           for (let i in data) {
             list.push(data[i])
           }
           this.setData({
-            list
+            list,
+            totalPrice: msg.data.data.statistics
           })
         }else{
-          Util.errorHandle(urlList.foodcount, msg.data.code);
+          Util.errorHandle(urlList.foodcount2, msg.data.code);
         }
       }
     })

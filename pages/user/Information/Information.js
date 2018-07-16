@@ -141,7 +141,6 @@ Page({
   
 
   formSubmit:function (e) {
-    console.log(1111111111111111111111);
     const { formData, rules, messages } = {
           formData: e.detail.value,
           rules: Util.rules,

@@ -3,7 +3,7 @@
       <view class="iconfont icon-nodata"></view>
       <view class="tip">暂无消费记录</view>
     </view> 
-    <view class="page__bd">
+    <view class="page__bd" wx:else>
         <scroll-view class="weui-form-preview" scroll-y="true"  bindscrolltolower="loadmore" bindtouchstart="start" bindtouchend="end" style="bottom:{{loadMoreHeight}}rpx;height:{{windowHeight}}px;background:#EEEEEE;" scroll-top="{{scrollTop}}" scroll-with-animation="true" bindscroll="scrolling">
           <view class="content" wx:for="{{orderlist}}" wx:key="ordernum" wx:for-item="orderlist">
             <view class="weui-form-preview__hd">
@@ -41,5 +41,5 @@
     <view class="gotoTop" hidden="{{showTop}}"  bindtap="goTop">
       <view class=".icon-up iconfont"></view>
       顶部
-    </view>  
+    </view>
 </view>
