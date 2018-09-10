@@ -52,8 +52,7 @@ Page({
       date: `${nowDate.getFullYear()}-${month}`,
       year: nowDate.getFullYear(),
       month
-    })
-    
+    })  
   },
 
   bindDateChange: function (e) {
@@ -85,7 +84,6 @@ Page({
         } else {
           Util.errorHandle(urlList.getCompanyBill, msg.data.code);
         }
-        wx.hideLoading();
       }
     })
   },
@@ -104,7 +102,6 @@ Page({
         } else {
           Util.errorHandle(urlList.getCompanyBill, msg.data.code);
         }
-        wx.hideLoading();
       }
     })
   },

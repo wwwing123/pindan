@@ -104,30 +104,43 @@ Page({
       title: '正在下单',
       icon: 'loading'
     });
-    wx.request({
-      url: urlList.placeOrder,
-      data: data,
-      header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key')},
-      method: 'POST',
-      dataType: 'json',
-      success: (msg) => {
-        wx.hideLoading();
-        if (msg.data.code == 1){
-          this.getbalance();
-          this.updateShopcar(kind);
-          wx.showToast({
-            title: '下单成功',
-            icon: 'success',
-            duration: 1000
-          });          
-        }else{
-          this.errorTime(kind);
-          Util.errorHandle(urlList.placeOrder, msg.data.code);
-        }       
-      },
-      fail: function(res) {
-        wx.hideLoading();
-      }
+    // wx.request({
+    //   url: urlList.placeOrder,
+    //   data: data,
+    //   header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key')},
+    //   method: 'POST',
+    //   dataType: 'json',
+    //   success: (msg) => {
+    //     wx.hideLoading();
+    //     if (msg.data.code == 1){
+    //       this.getbalance();
+    //       this.updateShopcar(kind);
+    //       wx.showToast({
+    //         title: '下单成功',
+    //         icon: 'success',
+    //         duration: 1000
+    //       });          
+    //     }else{
+    //       this.errorTime(kind);
+    //       Util.errorHandle(urlList.placeOrder, msg.data.code);
+    //     }       
+    //   },
+    //   fail: function(res) {
+    //     wx.hideLoading();
+    //   }
+    // })
+    Util.request(urlList.placeOrder, data, 'POST', '正在下单', (msg) => {
+      this.getbalance();
+      this.updateShopcar(kind);
+      wx.showToast({
+        title: '下单成功',
+        icon: 'success',
+        duration: 1000
+      });
+    }, (msg) => {
+      let message = msg.data.msg ? msg.data.msg : '下单异常' //提示信息
+      Util.openAlert('下单失败', message);
+      Util.errorHandle(urlList.placeOrder, msg.data.code);//异常打印
     })
   },
   //下单后更新全局shopcar数据
@@ -196,21 +209,34 @@ Page({
       cancelText: "取消",
       success: (res) => {
         if (res.confirm) {          
-          wx.request({
-            url: urlList.finish,
-            data: data,
-            header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
-            method: 'POST',
-            dataType: 'json',
-            success: (msg) => {
-              if (msg.data.code == 1) {
-                this.refreshShopcar(e.currentTarget.dataset.ordertype);   
-                this.gotoMsg(data.finish_type);
-              } else {
-                Util.errorHandle(urlList.finish, msg.data.code);
-              }
-            }
-          })
+          // wx.request({
+          //   url: urlList.finish,
+          //   data: data,
+          //   header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
+          //   method: 'POST',
+          //   dataType: 'json',
+          //   success: (msg) => {
+          //     if (msg.data.code == 1) {
+          //       this.refreshShopcar(e.currentTarget.dataset.ordertype);   
+          //       this.gotoMsg(data.finish_type);
+          //     } else {
+          //       Util.errorHandle(urlList.finish, msg.data.code);
+          //     }
+          //   }
+          // })
+          Util.request(urlList.finish, data, 'POST', '正在加载数据', (msg) => {
+              this.refreshShopcar(e.currentTarget.dataset.ordertype);
+              this.gotoMsg(data.finish_type);
+          },(msg)=> {
+              Util.errorHandle(urlList.finish, msg.data.code);//异常打印
+              let message = msg.data.msg ? msg.data.msg : '接口异常' //提示信息
+              wx.showToast({//异常提示toast
+                title: message,
+                duration: 3000,
+                image: '../../images/shopcar/fail.png',
+                mask: true
+              });
+          })            
         }else{
           return false;
         }
@@ -260,16 +286,16 @@ Page({
     });
   },
 
-  //下单时间异常提示
-  errorTime:function(kind){
-    if(kind == 0){
-      Util.openAlert('下单失败','早餐下单时间为19点~22点');
-    } else if (kind == 1){
-      Util.openAlert('下单失败', '午餐下单时间为今天10点前');
-    }else{
-      Util.openAlert('下单失败', '晚餐下单时间为今天16点前');
-    }
-  },
+  // //下单时间异常提示
+  // errorTime:function(kind){
+  //   if(kind == 0){
+  //     Util.openAlert('下单失败','早餐下单时间为18点~22点');
+  //   } else if (kind == 1){
+  //     Util.openAlert('下单失败', '午餐下单时间为今天10点前');
+  //   }else{
+  //     Util.openAlert('下单失败', '晚餐下单时间为今天16点前');
+  //   }
+  // },
 
   gotoMsg:function(type){
     wx.navigateTo({

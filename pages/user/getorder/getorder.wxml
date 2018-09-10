@@ -9,7 +9,7 @@
               </picker> 
             </view>
             <view class="number">
-              <view class='numberlabel'>订餐: {{totalsize}}</view>
+              <view class='numberlabel'>定餐: {{totalsize}}</view>
             </view>
             <view class="type">
               <view class='foodlabel'>餐类:</view>

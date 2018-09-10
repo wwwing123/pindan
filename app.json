@@ -37,7 +37,8 @@
         "pagePath": "pages/classify/classify",
         "iconPath": "images/tabBar/classify.png",
         "selectedIconPath": "images/tabBar/classifySelect.png",
-        "text": "分类"
+        "text": "分类",
+        "active": true
       },
       {
         "pagePath": "pages/shopcar/shopcar",

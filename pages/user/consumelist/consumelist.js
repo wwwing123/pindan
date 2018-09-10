@@ -14,7 +14,10 @@ Page({
     currentName: '',//当前公司名称
     size:10,
     page:1,
-    list: []
+    list: [],
+    userid:null,
+    year:'',
+    month:''
   },
 
   /**
@@ -22,6 +25,7 @@ Page({
    */
   onLoad: function (options) {
     this.getHeight();
+    this.dateInit();
     this.setData({
       authority: options.authority,
       level: options.level
@@ -44,6 +48,16 @@ Page({
       }
     })
   },
+
+  dateInit: function () {
+    const nowDate = new Date();
+    const month = (nowDate.getMonth() + 1) < 10 ? '0' + (nowDate.getMonth() + 1) : '' + (nowDate.getMonth() + 1);
+    this.setData({
+      year: nowDate.getFullYear(),
+      month
+    })
+  },
+
   getCompany: function () {
     wx.request({
       url: urlList.getAdminCompany,
@@ -97,7 +111,6 @@ Page({
         } else {
           Util.errorHandle(urlList.getStaffComsume, msg.data.code);
         }
-        wx.hideLoading();
       }
     })
   },
@@ -118,4 +131,35 @@ Page({
     });
     this.getStaffList();
   },
+
+  gotoConsumeTotal: function () {
+    this.openLoading();
+    wx.request({
+      url: `${urlList.getUserBill}?userid=${this.data.userid}&year=${this.data.year}&month=${this.data.month}`,
+      header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
+      method: 'GET',
+      success: (msg) => {
+        wx.hideLoading();
+        if (msg.data.code == 1) {
+          const data = msg.data.data
+          wx.navigateTo({
+            url: `/pages/user/consumetotal/consumetotal?userid=${data.userid}&name=${data.name}&title=个人月消费累计额`
+          })
+        }else{
+          wx.showToast({//异常提示toast
+            title: '该用户不存在',
+            duration: 2000,
+            image: '../../../images/shopcar/fail.png',
+            mask: true
+          });
+        }
+      }
+    })
+  },
+
+  getUserId:function(e){
+    this.setData({
+      userid:e.detail.value
+    })
+  }
 })

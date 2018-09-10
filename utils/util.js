@@ -102,7 +102,7 @@ const errorHandle = (url,code,callback) => {
   if (code == '1003' || code == '1004'){
     getSessionKey();
     callback && callback();
-  } else if (code == '2' || code == '4' || code == '1008' || code == '1010', code == '3001'){
+  } else if (code == '1008' || code == '1010', code == '3001'){
     openAlert('提示',errorCode[code]);
   }else{
     console.log(`${url}接口错误码:${code},\n${errorCode[code]}`);
@@ -153,6 +153,46 @@ const checkInformation = () =>{
   }
 }
 
+const request = function(url, params, method, message, success, fail) {
+  wx.showNavigationBarLoading();
+  if (message != "") {
+    wx.showLoading({
+      title: message,
+    })
+  }
+  wx.request({
+    url: url,
+    data: params,
+    header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
+    method: method,
+    success: function (msg) {
+      wx.hideNavigationBarLoading();
+      wx.hideLoading();
+      if (msg.data.code == 1) {
+        success(msg);
+      } else {
+        fail(msg);
+      }
+    },
+
+    fail: function (error) {
+      wx.hideNavigationBarLoading();
+      wx.hideLoading();
+      console.log(error);
+      wx.showToast({
+        title: '网络错误',
+        duration: 3000,
+        image:'../../images/shopcar/fail.png',
+        mask: true
+      });
+    },
+
+    complete: function (res) {
+
+    },
+  })
+}
+
 
 module.exports = {
   formatTime,
@@ -163,4 +203,5 @@ module.exports = {
   errorCode,
   errorHandle,
   checkInformation,
+  request
 }

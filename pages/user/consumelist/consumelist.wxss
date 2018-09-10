@@ -1,6 +1,6 @@
 .container {
   height: 100%;
-  padding-top:84rpx; 
+  padding-top:123rpx; 
 }
 
 .page__bd {
@@ -12,7 +12,6 @@
   top:0;
   left:0; 
   background:#fff;
-  height:84rpx;
   z-index:2;
 }
 
@@ -24,10 +23,26 @@
   font-size:12pt;
 }
 
-.weui-cell .weui-label{
-  width:40px;
-  text-align:center;
+.page__bd .consumeId{
+  width:60%;
+  display:flex;
   font-size:12pt;
+}
+
+.consumeId .weui-cell__bd{
+  display:flex;
+  align-items:center;
+}
+
+.consumeId .weui-input{ 
+  flex:1;
+}
+
+.consumeId .weui-btn{
+  margin:0;
+  width:160rpx;
+  background:#0096FF;
+  color:#fff;
 }
 
 .content{
@@ -72,6 +87,16 @@
   text-align:center;
   font-size:11pt;
 }
+
+.box .userid{
+  display:inline-block;
+  font-size:9pt;
+  color:#fff;
+  vertical-align:text-bottom;
+  line-height:36rpx;
+}
+
+
 
 
 

@@ -40,7 +40,11 @@ App({
               if (msg.data.code == 1) {
                 wx.setStorageSync('session_key', msg.data.data.et);
                 wx.setStorageSync('userid', msg.data.data.userid);
-                this.getGoodlist();
+                wx.showLoading({
+                  title: '正在获取信息…',
+                  icon: 'loading',
+                  mask: false
+                });
                 this.getUserinfo();
               } else {
                 this.globalData.Util.errorHandle(this.globalData.urlList.login, msg.data.code);
@@ -54,110 +58,129 @@ App({
     });
   },
 
-  getGoodlist:function(){
-    let goodPromise = new Promise((resolve, reject) => {
-      wx.request({
-        url: this.globalData.urlList.goods,
-        method: 'get',
-        success: (msg) => {
-          if (msg.data.code == 1) {
-            //写入所有商品数组
-            let allFoodList = this.globalData.allFoodList;
-            const goods = msg.data.data;
-            for (let i in goods) {
-              allFoodList = allFoodList.concat(goods[i].goodslist);
-            }
-            this.globalData.allFoodList = allFoodList;
-            resolve();
-          } else {
-            this.globalData.Util.errorHandle(this.globalData.urlList.goods, msg.data.code);
-          };
-        }
-      });
-    })
-    goodPromise.then(() => {
-      this.getShopcarData();
-    }); 
-  },
+  // getGoodlist:function(){
+  //   let goodPromise = new Promise((resolve, reject) => {
+  //     wx.request({
+  //       url: this.globalData.urlList.goodsOld,
+  //       method: 'get',
+  //       success: (msg) => {
+  //         if (msg.data.code == 1) {
+  //           //写入所有商品数组
+  //           let allFoodList = this.globalData.allFoodList;
+  //           const goods = msg.data.data;
+  //           for (let i in goods) {
+  //             allFoodList = allFoodList.concat(goods[i].goodslist);
+  //           }
+  //           this.globalData.allFoodList = allFoodList;
+  //           resolve();
+  //         } else {
+  //           this.globalData.Util.errorHandle(this.globalData.urlList.goodsNew, msg.data.code);
+  //         };
+  //       }
+  //     });
+  //   })
+  //   goodPromise.then(() => {
+  //     this.getShopcarData();
+  //   }); 
+  // },
 
   getShopcarData:function(){
     const typename = ["breakfast", "lunch", "dinner"];
-    for (let i in typename) {
-      //获取商品信息
-      wx.request({
-        url: `${this.globalData.urlList.goods}?type=${typename[i]}`,
-        method: 'get',
-        success: (msg) => {
-          if (msg.data.code == 1) {
-            if (typename[i] == 'breakfast') {
-              this.globalData.breakfastGoods = msg.data.data
-            } else if (typename[i] == 'lunch') {
-              this.globalData.lunchGoods = msg.data.data
+    //获取商品信息
+    if (this.globalData.userInformation.companyid != -1) {
+      for (let i in typename) {     
+        wx.request({
+          url: `${this.globalData.urlList.goodsNew}?type=${typename[i]}&companyid=${this.globalData.userInformation.companyid}`,
+          header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
+          method: 'get',
+          success: (msg) => {
+            if (msg.data.code == 1) {
+              //写入所有商品数组
+              let allFoodList = this.globalData.allFoodList;
+              const goods = msg.data.data;
+              for (let i in goods) {
+                allFoodList = allFoodList.concat(goods[i].goodslist);
+              }
+              this.globalData.allFoodList = allFoodList;
+              if (typename[i] == 'breakfast') {
+                this.globalData.breakfastGoods = msg.data.data
+              } else if (typename[i] == 'lunch') {
+                this.globalData.lunchGoods = msg.data.data
+              } else {
+                this.globalData.dinnerGoods = msg.data.data
+              }
             } else {
-              this.globalData.dinnerGoods = msg.data.data
+              this.globalData.Util.errorHandle(this.globalData.urlList.goodsNew, msg.data.code);
             }
-          }else{
-            this.globalData.Util.errorHandle(this.globalData.urlList.goods, msg.data.code);
           }
-        }
-      });
-      //获取未完成订单信息（购物车信息）
-      wx.request({
-        url: `${this.globalData.urlList.getUnfinishedOrder}?type=${typename[i]}`,
-        header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
-        method: 'GET',
-        success: (msg) => {
-          if (msg.data.code == 1) {
-            let shopcar = this.globalData.shopcar[i];
-            let shopcarlist = JSON.parse(msg.data.data.illustration),
-                count = shopcarlist.reduce((total,item)=>{
+        });
+        //获取未完成订单信息（购物车信息）
+        wx.request({
+          url: `${this.globalData.urlList.getUnfinishedOrder}?type=${typename[i]}`,
+          header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
+          method: 'GET',
+          success: (msg) => {
+            if (msg.data.code == 1) {
+              let shopcar = this.globalData.shopcar[i];
+              let shopcarlist = JSON.parse(msg.data.data.illustration),
+                count = shopcarlist.reduce((total, item) => {
                   return total + item.count
-                },0);
-            shopcar.time = this.globalData.Util.formatTime(new Date(msg.data.data.created_at*1000));
+                }, 0);
+              shopcar.time = this.globalData.Util.formatTime(new Date(msg.data.data.created_at * 1000));
               shopcar.orderNum = msg.data.data.order_number;
               shopcar.list = shopcarlist;
               shopcar.total = msg.data.data.balance_change;
               shopcar.status = msg.data.data.order_status;
               shopcar.id = msg.data.data.id;
-              shopcar.count = count;             
+              shopcar.count = count;
               this.globalData.shopcar[i] = shopcar
-          }else{
-            this.globalData.Util.errorHandle(this.globalData.urlList.getUnfinishedOrder, msg.data.code);
+            } else {
+              this.globalData.Util.errorHandle(this.globalData.urlList.getUnfinishedOrder, msg.data.code);
+            }
           }
-        }
-      })
+        })
+      }          
     }
   },
 
   getUserinfo: function () {
-    wx.request({
-      url: this.globalData.urlList.getuserinfo,
-      header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
-      method: 'GET',
-      success: (msg) => {
-        if (msg.data.code == 1) {
-          const data = msg.data.data;
-          let userInformation = {
-            name: data.name,
-            idcard: data.idcard,
-            company: data.company,
-            address: data.address,
-            phone: data.phone,
-            balance: data.balance,
-            companyid: data.companyid,
-            authority: data.authority,
-            userid: data.id,
-            level: data.level,
-            admin: data.level != 3 ? true : false
+    let getUserPromise = new Promise((resolve, reject) => {
+      wx.request({
+        url: this.globalData.urlList.getuserinfo,
+        header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
+        method: 'GET',
+        success: (msg) => {
+          if (msg.data.code == 1) {
+            const data = msg.data.data;
+            let userInformation = {
+              name: data.name,
+              idcard: data.idcard,
+              company: data.company,
+              address: data.address,
+              phone: data.phone,
+              balance: data.balance,
+              companyid: data.companyid,
+              authority: data.authority,
+              userid: data.id,
+              level: data.level,
+              admin: data.level != 3 ? true : false
+            }
+            this.globalData.userInformation = userInformation;
+            if (userInformation.idcard && userInformation.company) {
+              this.globalData.getuserInfo = true;//是否完善个人信息
+            }
+            wx.setStorageSync('userInformation', this.globalData.userInformation);
+            resolve();
+          } else {
+            this.globalData.Util.errorHandle(this.globalData.urlList.getuserinfo, msg.data.code);
           }
-          this.globalData.userInformation = userInformation;
-          this.globalData.getuserInfo = true;
-          wx.setStorageSync('userInformation', this.globalData.userInformation);
-        } else {
-          this.globalData.Util.errorHandle(this.globalData.urlList.getuserinfo, msg.data.code);
         }
-      }
-    });
+      });
+    })
+    getUserPromise.then(() => {
+      wx.hideLoading();
+      this.getShopcarData();
+    });     
   },
   
 
@@ -173,7 +196,7 @@ App({
     //所有商品原始数据整合到一个数组，方便根据id获取到商品的内容
     allFoodList: [],
     userInformation:{},//用户个人信息
-    getuserInfo:false,//是否获取到用户信息
+    getuserInfo:false,//是否获取到用户信息,且完善了个人信息
     balance:'',
     //购物车的数据，list存放id，数量
     //count总数，total总价格

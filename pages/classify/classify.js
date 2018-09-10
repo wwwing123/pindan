@@ -8,7 +8,7 @@ Page({
     "activeIndex": 0,
     "sliderOffset": 0,
     "sliderLeft": 0,
-    
+    "companyid":-1,
     "breakfastGoods": [],
     "lunchGoods": [],
     "dinnerGoods": [],
@@ -24,13 +24,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
     this.setData({
       breakfastGoods: app.globalData.breakfastGoods,
       lunchGoods: app.globalData.lunchGoods,
       dinnerGoods: app.globalData.dinnerGoods,
-      allFoodList: app.globalData.allFoodList
-    })
+      allFoodList: app.globalData.allFoodList,
+      companyid: app.globalData.userInformation.companyid
+    });
   },
 
   /**
@@ -45,19 +45,20 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.getGoodlist();//更新菜单接口数据
+    this.setData({
+      breakfastGoods: app.globalData.breakfastGoods,
+      lunchGoods: app.globalData.lunchGoods,
+      dinnerGoods: app.globalData.dinnerGoods,
+      allFoodList: app.globalData.allFoodList,
+      companyid: app.globalData.userInformation.companyid
+    })//更新最新菜单接口数据
+    this.getShopcarData();//更新菜单接口数据
     this.setData({
       shopcar: app.globalData.shopcar,//更新总件数
     });
     this.setData({
       count: this.getAllCountPrice('count'),//更新总件数
       total: this.getAllCountPrice('total').toFixed(2)//更新总价
-    });
-    this.tabClick({
-      currentTarget:{
-        id:0,
-        offsetLeft:0
-      }
     });
   },
 
@@ -92,7 +93,7 @@ Page({
     if (shopcar[kind].status != 3) {
       return false;
     }
-    if (this.data.shopcar[kind].count>=10){
+    if (this.data.shopcar[kind].count>=30){
       this.overCount(kind);
       return false;
     }
@@ -178,7 +179,7 @@ Page({
   },
   overCount: function (kind) {
     wx.showModal({
-      content: this.data.tabs[kind] + '订单最多只能添加10份菜式',
+      content: this.data.tabs[kind] + '订单最多只能添加30份菜式',
       showCancel: false,
       success: function (res) {
         if (res.confirm) {
@@ -207,7 +208,7 @@ Page({
     const item = data.find((x) => {
       return x.id == this.data.classifySeleted
     })
-    let activeIdIndex = item ? item.id : data[0].id;
+    let activeIdIndex = item ? item.id : data.length != 0 ? data[0].id : -1;
     
     if (e.currentTarget.id == 0){
       good = this.data.breakfastGoods.filter((item) => {
@@ -230,7 +231,7 @@ Page({
     //   activeIdIndex = good.length-1
     // }
     this.setData({
-      classifySeleted: nowitem ? nowitem.id : good[0].id,
+      classifySeleted: nowitem ? nowitem.id : good.length != 0 ? good[0].id : -1,
       sliderOffset: e.currentTarget.offsetLeft,
       activeIndex: e.currentTarget.id
     });
@@ -245,65 +246,74 @@ Page({
     return total;
   },
 
-  getGoodlist: function () {
-    let goodPromise = new Promise((resolve, reject) => {
-      wx.request({
-        url: urlList.goods,
-        method: 'get',
-        success: (msg) => {
-          if (msg.data.code == 1) {
-            //写入所有商品数组
-            let allFoodList = [];
-            const goods = msg.data.data;
-            for (let i in goods) {
-              allFoodList = allFoodList.concat(goods[i].goodslist);
-            }
-            app.globalData.allFoodList = allFoodList;
-            this.setData({
-              allFoodList
-            })
-            resolve();
-          } else {
-            Util.errorHandle(urlList.goods, msg.data.code);
-          };
-        }
-      });
-    })
-    goodPromise.then(() => {
-      this.getShopcarData();
-    });
-  },
-
   getShopcarData: function () {
     const typename = ["breakfast", "lunch", "dinner"];
-    for (let i in typename) {
-      //获取商品信息
-      wx.request({
-        url: `${urlList.goods}?type=${typename[i]}`,
-        method: 'get',
-        success: (msg) => {
-          if (msg.data.code == 1) {
-            if (typename[i] == 'breakfast') {
-              app.globalData.breakfastGoods = msg.data.data
-              this.setData({
-                breakfastGoods: msg.data.data
-              })
-            } else if (typename[i] == 'lunch') {
-              app.globalData.lunchGoods = msg.data.data
-              this.setData({
-                lunchGoods: msg.data.data
-              })
-            } else {
-              app.globalData.dinnerGoods = msg.data.data
-              this.setData({
-                dinnerGoods: msg.data.data
-              })
+    let getBreakfast, getLunch, getDinner
+    if (app.globalData.userInformation.companyid != -1 && app.globalData.userInformation.companyid) {
+      for (let i in typename) {
+        //获取商品信息
+        let promise = new Promise((resolve, reject) => {
+          wx.request({
+            url: `${urlList.goodsNew}?type=${typename[i]}&companyid=${app.globalData.userInformation.companyid}`,
+            header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
+            method: 'get',
+            success: (msg) => {
+              if (msg.data.code == 1) {
+                //写入所有商品数组
+                let allFoodList = app.globalData.allFoodList;
+                const goods = msg.data.data;
+                for (let i in goods) {
+                  allFoodList = allFoodList.concat(goods[i].goodslist);
+                }
+                app.globalData.allFoodList = allFoodList;
+                this.setData({
+                  allFoodList: app.globalData.allFoodList
+                })
+                if (typename[i] == 'breakfast') {
+                  app.globalData.breakfastGoods = msg.data.data
+                  this.setData({
+                    breakfastGoods: msg.data.data
+                  })
+                } else if (typename[i] == 'lunch') {
+                  app.globalData.lunchGoods = msg.data.data
+                  this.setData({
+                    lunchGoods: msg.data.data
+                  })
+                } else {
+                  app.globalData.dinnerGoods = msg.data.data
+                  this.setData({
+                    dinnerGoods: msg.data.data
+                  })
+                }
+              } else {
+                Util.errorHandle(urlList.goodsNew, msg.data.code);
+              }
+              resolve();
             }
-          } else {
-            Util.errorHandle(urlList.goods, msg.data.code);
-          }
+          });
+        })
+        switch (typename[i]) {
+          case 'breakfast':
+            getBreakfast = promise;
+            break;
+          case 'lunch':
+            getLunch = promise;
+            break;
+          case 'dinner':
+            getDinner = promise;
+            break;
         }
-      });
+      }
+      Promise.all([getBreakfast, getLunch, getDinner]).then((result) => {
+        this.tabClick({
+          currentTarget: {
+            id: this.data.activeIndex || 0,
+            offsetLeft: this.data.sliderOffset || 0
+          }
+        });
+      }).catch((error) => {
+        console.log(error)
+      })
     }
   }
 })

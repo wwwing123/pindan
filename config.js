@@ -4,7 +4,8 @@ const urlList = {
   login: `${baseUrl}/api/register/wx/`,//登录
   indexImg:`${baseUrl}/api/get/ad/`,//首页大图
   indexNotice: `${baseUrl}/api/get/notice/`,//首页公告
-  goods: `${baseUrl}/api/get/goodslist/`,//商品信息
+  goodsOld: `${baseUrl}/api/get/goodslist/`,//商品信息
+  goodsNew: `${baseUrl}/api/get/relationship_goodslist/`,//新版商品信息（拼上公司字段）
   getUnfinishedOrder: `${baseUrl}/api/user/get_curr_order/`,//个人未完成订单
   placeOrder: `${baseUrl}/api/user/place_order/`,//下单接口
   finish:`${baseUrl }/api/user/finish_order/`,//取餐或放弃接口

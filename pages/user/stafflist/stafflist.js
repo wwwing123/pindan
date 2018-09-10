@@ -14,7 +14,8 @@ Page({
     currentName: '',//当前公司名称
     size:10,
     page:1,
-    list: []
+    list: [],
+    userid: null,
   },
 
   /**
@@ -118,4 +119,35 @@ Page({
     });
     this.getStaffList();
   },
+
+  gotoStaffOrder: function () {
+    this.openLoading();
+    wx.request({
+      url: `${urlList.getPersonOrder}?userid=${this.data.userid}`,
+      header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
+      method: 'GET',
+      success: (msg) => {
+        wx.hideLoading();
+        if (msg.data.code == 1) {
+          const data = msg.data.data
+          wx.navigateTo({
+            url: `/pages/user/stafforder/stafforder?staffId=${data.userid}&title=${data.name}订单记录`
+          })
+        } else {
+          wx.showToast({//异常提示toast
+            title: '该用户不存在',
+            duration: 2000,
+            image: '../../../images/shopcar/fail.png',
+            mask: true
+          });
+        }
+      }
+    })
+  },
+
+  getUserId: function (e) {
+    this.setData({
+      userid: e.detail.value
+    })
+  }
 })

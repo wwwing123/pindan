@@ -11,11 +11,12 @@
           </view>
           <view class="weui-tab__panel">
               <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
-                <view  class="nodata" hidden="{{shopcar[0].status!=2}}">   
+                <view  class="nodata" hidden="{{companyid != -1 && shopcar[0].status != 2}}">   
                   <view class="iconfont icon-nodata"></view>
-                  <view class="tip">请先结算本次订单后再进行下单</view>
+                  <view class="tip" wx:if="{{companyid != -1}}">请先结算本次订单后再进行下单</view>
+                  <view class="tip" wx:else>请先完善个人信息后再进行下单</view> 
                 </view>
-                <view class="main" hidden="{{shopcar[0].status==2}}">
+                <view class="main" hidden="{{shopcar[0].status==2 || companyid == -1}}">
                   <scroll-view class="classifySelect" scroll-y="true">
                     <view class="classifyItem {{classifySeleted==classify.id ? 'active' : ''}}" wx:for="{{breakfastGoods}}" wx:for-item="classify" wx:key="id" data-id="{{classify.id}}" bindtap="tapClassify" wx:if="{{classify.goodslist.length>0}}">
                       {{classify.name}}
@@ -48,11 +49,12 @@
                 </view>
               </view>
               <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
-                <view  class="nodata" hidden="{{shopcar[1].status!=2}}">   
+                <view  class="nodata" hidden="{{shopcar[1].status!=2 && companyid != -1}}">   
                   <view class="iconfont icon-nodata"></view>
-                  <view class="tip">请先结算本次订单后再进行下单</view>
+                  <view class="tip" wx:if="{{companyid != -1}}">请先结算本次订单后再进行下单</view>
+                  <view class="tip" wx:else>请先完善个人信息后再进行下单</view>
                 </view>
-                <view class="main" hidden="{{shopcar[1].status==2}}">
+                <view class="main" hidden="{{shopcar[1].status==2 || companyid == -1}}">
                   <scroll-view class="classifySelect" scroll-y>
                     <view class="classifyItem {{classifySeleted==classify.id ? 'active' : ''}}" wx:for="{{lunchGoods}}" wx:for-item="classify" wx:key="id" data-id="{{classify.id}}" bindtap="tapClassify" wx:if="{{classify.goodslist.length>0}}">
                       {{classify.name}}
@@ -85,11 +87,12 @@
                 </view>
               </view>
               <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
-                <view  class="nodata" hidden="{{shopcar[2].status!=2}}">   
+                <view  class="nodata" hidden="{{shopcar[2].status!=2 && companyid != -1}}">   
                   <view class="iconfont icon-nodata"></view>
-                  <view class="tip">请先结算本次订单后再进行下单</view>
+                  <view class="tip" wx:if="{{companyid != -1}}">请先结算本次订单后再进行下单</view>
+                  <view class="tip" wx:else>请先完善个人信息后再进行下单</view>
                 </view>
-                <view class="main" hidden="{{shopcar[2].status==2}}">
+                <view class="main" hidden="{{shopcar[2].status==2 || companyid == -1}}">
                   <scroll-view class="classifySelect" scroll-y="true">
                     <view class="classifyItem {{classifySeleted==classify.id ? 'active' : ''}}" wx:for="{{dinnerGoods}}" wx:for-item="classify" wx:key="id" data-id="{{classify.id}}" bindtap="tapClassify" wx:if="{{classify.goodslist.length>0}}">
                       {{classify.name}}
