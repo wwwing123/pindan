@@ -1,5 +1,6 @@
 const urlList = require("../../../config.js");
 const Util = require("../../../utils/util.js");
+import Toast from '../../../vantComponents/toast/toast';
 Page({
 
   /**

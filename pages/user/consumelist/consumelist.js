@@ -1,5 +1,6 @@
 const urlList = require("../../../config.js");
 const Util = require("../../../utils/util.js");
+import Toast from '../../../vantComponents/toast/toast';
 Page({
 
   /**
@@ -146,12 +147,13 @@ Page({
             url: `/pages/user/consumetotal/consumetotal?userid=${data.userid}&name=${data.name}&title=个人月消费累计额`
           })
         }else{
-          wx.showToast({//异常提示toast
-            title: '该用户不存在',
-            duration: 2000,
-            image: '../../../images/shopcar/fail.png',
-            mask: true
-          });
+          // wx.showToast({//异常提示toast
+          //   title: '该用户不存在',
+          //   duration: 2000,
+          //   image: '../../../images/shopcar/fail.png',
+          //   mask: true
+          // });
+          Toast.fail('我是提示文案，建议不超过十五字~我是提示文案，建议不超过十五字~');
         }
       }
     })

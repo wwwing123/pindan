@@ -1,4 +1,5 @@
 <view class="container">
+  <van-toast id="van-toast" />
   <view class="select page__bd">
     <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell">
