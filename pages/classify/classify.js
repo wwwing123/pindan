@@ -4,7 +4,7 @@ const urlList = require("../../config.js");
 const app = getApp();
 Page({
   data: {
-    "tabs": ["早餐", "午餐", "晚餐"],
+    "tabs": ["早餐", "午餐", "晚餐", "定制"],
     "activeIndex": 0,
     "sliderOffset": 0,
     "sliderLeft": 0,
@@ -12,6 +12,7 @@ Page({
     "breakfastGoods": [],
     "lunchGoods": [],
     "dinnerGoods": [],
+    "customGoods": [],
     "allFoodList": app.globalData.allFoodList,
     "shopcar": app.globalData.shopcar,
     "count": 0,//购物车总件数
@@ -28,6 +29,7 @@ Page({
       breakfastGoods: app.globalData.breakfastGoods,
       lunchGoods: app.globalData.lunchGoods,
       dinnerGoods: app.globalData.dinnerGoods,
+      customGoods: app.globalData.customGoods,
       allFoodList: app.globalData.allFoodList,
       companyid: app.globalData.userInformation.companyid
     });
@@ -49,6 +51,7 @@ Page({
       breakfastGoods: app.globalData.breakfastGoods,
       lunchGoods: app.globalData.lunchGoods,
       dinnerGoods: app.globalData.dinnerGoods,
+      customGoods: app.globalData.customGoods,
       allFoodList: app.globalData.allFoodList,
       companyid: app.globalData.userInformation.companyid
     })//更新最新菜单接口数据
@@ -189,47 +192,23 @@ Page({
     });
   },
   tabClick: function (e) {
+    const typename = ["breakfastGoods", "lunchGoods", "dinnerGoods","customGoods"]
     this.Modal && this.Modal.hideModal();//隐藏商品详情
     //当点击tab时，默认选中第一个分类处理
     let good,data;
-    if (this.data.activeIndex == 0){
-      data = this.data.breakfastGoods.filter((item) => {
+    data = this.data[typename[this.data.activeIndex]].filter((item) => {
         return item.goodslist.length>0
-      })  
-    } else if (this.data.activeIndex == 1){
-      data = this.data.lunchGoods.filter((item) => {
-        return item.goodslist.length > 0
-      })
-    }else{
-      data = this.data.dinnerGoods.filter((item) => {
-        return item.goodslist.length > 0
-      })
-    }
+    })
     const item = data.find((x) => {
       return x.id == this.data.classifySeleted
     })
     let activeIdIndex = item ? item.id : data.length != 0 ? data[0].id : -1;
-    
-    if (e.currentTarget.id == 0){
-      good = this.data.breakfastGoods.filter((item) => {
-        return item.goodslist.length > 0
-      })     
-    } else if (e.currentTarget.id == 1){
-      good = this.data.lunchGoods.filter((item) => {
-        return item.goodslist.length > 0
-      })
-    }else{
-      good = this.data.dinnerGoods.filter((item) => {
-        return item.goodslist.length > 0
-      })
-    }
-
+    good = this.data[typename[e.currentTarget.id]].filter((item) => {
+      return item.goodslist.length > 0
+    })
     let nowitem = good.find((x) => {
       return x.id == activeIdIndex
     })
-    // if (parseInt(activeIdIndex) + 1 > good.length){
-    //   activeIdIndex = good.length-1
-    // }
     this.setData({
       classifySeleted: nowitem ? nowitem.id : good.length != 0 ? good[0].id : -1,
       sliderOffset: e.currentTarget.offsetLeft,
@@ -247,7 +226,7 @@ Page({
   },
 
   getShopcarData: function () {
-    const typename = ["breakfast", "lunch", "dinner"];
+    const typename = ["breakfast", "lunch", "dinner","custom"];
     let getBreakfast, getLunch, getDinner
     if (app.globalData.userInformation.companyid != -1 && app.globalData.userInformation.companyid) {
       for (let i in typename) {
@@ -279,10 +258,15 @@ Page({
                   this.setData({
                     lunchGoods: msg.data.data
                   })
-                } else {
+                } else if (typename[i] == 'dinner'){
                   app.globalData.dinnerGoods = msg.data.data
                   this.setData({
                     dinnerGoods: msg.data.data
+                  })
+                } else{
+                  app.globalData.customGoods = msg.data.data
+                  this.setData({
+                    customGoods: msg.data.data
                   })
                 }
               } else {

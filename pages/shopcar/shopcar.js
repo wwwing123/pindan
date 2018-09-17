@@ -86,6 +86,9 @@ Page({
       case "dinner":
         kind = 2;
         break;
+      case "custom":
+        kind = 3;
+        break;
     };
     //检查餐券是否足够支付
     if (!this.checkBalance(this.data.shopcar[kind].total)) {
@@ -103,32 +106,7 @@ Page({
     wx.showLoading({
       title: '正在下单',
       icon: 'loading'
-    });
-    // wx.request({
-    //   url: urlList.placeOrder,
-    //   data: data,
-    //   header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key')},
-    //   method: 'POST',
-    //   dataType: 'json',
-    //   success: (msg) => {
-    //     wx.hideLoading();
-    //     if (msg.data.code == 1){
-    //       this.getbalance();
-    //       this.updateShopcar(kind);
-    //       wx.showToast({
-    //         title: '下单成功',
-    //         icon: 'success',
-    //         duration: 1000
-    //       });          
-    //     }else{
-    //       this.errorTime(kind);
-    //       Util.errorHandle(urlList.placeOrder, msg.data.code);
-    //     }       
-    //   },
-    //   fail: function(res) {
-    //     wx.hideLoading();
-    //   }
-    // })
+    });  
     Util.request(urlList.placeOrder, data, 'POST', '正在下单', (msg) => {
       this.getbalance();
       this.updateShopcar(kind);
@@ -137,6 +115,13 @@ Page({
         icon: 'success',
         duration: 1000
       });
+      if(kind == 3){
+        wx.showModal({
+          title: '提示',
+          content: '定制订单下单成功后且退出程序后不会在购物车上显示，如需查看请到定制变动记录查找',
+          showCancel: false
+        });
+      }
     }, (msg) => {
       let message = msg.data.msg ? msg.data.msg : '下单异常' //提示信息
       Util.openAlert('下单失败', message);
@@ -145,41 +130,57 @@ Page({
   },
   //下单后更新全局shopcar数据
   updateShopcar: function (kind) {
-    const typename = ["breakfast", "lunch", "dinner"];
-    wx.request({
-      url: `${urlList.getUnfinishedOrder}?type=${typename[kind]}`,
-      header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
-      method: 'GET',
-      success: (msg) => {
-        if (msg.data.code == 1) {
-          let shopcar = app.globalData.shopcar[kind];
-          let shopcarlist = JSON.parse(msg.data.data.illustration),
-            count = shopcarlist.reduce((total, item) => {
-              return total + item.count
-            }, 0);
-          shopcar.time = Util.formatTime(new Date(msg.data.data.created_at * 1000));
-          shopcar.orderNum = msg.data.data.order_number;
-          shopcar.list = shopcarlist;
-          shopcar.total = msg.data.data.balance_change;
-          shopcar.status = msg.data.data.order_status;
-          shopcar.id = msg.data.data.id;
-          shopcar.count = count;
-          app.globalData.shopcar[kind] = shopcar
-          this.setData({
-            shopcar: app.globalData.shopcar
-          })
-          this.IntegrationData();//再次整合数据
-        }else{
-          Util.errorHandle(urlList.getUnfinishedOrder, msg.data.code);
+    const typename = ["breakfast", "lunch", "dinner","custom"];
+    if (typename[kind] != 'custom'){//定制的单分开处理
+      wx.request({
+        url: `${urlList.getUnfinishedOrder}?type=${typename[kind]}`,
+        header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
+        method: 'GET',
+        success: (msg) => {
+          if (msg.data.code == 1) {
+            let shopcar = app.globalData.shopcar[kind];
+            let shopcarlist = JSON.parse(msg.data.data.illustration),
+              count = shopcarlist.reduce((total, item) => {
+                return total + item.count
+              }, 0);
+            shopcar.time = Util.formatTime(new Date(msg.data.data.created_at * 1000));
+            shopcar.orderNum = msg.data.data.order_number;
+            shopcar.list = shopcarlist;
+            shopcar.total = msg.data.data.balance_change;
+            shopcar.status = msg.data.data.order_status;
+            shopcar.id = msg.data.data.id;
+            shopcar.count = count;
+            app.globalData.shopcar[kind] = shopcar
+            this.setData({
+              shopcar: app.globalData.shopcar
+            })
+            this.IntegrationData();//再次整合数据
+          } else {
+            Util.errorHandle(urlList.getUnfinishedOrder, msg.data.code);
+          }
         }
-      }
-    })
-    
+      })
+    }else{
+      //更新购物车的状态
+      let shopcar = {
+        count:this.data.shopcar[3].count,
+        orderNum:'',
+        list: this.data.shopcar[3].list,
+        total: this.data.shopcar[3].total,
+        status: 1,
+        id:'',
+        time:''
+      };
+      app.globalData.shopcar[kind] = shopcar
+      this.setData({
+        shopcar: app.globalData.shopcar
+      })
+    }   
   },
 
   //结算订单后更新购物车数据
   refreshShopcar:function(kind){
-    const typename = ["breakfast", "lunch", "dinner"];
+    const typename = ["breakfast", "lunch", "dinner","custom"];
     let resetList = {
       name: typename[kind],
       time: '',
@@ -241,9 +242,7 @@ Page({
           return false;
         }
       }
-    });
-    
-    
+    }); 
   },
 
   //获取个人餐券
@@ -358,12 +357,28 @@ Page({
   },
 
   overCount: function (kind) {
-    const tabs = ["早餐", "午餐", "晚餐"]
+    const tabs = ["早餐", "午餐", "晚餐", "定制"]
     wx.showModal({
-      content: tabs[kind] + '订单最多只能添加10份菜式',
+      content: tabs[kind] + '订单最多只能添加30份菜式',
       showCancel: false,
       success: function (res) {
         if (res.confirm) {
+          return false;
+        }
+      }
+    });
+  },
+
+  clearConfirm: function(){
+    wx.showModal({
+      title: '提示',
+      content: `清除定制订单信息后，购物车不再显示该订单信息，如需查看记录，请到定制变动记录查看`,
+      confirmText: "确定",
+      cancelText: "取消",
+      success: (res) => {
+        if (res.confirm) {
+          this.refreshShopcar(3);//重置购物车数据
+        } else {
           return false;
         }
       }

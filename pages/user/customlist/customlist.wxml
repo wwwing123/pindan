@@ -1,0 +1,45 @@
+<view class="page">
+    <view  class="nodata" wx:if="{{orderlist.length==0}}">   
+      <view class="iconfont icon-nodata"></view>
+      <view class="tip">暂无消费记录</view>
+    </view> 
+    <view class="page__bd">
+        <scroll-view class="weui-form-preview" scroll-y="true"  bindscrolltolower="loadmore" bindtouchstart="start" bindtouchend="end" style="bottom:{{loadMoreHeight}}rpx;height:{{windowHeight}}px;background:#EEEEEE;" scroll-top="{{scrollTop}}" scroll-with-animation="true" bindscroll="scrolling">
+          <view class="content" wx:for="{{orderlist}}" wx:key="ordernum" wx:for-item="orderlist">
+            <view class="weui-form-preview__hd">
+                <view class="weui-form-preview__label">消费餐券</view>
+                <view class="weui-form-preview__value_in-hd">{{orderlist.totalprice}}</view>
+            </view>
+            <view class="weui-form-preview__bd">
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">下单时间</view>
+                    <view class="weui-form-preview__value">{{orderlist.orderdate}}</view>
+                </view>
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">订单号</view>
+                    <view class="weui-form-preview__value">{{orderlist.ordernum}}</view>
+                </view>
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">订单状态</view>
+                    <view class="weui-form-preview__value">{{orderlist.status}}</view>
+                </view>
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">商品</view>
+                    <view class="weui-form-preview__value" wx:if="{{orderlist.ordertype==1 || orderlist.ordertype==0}}">{{orderlist.foods}}</view>
+                    <view class="weui-form-preview__value" wx:else>
+                      <view wx:for="{{orderlist.foods}}" wx:key="id" wx:for-item="foods">{{foods.name}} × {{foods.count}}</view>
+                    </view>                    
+                </view>
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">剩余餐券</view>
+                    <view class="weui-form-preview__value">{{orderlist.remain}}</view>
+                </view>
+            </view>
+          </view>
+        </scroll-view>
+    </view>
+    <view class="gotoTop" hidden="{{showTop}}"  bindtap="goTop">
+      <view class=".icon-up iconfont"></view>
+      顶部
+    </view>  
+</view>

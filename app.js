@@ -15,10 +15,7 @@ App({
     }
 
     //登录调用
-    this.login();
-
-    
-      
+    this.login();     
   },
 
   login:function(){
@@ -58,39 +55,19 @@ App({
     });
   },
 
-  // getGoodlist:function(){
-  //   let goodPromise = new Promise((resolve, reject) => {
-  //     wx.request({
-  //       url: this.globalData.urlList.goodsOld,
-  //       method: 'get',
-  //       success: (msg) => {
-  //         if (msg.data.code == 1) {
-  //           //写入所有商品数组
-  //           let allFoodList = this.globalData.allFoodList;
-  //           const goods = msg.data.data;
-  //           for (let i in goods) {
-  //             allFoodList = allFoodList.concat(goods[i].goodslist);
-  //           }
-  //           this.globalData.allFoodList = allFoodList;
-  //           resolve();
-  //         } else {
-  //           this.globalData.Util.errorHandle(this.globalData.urlList.goodsNew, msg.data.code);
-  //         };
-  //       }
-  //     });
-  //   })
-  //   goodPromise.then(() => {
-  //     this.getShopcarData();
-  //   }); 
-  // },
 
   getShopcarData:function(){
-    const typename = ["breakfast", "lunch", "dinner"];
+    const typename = {
+      "breakfast":{index:0,name: "breakfastGoods"},
+      "lunch": { index: 1, name: "lunchGoods" },
+      "dinner": { index: 2, name: "dinnerGoods" },
+      "custom": { index: 3, name: "customGoods" }
+    }
     //获取商品信息
     if (this.globalData.userInformation.companyid != -1) {
       for (let i in typename) {     
         wx.request({
-          url: `${this.globalData.urlList.goodsNew}?type=${typename[i]}&companyid=${this.globalData.userInformation.companyid}`,
+          url: `${this.globalData.urlList.goodsNew}?type=${i}&companyid=${this.globalData.userInformation.companyid}`,
           header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
           method: 'get',
           success: (msg) => {
@@ -102,26 +79,23 @@ App({
                 allFoodList = allFoodList.concat(goods[i].goodslist);
               }
               this.globalData.allFoodList = allFoodList;
-              if (typename[i] == 'breakfast') {
-                this.globalData.breakfastGoods = msg.data.data
-              } else if (typename[i] == 'lunch') {
-                this.globalData.lunchGoods = msg.data.data
-              } else {
-                this.globalData.dinnerGoods = msg.data.data
-              }
+              this.globalData[typename[i].name] = msg.data.data ? msg.data.data : [];
             } else {
               this.globalData.Util.errorHandle(this.globalData.urlList.goodsNew, msg.data.code);
             }
           }
         });
         //获取未完成订单信息（购物车信息）
+        if(i == "custom"){//定制订单自动完成，不存在未完成
+          continue;
+        }
         wx.request({
-          url: `${this.globalData.urlList.getUnfinishedOrder}?type=${typename[i]}`,
+          url: `${this.globalData.urlList.getUnfinishedOrder}?type=${i}`,
           header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
           method: 'GET',
           success: (msg) => {
             if (msg.data.code == 1) {
-              let shopcar = this.globalData.shopcar[i];
+              let shopcar = this.globalData.shopcar[typename[i].index];
               let shopcarlist = JSON.parse(msg.data.data.illustration),
                 count = shopcarlist.reduce((total, item) => {
                   return total + item.count
@@ -133,7 +107,7 @@ App({
               shopcar.status = msg.data.data.order_status;
               shopcar.id = msg.data.data.id;
               shopcar.count = count;
-              this.globalData.shopcar[i] = shopcar
+              this.globalData.shopcar[typename[i].index] = shopcar
             } else {
               this.globalData.Util.errorHandle(this.globalData.urlList.getUnfinishedOrder, msg.data.code);
             }
@@ -193,6 +167,7 @@ App({
     breakfastGoods: [],
     lunchGoods: [],
     dinnerGoods: [],
+    customGoods: [],
     //所有商品原始数据整合到一个数组，方便根据id获取到商品的内容
     allFoodList: [],
     userInformation:{},//用户个人信息
@@ -222,6 +197,15 @@ App({
       },
       {
         name: "dinner",
+        time: '',
+        orderNum: '',
+        list: {},
+        count: 0,
+        total: 0,
+        status: 3
+      },
+      {
+        name: "custom",
         time: '',
         orderNum: '',
         list: {},

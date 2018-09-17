@@ -1,4 +1,4 @@
-const baseUrl = "https://taste.benbenlitian.net.cn";
+const baseUrl = "http://139.199.182.202";
 
 const urlList = {
   login: `${baseUrl}/api/register/wx/`,//登录

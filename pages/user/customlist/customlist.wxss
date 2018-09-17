@@ -1,0 +1,62 @@
+.page__hd{
+  padding:40px;
+}
+
+.page__title{
+  text-align:left;
+  font-size:20px;
+  font-weight:400;
+}
+
+.content{
+  margin:50rpx 0;
+  background:#fff;
+}
+
+.weui-form-preview__item{
+  line-height:76rpx;
+}
+
+
+.weui-form-preview{
+    margin-bottom: 25px;
+}
+
+.icon-up{
+  margin-top:10rpx;
+}
+
+.gotoTop{
+  position:fixed;
+  right:30rpx;
+  bottom:48rpx;
+  width:100rpx;
+  height:100rpx;
+  border-radius:50%;
+  background:#868686;
+  opacity:0.9;
+  color:#fff;
+  font-size:12pt;
+  text-align:center;
+  line-height:40rpx;
+}
+
+.nodata{
+  position:absolute;
+  width:100%;
+  left:0;
+  top:50%;
+  margin-top:-120px;
+}
+
+.nodata .icon-nodata{
+  font-size:76pt;
+  text-align:center;
+  color:#B5B5B5;
+}
+
+.nodata .tip{
+  text-align:center;
+  font-size:12pt;
+  color:#B5B5B5;
+}

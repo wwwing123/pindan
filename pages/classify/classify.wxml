@@ -7,7 +7,7 @@
                       <view class="weui-navbar__title">{{item}}</view>
                   </view>
               </block>
-              <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);width:33.33%;"></view>
+              <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);width:24.99%;"></view>
           </view>
           <view class="weui-tab__panel">
               <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
@@ -115,6 +115,44 @@
                             </view>
                             <view class="count">{{shopcar[2].list[foods.id]}}</view>
                             <view class="addCart icon-jia iconfont" catchtap="tapAddCart" data-id="{{foods.id}}" data-type="2">
+                            </view>             
+                          </view>
+                        </view>
+                      </view>
+                      </scroll-view>
+                    </block>
+                  </view>
+                </view>
+              </view>
+              <view class="weui-tab__content" hidden="{{activeIndex != 3}}">
+                <view  class="nodata" hidden="{{shopcar[3].status!=2 && companyid != -1}}">   
+                  <view class="iconfont icon-nodata"></view>
+                  <view class="tip" wx:if="{{companyid != -1}}">请先结算本次订单后再进行下单</view>
+                  <view class="tip" wx:else>请先完善个人信息后再进行下单</view>
+                </view>
+                <view class="main" hidden="{{shopcar[3].status==2 || companyid == -1}}">
+                  <scroll-view class="classifySelect" scroll-y="true">
+                    <view class="classifyItem {{classifySeleted==classify.id ? 'active' : ''}}" wx:for="{{customGoods}}" wx:for-item="classify" wx:key="id" data-id="{{classify.id}}" bindtap="tapClassify" wx:if="{{classify.goodslist.length>0}}">
+                      {{classify.name}}
+                    </view>
+                  </scroll-view>
+                  <view class="foodSelect">
+                    <block wx:for="{{customGoods}}" wx:key="id" wx:for-item="goods">
+                      <scroll-view class="foodSelectItem {{classifySeleted!=goods.id ? 'hide' : ''}}" scroll-y="ture">
+                      <view class="foods" wx:for="{{goods.goodslist}}" wx:key="id" wx:for-item="foods">
+                        <view class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" data-id="{{foods.id}}">
+                          <view class="weui-media-box__hd weui-media-box__hd_in-appmsg" catchtap='_onShowModal' data-id="{{foods.id}}">
+                              <image class="weui-media-box__thumb" src="{{foods.img}}" />
+                          </view>
+                          <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                              <view class="weui-media-box__title">{{foods.name}}</view>
+                              <view class="weui-media-box__desc">{{foods.price}}</view>
+                          </view>
+                          <view class="countBar">
+                            <view class="reduceCart icon-jian iconfont {{!shopcar[3].list[foods.id] ? 'hide' : ''}}" catchtap="tapReduceCart" data-id="{{foods.id}}" data-price="foods.price" data-type="3">
+                            </view>
+                            <view class="count">{{shopcar[3].list[foods.id]}}</view>
+                            <view class="addCart icon-jia iconfont" catchtap="tapAddCart" data-id="{{foods.id}}" data-type="3">
                             </view>             
                           </view>
                         </view>

@@ -33,7 +33,7 @@
                       <navigator url="/pages/user/stafforder/stafforder?staffId={{list.userid}}&title={{list.name}}订单记录">
                         <view class="more">
                           <view class="iconfont icon-list"></view>
-                          <view class="text">订单记录</view>
+                          <view class="text">定制记录</view>
                           <view class="iconfont icon-more"></view>
                         </view>
                       </navigator> 

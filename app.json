@@ -12,6 +12,8 @@
     "pages/user/stafforder/stafforder",
     "pages/user/consumelist/consumelist",
     "pages/user/consumetotal/consumetotal",
+    "pages/user/customlist/customlist",
+    "pages/user/staffcustom/staffcustom",
     "pages/msg/msg",
     "pages/logs/logs"
   ],

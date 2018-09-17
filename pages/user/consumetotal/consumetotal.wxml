@@ -14,7 +14,7 @@
   <view class="content">
     <view class="page__bd">
         <view class='top'>
-          <view>{{name}}</view>
+          <view>{{name != 'null' ? name : '未填写'}}</view>
         </view>
         <view class="listBox">
           <view class='text'>早餐:{{data.breakfast_count}}人次<view class='num'>{{data.breakfast}}</view><view class='tip'>*包含误餐和消费</view></view>

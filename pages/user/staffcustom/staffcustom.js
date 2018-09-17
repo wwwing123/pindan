@@ -16,9 +16,7 @@ Page({
     size:10,
     page:1,
     list: [],
-    userid:null,
-    year:'',
-    month:''
+    userid: null,
   },
 
   /**
@@ -26,7 +24,6 @@ Page({
    */
   onLoad: function (options) {
     this.getHeight();
-    this.dateInit();
     this.setData({
       authority: options.authority,
       level: options.level
@@ -49,16 +46,6 @@ Page({
       }
     })
   },
-
-  dateInit: function () {
-    const nowDate = new Date();
-    const month = (nowDate.getMonth() + 1) < 10 ? '0' + (nowDate.getMonth() + 1) : '' + (nowDate.getMonth() + 1);
-    this.setData({
-      year: nowDate.getFullYear(),
-      month
-    })
-  },
-
   getCompany: function () {
     wx.request({
       url: urlList.getAdminCompany,
@@ -89,7 +76,7 @@ Page({
     this.setData({
       currentID: this.data.companyid[e.detail.value],
       currentName: this.data.company[e.detail.value],
-      page:1
+      page: 1
     });
     this.getStaffList(true);
   },
@@ -97,7 +84,7 @@ Page({
   getStaffList: function (reflesh){
     this.openLoading();
     wx.request({
-      url: urlList.getStaffComsume + `?page=${this.data.page}&size=${this.data.size}&companyid=${this.data.currentID}`,
+      url: urlList.getStaff + `?page=${this.data.page}&size=${this.data.size}&companyid=${this.data.currentID}`,
       header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
       method: 'GET',
       success: (msg) => {
@@ -110,8 +97,9 @@ Page({
             totalsize: msg.data.data.totalsize
           });
         } else {
-          Util.errorHandle(urlList.getStaffComsume, msg.data.code);
+          Util.errorHandle(urlList.getStaff, msg.data.code);
         }
+        wx.hideLoading();
       }
     })
   },
@@ -133,14 +121,14 @@ Page({
     this.getStaffList();
   },
 
-  gotoConsumeTotal: function () {
-    if (!this.data.userid){
+  gotoStaffOrder: function () {
+    if (!this.data.userid) {
       Toast.fail('请输入用户id');
       return;
     }
     this.openLoading();
     wx.request({
-      url: `${urlList.getUserBill}?userid=${this.data.userid}&year=${this.data.year}&month=${this.data.month}`,
+      url: `${urlList.getPersonOrder}?userid=${this.data.userid}&type=custom`,
       header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
       method: 'GET',
       success: (msg) => {
@@ -148,18 +136,18 @@ Page({
         if (msg.data.code == 1) {
           const data = msg.data.data
           wx.navigateTo({
-            url: `/pages/user/consumetotal/consumetotal?userid=${data.userid}&name=${data.name}&title=个人月消费累计额`
+            url: `/pages/user/stafforder/stafforder?staffId=${data.userid}&title=${data.username}定制记录`
           })
-        }else{
+        } else {
           Toast.fail(msg.data.msg);
         }
       }
     })
   },
 
-  getUserId:function(e){
+  getUserId: function (e) {
     this.setData({
-      userid:e.detail.value
+      userid: e.detail.value
     })
   }
 })

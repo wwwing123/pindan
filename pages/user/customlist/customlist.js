@@ -1,7 +1,5 @@
 const urlList = require("../../../config.js");
 const Util = require("../../../utils/util.js");
-import Toast from '../../../vantComponents/toast/toast';
-
 Page({
 
   /**
@@ -16,24 +14,14 @@ Page({
     showTop:true,//回到顶部显示
     size:10,
     currentPage:1,
-    totalsize:0,
-    dataUserid:'',
-    title:''
+    totalsize:0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getHeight();
-    this.setData({
-      dataUserid: options.staffId,
-      title: options.title
-    })
-    this.doLoadData();
-    wx.setNavigationBarTitle({
-      title: options.title
-    });  
+    this.getHeight();    
   },
 
   /**
@@ -47,7 +35,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    this.doLoadData();
   },
 
   /**
@@ -94,12 +82,12 @@ Page({
   },
   doLoadData(currendSize, PAGE_SIZE) {
     wx.request({
-      url: `${urlList.getPersonOrder}?userid=${this.data.dataUserid}`,
+      url: `${urlList.getPersonOrder}`,
       header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
       data:{
         "page": this.data.currentPage,
         "size": this.data.size,
-        "type": this.data.title.indexOf('定制') > -1 ? 'custom' : ''
+        "type": "custom"
       },
       success:(msg) => {
         if(msg.data.code == 1){

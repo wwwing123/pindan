@@ -1,5 +1,6 @@
 const urlList = require("../../../config.js");
 const Util = require("../../../utils/util.js");
+import Toast from '../../../vantComponents/toast/toast';
 Page({
 
   /**
@@ -121,6 +122,10 @@ Page({
   },
 
   gotoStaffOrder: function () {
+    if (!this.data.userid) {
+      Toast.fail('请输入用户id');
+      return;
+    }
     this.openLoading();
     wx.request({
       url: `${urlList.getPersonOrder}?userid=${this.data.userid}`,
@@ -131,15 +136,10 @@ Page({
         if (msg.data.code == 1) {
           const data = msg.data.data
           wx.navigateTo({
-            url: `/pages/user/stafforder/stafforder?staffId=${data.userid}&title=${data.name}订单记录`
+            url: `/pages/user/stafforder/stafforder?staffId=${data.userid}&title=${data.username}订单记录`
           })
         } else {
-          wx.showToast({//异常提示toast
-            title: '该用户不存在',
-            duration: 2000,
-            image: '../../../images/shopcar/fail.png',
-            mask: true
-          });
+          Toast.fail(msg.data.msg);
         }
       }
     })
