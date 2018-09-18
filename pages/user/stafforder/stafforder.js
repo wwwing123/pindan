@@ -18,7 +18,7 @@ Page({
     currentPage:1,
     totalsize:0,
     dataUserid:'',
-    title:''
+    ifcustom:false,
   },
 
   /**
@@ -28,7 +28,7 @@ Page({
     this.getHeight();
     this.setData({
       dataUserid: options.staffId,
-      title: options.title
+      ifcustom: options.title.indexOf('定制') > -1 ? true : false
     })
     this.doLoadData();
     wx.setNavigationBarTitle({
@@ -99,7 +99,7 @@ Page({
       data:{
         "page": this.data.currentPage,
         "size": this.data.size,
-        "type": this.data.title.indexOf('定制') > -1 ? 'custom' : ''
+        "type": this.data.ifcustom ? 'custom' : ''
       },
       success:(msg) => {
         if(msg.data.code == 1){
@@ -111,6 +111,7 @@ Page({
               ordernum: data[i].order_number,
               status: this.data.orderType[data[i].order_status],
               ordertype: data[i].order_type,
+              orderTypeName: Util.ordertype[data[i].order_type],
               totalprice: data[i].order_type == 1 ? `+${data[i].balance_change}` : `-${data[i].balance_change}`,
               id: data[i].id,
               remain: data[i].remain

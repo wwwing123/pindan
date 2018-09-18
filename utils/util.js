@@ -193,6 +193,8 @@ const request = function(url, params, method, message, success, fail) {
   })
 }
 
+const ordertype = ['扣除','充值','早餐','午餐','晚餐','定制'];
+
 
 module.exports = {
   formatTime,
@@ -203,5 +205,6 @@ module.exports = {
   errorCode,
   errorHandle,
   checkInformation,
-  request
+  request,
+  ordertype
 }

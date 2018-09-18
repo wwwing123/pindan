@@ -73,7 +73,7 @@ Page({
     });
   },
 
-  //下单函数
+  //下单前判断逻辑函数
   goToOrder:function(e){
     let kind;
     switch(e.currentTarget.dataset.type){
@@ -103,10 +103,31 @@ Page({
       }
       data["goods"].push(obj);
     }
+    if (kind == 3) {
+      wx.showModal({
+        title: '是否确认下单',
+        content: '定制订单下单成功后且退出程序后不会在购物车上显示，如需查看请到定制变动记录查找',
+        confirmText: "确定",
+        cancelText: "取消",
+        success: (res) => {
+          if (res.confirm) {
+            this.placeOrder(data,kind);
+          } else {
+            return false;
+          }
+        }
+      });
+    }else{
+      this.placeOrder(data);
+    } 
+    
+  },
+  //下单请求函数
+  placeOrder: function (data,kind){
     wx.showLoading({
       title: '正在下单',
       icon: 'loading'
-    });  
+    });
     Util.request(urlList.placeOrder, data, 'POST', '正在下单', (msg) => {
       this.getbalance();
       this.updateShopcar(kind);
@@ -115,19 +136,13 @@ Page({
         icon: 'success',
         duration: 1000
       });
-      if(kind == 3){
-        wx.showModal({
-          title: '提示',
-          content: '定制订单下单成功后且退出程序后不会在购物车上显示，如需查看请到定制变动记录查找',
-          showCancel: false
-        });
-      }
     }, (msg) => {
       let message = msg.data.msg ? msg.data.msg : '下单异常' //提示信息
       Util.openAlert('下单失败', message);
       Util.errorHandle(urlList.placeOrder, msg.data.code);//异常打印
     })
   },
+
   //下单后更新全局shopcar数据
   updateShopcar: function (kind) {
     const typename = ["breakfast", "lunch", "dinner","custom"];
@@ -175,6 +190,7 @@ Page({
       this.setData({
         shopcar: app.globalData.shopcar
       })
+      this.IntegrationData();//再次整合数据
     }   
   },
 
@@ -209,22 +225,7 @@ Page({
       confirmText: "确定",
       cancelText: "取消",
       success: (res) => {
-        if (res.confirm) {          
-          // wx.request({
-          //   url: urlList.finish,
-          //   data: data,
-          //   header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
-          //   method: 'POST',
-          //   dataType: 'json',
-          //   success: (msg) => {
-          //     if (msg.data.code == 1) {
-          //       this.refreshShopcar(e.currentTarget.dataset.ordertype);   
-          //       this.gotoMsg(data.finish_type);
-          //     } else {
-          //       Util.errorHandle(urlList.finish, msg.data.code);
-          //     }
-          //   }
-          // })
+        if (res.confirm) {
           Util.request(urlList.finish, data, 'POST', '正在加载数据', (msg) => {
               this.refreshShopcar(e.currentTarget.dataset.ordertype);
               this.gotoMsg(data.finish_type);
