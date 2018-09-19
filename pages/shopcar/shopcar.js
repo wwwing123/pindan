@@ -67,7 +67,9 @@ Page({
       }
       shopcar[j].list = list;
     }
-
+    if (shopcar[3].status == 1 && shopcar[3].completeList) {
+      shopcar[3].list = shopcar[3].completeList
+    }
     this.setData({
       shopcar
     });
@@ -176,21 +178,24 @@ Page({
         }
       })
     }else{
-      //更新购物车的状态
-      let shopcar = {
-        count:this.data.shopcar[3].count,
+      //更新定制购物车全局数据，相当于初始化定制购物车，仅保留当前页面数据
+      app.globalData.shopcar[kind] = {
+        count:this.data.shopcar[kind].count,
         orderNum:'',
-        list: this.data.shopcar[3].list,
-        total: this.data.shopcar[3].total,
+        list: {},
+        total: this.data.shopcar[kind].total,
         status: 1,
         id:'',
-        time:''
+        time:'',
+        completeList: this.data.shopcar[kind].list
       };
-      app.globalData.shopcar[kind] = shopcar
+      //本地定制购物车的状态要更新
+      let localShopcar = this.data.shopcar;
+      localShopcar[kind].status = 1;
       this.setData({
-        shopcar: app.globalData.shopcar
+        shopcar: localShopcar
       })
-      this.IntegrationData();//再次整合数据
+      // this.IntegrationData();//再次整合数据
     }   
   },
 
@@ -204,7 +209,10 @@ Page({
       list: {},
       count: 0,
       total: 0,
-      status: 3
+      status: 3,
+    }
+    if (typename[kind] == "custom"){
+      resetList.completeList = null;
     }
     app.globalData.shopcar[kind] = resetList;
     this.setData({
@@ -326,6 +334,8 @@ Page({
     }
     this.totalCount(kind);
     this.IntegrationData();
+    console.log(app.globalData.shopcar);
+    console.log(this.data.shopcar);
   },
   //商品移除购物车
   tapReduceCart: function (e) {

@@ -211,7 +211,8 @@ App({
         list: {},
         count: 0,
         total: 0,
-        status: 3
+        status: 3,
+        completeList:null
       }
     ]
   }

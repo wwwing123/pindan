@@ -93,7 +93,17 @@ Page({
     let kind = e.currentTarget.dataset.type,
         shopcar = this.data.shopcar, 
         id = e.currentTarget.dataset.id;
-    if (shopcar[kind].status != 3) {
+    // if (shopcar[kind].status != 3) {
+    //   return false;
+    // }
+    if (kind == 3 && app.globalData.shopcar[kind].status == 1) {//检查用户本次是否已经下单完定制的单
+      wx.showModal({
+        content: '请先清除本次定制订单，再进行添加菜品',
+        showCancel: false,
+        success:  (res) => {         
+            this.goToPay(kind);            
+        }
+      });
       return false;
     }
     if (this.data.shopcar[kind].count>=30){
@@ -157,8 +167,8 @@ Page({
     })  
   },
   //去结算，页面跳转
-  goToPay:function(){
-    if(this.data.count > 0){
+  goToPay:function(kind){
+    if(this.data.count > 0 || kind == 3){
       wx.switchTab({
         url: '/pages/shopcar/shopcar'
       })
