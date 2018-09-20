@@ -120,7 +120,7 @@ Page({
         }
       });
     }else{
-      this.placeOrder(data);
+      this.placeOrder(data,kind);
     } 
     
   },
