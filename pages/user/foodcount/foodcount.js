@@ -29,7 +29,6 @@ Page({
       method: 'GET',
       success: (msg) => {
         if (msg.data.code == 1) {
-          console.log(msg)
           let data = msg.data.data.datas,
             list = []
           for (let i in data) {

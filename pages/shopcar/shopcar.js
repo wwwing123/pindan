@@ -334,8 +334,6 @@ Page({
     }
     this.totalCount(kind);
     this.IntegrationData();
-    console.log(app.globalData.shopcar);
-    console.log(this.data.shopcar);
   },
   //商品移除购物车
   tapReduceCart: function (e) {

@@ -29,8 +29,6 @@ Page({
       userid: options.userid,
       name: options.name
     });
-    console.log(options)
-    console.log(this.data.name != null)
     if (this.data.companyid) {
       this.getCompanyBill();
     } else {
