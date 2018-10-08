@@ -149,6 +149,29 @@ page {
   color:#6D7379;
 }
 
+.shopcar .selectComp{
+  width:200rpx;
+  position:absolute;
+  right:210rpx;
+  top:0;
+  line-height:100rpx;
+  text-align:center;
+  color:#fff;
+  font-size:10pt;
+}
+
+.shopcar .selectComp picker{
+  width:100%;
+}
+
+.shopcar .selectComp picker text{
+  width:100%;
+  overflow:hidden;
+  white-space:nowrap;
+  display:inline-block;
+  text-overflow: ellipsis;
+}
+
 .shopcar.active .price{
   width:300rpx;
 }

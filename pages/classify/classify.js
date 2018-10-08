@@ -18,7 +18,12 @@ Page({
     "count": 0,//购物车总件数
     "total": 0,//购物车总价
     "classifySeleted":-1,
-    "foodsSeleted":{}
+    "foodsSeleted":{},
+    "companyid": [],//公司id数组
+    "company": [],//公司名称数组
+    "currentID": null,//当前公司id
+    "currentName": null,//当前公司名称
+    "ifAdmin": false
   },
 
   /**
@@ -31,7 +36,10 @@ Page({
       dinnerGoods: app.globalData.dinnerGoods,
       customGoods: app.globalData.customGoods,
       allFoodList: app.globalData.allFoodList,
-      companyid: app.globalData.userInformation.companyid
+      companyid: app.globalData.userInformation.companyid,
+      currentID: app.globalData.userInformation.companyid,
+      currentName: app.globalData.userInformation.company,
+      ifAdmin: app.globalData.userInformation.admin,
     });
   },
 
@@ -47,13 +55,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.getCompany();//获取管理员可以查看的公司
     this.setData({
       breakfastGoods: app.globalData.breakfastGoods,
       lunchGoods: app.globalData.lunchGoods,
       dinnerGoods: app.globalData.dinnerGoods,
       customGoods: app.globalData.customGoods,
       allFoodList: app.globalData.allFoodList,
-      companyid: app.globalData.userInformation.companyid
+      companyid: app.globalData.userInformation.companyid,
+      ifAdmin: app.globalData.userInformation.admin
     })//更新最新菜单接口数据
     this.getShopcarData();//更新菜单接口数据
     this.setData({
@@ -237,49 +247,53 @@ Page({
 
   getShopcarData: function () {
     const typename = ["breakfast", "lunch", "dinner","custom"];
-    let getBreakfast, getLunch, getDinner
-    if (app.globalData.userInformation.companyid != -1 && app.globalData.userInformation.companyid) {
+    let getBreakfast, getLunch, getDinner;
+    let allFoodList = [];
+    wx.showLoading({
+      title: '正在加载菜单',
+      icon: 'loading'
+    });
+    if (this.data.currentID != -1 && this.data.currentID) {
       for (let i in typename) {
         //获取商品信息
         let promise = new Promise((resolve, reject) => {
           wx.request({
-            url: `${urlList.goodsNew}?type=${typename[i]}&companyid=${app.globalData.userInformation.companyid}`,
+            url: `${urlList.goodsNew}?type=${typename[i]}&companyid=${this.data.currentID}`,
             header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
             method: 'get',
             success: (msg) => {
-              if (msg.data.code == 1) {
+              if (msg.data.code == 1 || msg.data.code == 6) {
                 //写入所有商品数组
-                let allFoodList = app.globalData.allFoodList;
                 const goods = msg.data.data;
-                for (let i in goods) {
-                  allFoodList = allFoodList.concat(goods[i].goodslist);
+                for (let k in goods) {
+                  allFoodList = allFoodList.concat(goods[k].goodslist);
                 }
                 app.globalData.allFoodList = allFoodList;
                 this.setData({
                   allFoodList: app.globalData.allFoodList
                 })
                 if (typename[i] == 'breakfast') {
-                  app.globalData.breakfastGoods = msg.data.data
+                  app.globalData.breakfastGoods = msg.data.data ? msg.data.data : []
                   this.setData({
-                    breakfastGoods: msg.data.data
+                    breakfastGoods: app.globalData.breakfastGoods
                   })
                 } else if (typename[i] == 'lunch') {
-                  app.globalData.lunchGoods = msg.data.data
+                  app.globalData.lunchGoods = msg.data.data ? msg.data.data : []
                   this.setData({
-                    lunchGoods: msg.data.data
+                    lunchGoods: app.globalData.lunchGoods
                   })
                 } else if (typename[i] == 'dinner'){
-                  app.globalData.dinnerGoods = msg.data.data
+                  app.globalData.dinnerGoods = msg.data.data ? msg.data.data : []
                   this.setData({
-                    dinnerGoods: msg.data.data
+                    dinnerGoods: app.globalData.dinnerGoods
                   })
                 } else{
-                  app.globalData.customGoods = msg.data.data
+                  app.globalData.customGoods = msg.data.data ? msg.data.data : []
                   this.setData({
-                    customGoods: msg.data.data
+                    customGoods: app.globalData.customGoods
                   })
                 }
-              } else {
+              } else{
                 Util.errorHandle(urlList.goodsNew, msg.data.code);
               }
               resolve();
@@ -299,6 +313,7 @@ Page({
         }
       }
       Promise.all([getBreakfast, getLunch, getDinner]).then((result) => {
+        wx.hideLoading();
         this.tabClick({
           currentTarget: {
             id: this.data.activeIndex || 0,
@@ -308,6 +323,75 @@ Page({
       }).catch((error) => {
         console.log(error)
       })
+    }
+  },
+
+  companyPickerChange:function(e){
+    this.setData({
+      currentID: this.data.companyid[e.detail.value],
+      currentName: this.data.company[e.detail.value]
+    });
+    this.getShopcarData();
+    this.refreshShopcar();
+    this.setData({
+      shopcar: app.globalData.shopcar,//更新总件数
+    });
+    this.setData({
+      count: this.getAllCountPrice('count'),//更新总件数
+      total: this.getAllCountPrice('total').toFixed(2)//更新总价
+    });
+  },
+
+  getCompany: function () {
+    if(!this.data.ifAdmin){
+      return;
+    }
+    wx.request({
+      url: urlList.getAdminCompany,
+      method: 'get',
+      header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
+      success: (msg) => {
+        if (msg.data.code == 1) {
+          let company = [], companyid = [];
+          const data = msg.data.data;
+          for (let i in data) {
+            company.push(data[i].name);
+            companyid.push(data[i].id);
+          }
+          if (companyid.indexOf(app.globalData.userInformation.companyid) < 0) {
+            companyid.unshift(app.globalData.userInformation.companyid)
+          }
+          if (company.indexOf(app.globalData.userInformation.company) < 0) {
+            company.unshift(app.globalData.userInformation.company)
+          }
+          this.setData({
+            companyid,
+            company
+          });
+          this.getorderList(true);//true清空原数据
+        } else {
+          Util.errorHandle(urlList.getAdminCompany, msg.data.code);
+        }
+      }
+    })
+  },
+
+  refreshShopcar: function (kind) {
+    const typename = ["breakfast", "lunch", "dinner", "custom"];
+    for (let i in typename){
+      let resetList = {
+        name: typename[kind],
+        time: '',
+        orderNum: '',
+        list: {},
+        count: 0,
+        total: 0,
+        status: 3,
+      }
+      if (typename[i] == "custom") {
+        resetList.completeList = null;
+      }
+      app.globalData.shopcar[i] = resetList;
     }
   }
 })

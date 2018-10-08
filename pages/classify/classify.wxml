@@ -170,6 +170,11 @@
       <view class="num" wx:if="{{count >= 1}}">{{total}}</view>
       <view wx:else>未选购商品</view>
     </view>
+    <view class="selectComp" hidden="{{!ifAdmin}}">
+      <picker bindchange="companyPickerChange" range="{{company}}">
+        <text>{{currentName}}</text>
+      </picker> 
+    </view>
     <view class="pay" catchtap="goToPay">去结算</view>
   </view>
   <dialog id="modal">    
