@@ -40,7 +40,7 @@ App({
                 wx.showLoading({
                   title: '正在获取信息…',
                   icon: 'loading',
-                  mask: false
+                  mask: true
                 });
                 this.getUserinfo();
               } else {
@@ -85,8 +85,8 @@ App({
             }
           }
         });
-        //获取未完成订单信息（购物车信息）
-        if(i == "custom"){//定制订单自动完成，不存在未完成
+        //获取未完成定餐信息（购物车信息）
+        if (i == "custom") {//定制定餐自动完成，不存在未完成
           continue;
         }
         wx.request({
@@ -175,7 +175,7 @@ App({
     balance:'',
     //购物车的数据，list存放id，数量
     //count总数，total总价格
-    //status订单状态 0已放弃 1已取餐 2已下单 3未下单
+    //status定餐状态 0已放弃 1已取餐 2已下单 3未下单
     shopcar:[
       {
         name:"breakfast",

@@ -136,7 +136,7 @@ Page({
         if (msg.data.code == 1) {
           const data = msg.data.data
           wx.navigateTo({
-            url: `/pages/user/stafforder/stafforder?staffId=${data.userid}&title=${data.username}订单记录`
+            url: `/pages/user/stafforder/stafforder?staffId=${data.userid}&title=${data.username}定餐记录`
           })
         } else {
           Toast.fail(msg.data.msg);

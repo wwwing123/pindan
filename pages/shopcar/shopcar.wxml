@@ -9,7 +9,7 @@
       <view class="title">
         <view class="text">早餐</view>
         <view class="box">
-          <view class="orderNum" wx:if="{{shopcar[0].orderNum}}">订单号: {{shopcar[0].orderNum}}</view>
+          <view class="orderNum" wx:if="{{shopcar[0].orderNum}}">定餐号: {{shopcar[0].orderNum}}</view>
           <view class="time">{{shopcar[0].time}}</view>   
         </view>     
       </view>
@@ -40,7 +40,7 @@
       <view class="title">
         <view class="text">午餐</view>
         <view class="box">
-          <view class="orderNum" wx:if="{{shopcar[1].orderNum}}">订单号: {{shopcar[1].orderNum}}</view>
+          <view class="orderNum" wx:if="{{shopcar[1].orderNum}}">定餐号: {{shopcar[1].orderNum}}</view>
           <view class="time">{{shopcar[1].time}}</view>  
         </view>        
       </view>
@@ -71,7 +71,7 @@
       <view class="title">
         <view class="text">晚餐</view>
         <view class="box">
-          <view class="orderNum" wx:if="{{shopcar[2].orderNum}}">订单号: {{shopcar[2].orderNum}}</view>
+          <view class="orderNum" wx:if="{{shopcar[2].orderNum}}">定餐号: {{shopcar[2].orderNum}}</view>
           <view class="time">{{shopcar[2].time}}</view>  
         </view>         
       </view>
@@ -102,7 +102,7 @@
       <view class="title">
         <view class="text">定制</view>
         <view class="box">
-          <view class="orderNum" wx:if="{{shopcar[3].orderNum}}">订单号: {{shopcar[3].orderNum}}</view>
+          <view class="orderNum" wx:if="{{shopcar[3].orderNum}}">定餐号: {{shopcar[3].orderNum}}</view>
           <view class="time">{{shopcar[3].time}}</view>  
         </view>         
       </view>
@@ -125,7 +125,7 @@
       </view>
       <view class="page__bd page__bd_spacing">
         <button class="weui-btn" type="primary" wx:if="{{shopcar[3].status==3}}" style="background:#0096FF;width:96%;margin-top:20rpx;" data-type="custom" bindtap="goToOrder">下单</button>
-        <button class="weui-btn" type="primary" wx:if="{{shopcar[3].status==1}}" style="width:96%;" bindtap="clearConfirm">清除本次定制订单</button>   
+        <button class="weui-btn" type="primary" wx:if="{{shopcar[3].status==1}}" style="width:96%;" bindtap="clearConfirm">清除本次定制定餐</button>   
       </view>
     </view>
   </view>

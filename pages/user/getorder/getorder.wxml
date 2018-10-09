@@ -22,7 +22,7 @@
   </view>
   <view  class="nodata" wx:if="{{list.length==0}}">   
     <view class="iconfont icon-nodata"></view>
-    <view class="tip">暂无订单数据</view>
+    <view class="tip">暂无定餐数据</view>
   </view>  
   <view class="content" wx:else>
     <view class="count">

@@ -23,7 +23,7 @@ page {
 }
 
 .classifySelect {
-  width: 180rpx;
+  width: 190rpx;
   background: #F3F5F7;
   height: 100%;
 }

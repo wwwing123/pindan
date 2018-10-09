@@ -1,5 +1,5 @@
- const baseUrl = "http://139.199.182.202";//测试地址
-//const baseUrl = "https://taste.benbenlitian.net.cn";//生产地址
+//const baseUrl = "http://139.199.182.202";//测试地址
+const baseUrl = "https://taste.benbenlitian.net.cn";//生产地址
 
 const urlList = {
   login: `${baseUrl}/api/register/wx/`,//登录
@@ -7,10 +7,10 @@ const urlList = {
   indexNotice: `${baseUrl}/api/get/notice/`,//首页公告
   goodsOld: `${baseUrl}/api/get/goodslist/`,//商品信息
   goodsNew: `${baseUrl}/api/get/relationship_goodslist/`,//新版商品信息（拼上公司字段）
-  getUnfinishedOrder: `${baseUrl}/api/user/get_curr_order/`,//个人未完成订单
+  getUnfinishedOrder: `${baseUrl}/api/user/get_curr_order/`,//个人未完成定餐
   placeOrder: `${baseUrl}/api/user/place_order/`,//下单接口
   finish:`${baseUrl }/api/user/finish_order/`,//取餐或放弃接口
-  getPersonOrder: `${baseUrl}/api/user/get_order_list/`,//个人订单
+  getPersonOrder: `${baseUrl}/api/user/get_order_list/`,//个人定餐
   getbalance: `${baseUrl}/api/user/get_balance/`,//获取个人余额
   getAdminOrder: `${baseUrl}/api/user/admin/get_company_order/`,//管理员菜品统计
   foodcount: `${baseUrl}/api/user/admin/get_goods_statistics/`,//管理员菜品统计

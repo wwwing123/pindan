@@ -30,6 +30,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(app.globalData.breakfastGoods)
     this.setData({
       breakfastGoods: app.globalData.breakfastGoods,
       lunchGoods: app.globalData.lunchGoods,
@@ -40,6 +41,7 @@ Page({
       currentID: app.globalData.userInformation.companyid,
       currentName: app.globalData.userInformation.company,
       ifAdmin: app.globalData.userInformation.admin,
+      classifySeleted: app.globalData.breakfastGoods[0] ? app.globalData.breakfastGoods[0].id : -1
     });
   },
 
@@ -54,8 +56,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-    this.getCompany();//获取管理员可以查看的公司
+  onShow: function () {    
     this.setData({
       breakfastGoods: app.globalData.breakfastGoods,
       lunchGoods: app.globalData.lunchGoods,
@@ -64,8 +65,9 @@ Page({
       allFoodList: app.globalData.allFoodList,
       companyid: app.globalData.userInformation.companyid,
       ifAdmin: app.globalData.userInformation.admin
-    })//更新最新菜单接口数据
-    this.getShopcarData();//更新菜单接口数据
+    })//更新最新菜单接口数据 
+    this.getCompany();//获取管理员可以查看的公司
+    //this.getShopcarData();//更新菜单接口数据
     this.setData({
       shopcar: app.globalData.shopcar,//更新总件数
     });
@@ -108,7 +110,7 @@ Page({
     // }
     if (kind == 3 && app.globalData.shopcar[kind].status == 1) {//检查用户本次是否已经下单完定制的单
       wx.showModal({
-        content: '请先清除本次定制订单，再进行添加菜品',
+        content: '请先清除本次定制定餐，再进行添加菜品',
         showCancel: false,
         success:  (res) => {         
             this.goToPay(kind);            
@@ -202,7 +204,7 @@ Page({
   },
   overCount: function (kind) {
     wx.showModal({
-      content: this.data.tabs[kind] + '订单最多只能添加30份菜式',
+      content: this.data.tabs[kind] + '定餐最多只能添加30份菜式',
       showCancel: false,
       success: function (res) {
         if (res.confirm) {
@@ -358,10 +360,10 @@ Page({
             company.push(data[i].name);
             companyid.push(data[i].id);
           }
-          if (companyid.indexOf(app.globalData.userInformation.companyid) < 0) {
+          if (app.globalData.userInformation.companyid && companyid.indexOf(app.globalData.userInformation.companyid) < 0) {
             companyid.unshift(app.globalData.userInformation.companyid)
           }
-          if (company.indexOf(app.globalData.userInformation.company) < 0) {
+          if (app.globalData.userInformation.company && company.indexOf(app.globalData.userInformation.company) < 0) {
             company.unshift(app.globalData.userInformation.company)
           }
           this.setData({
@@ -391,7 +393,10 @@ Page({
       if (typename[i] == "custom") {
         resetList.completeList = null;
       }
-      app.globalData.shopcar[i] = resetList;
+      if (app.globalData.shopcar[i].status == 3){
+        app.globalData.shopcar[i] = resetList;
+      }
+      
     }
   }
 })

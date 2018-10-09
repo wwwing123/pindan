@@ -34,14 +34,14 @@
           <view class="weui-cell__hd">
               <view class="iconfont icon-admin"></view>
           </view>
-          <view class="weui-cell__bd">查看公司订单</view>
+          <view class="weui-cell__bd">查看公司定餐</view>
           <view class="weui-cell__ft weui-cell__ft_in-access"></view>
         </navigator>
         <navigator url="/pages/user/stafflist/stafflist?companyid={{userInformation.companyid}}&company={{userInformation.company}}&level={{userInformation.level}}&authority={{userInformation.authority}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:if='{{userInformation.admin}}'>
           <view class="weui-cell__hd">
               <view class="iconfont icon-consume"></view>
           </view>
-          <view class="weui-cell__bd">员工订单记录</view>
+          <view class="weui-cell__bd">员工定餐记录</view>
           <view class="weui-cell__ft weui-cell__ft_in-access"></view>
         </navigator>
         <navigator url="/pages/user/staffcustom/staffcustom?companyid={{userInformation.companyid}}&company={{userInformation.company}}&level={{userInformation.level}}&authority={{userInformation.authority}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:if='{{userInformation.admin}}'>

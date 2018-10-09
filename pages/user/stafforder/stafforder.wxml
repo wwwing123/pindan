@@ -16,15 +16,15 @@
                     <view class="weui-form-preview__value">{{orderlist.orderdate}}</view>
                 </view>
                 <view class="weui-form-preview__item">
-                    <view class="weui-form-preview__label">订单号</view>
+                    <view class="weui-form-preview__label">定餐号</view>
                     <view class="weui-form-preview__value">{{orderlist.ordernum}}</view>
                 </view>
                 <view class="weui-form-preview__item">
-                    <view class="weui-form-preview__label">订单类型</view>
+                    <view class="weui-form-preview__label">定餐类型</view>
                     <view class="weui-form-preview__value">{{orderlist.orderTypeName}}</view>
                 </view>
                 <view class="weui-form-preview__item">
-                    <view class="weui-form-preview__label">订单状态</view>
+                    <view class="weui-form-preview__label">定餐状态</view>
                     <view class="weui-form-preview__value">{{orderlist.status}}</view>
                 </view>
                 <view class="weui-form-preview__item">
