@@ -1,5 +1,5 @@
-const urlList = require("../../../config.js");
-const Util = require("../../../utils/util.js");
+const urlList = require("../../../../config.js");
+const Util = require("../../../../utils/util.js");
 Page({
 
   /**
@@ -7,7 +7,8 @@ Page({
    */
   data: {
     companyid:null,
-    Type:null,
+    starttime:null,
+    endtime:null,
     list:[],
     totalPrice:"0.00"
   },
@@ -18,13 +19,14 @@ Page({
   onLoad: function (options) {
     this.setData({
       companyid: options.companyid,
-      Type: options.type
+      starttime: options.starttime,
+      endtime: options.endtime
     });
-    this.getordercount();
+    this.getcustomcount();
   },
-  getordercount: function () {
+  getcustomcount: function () {
     wx.request({
-      url: `${urlList.foodcount2}?companyid=${this.data.companyid}&type=${this.data.Type}`,
+      url: `${urlList.customcount}?companyid=${this.data.companyid}&starttime=${this.data.starttime}&endtime=${this.data.endtime}`,
       header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
       method: 'GET',
       success: (msg) => {
@@ -39,7 +41,7 @@ Page({
             totalPrice: msg.data.data.statistics
           })
         }else{
-          Util.errorHandle(urlList.foodcount2, msg.data.code);
+          Util.errorHandle(urlList.customcount, msg.data.code);
         }
       }
     })

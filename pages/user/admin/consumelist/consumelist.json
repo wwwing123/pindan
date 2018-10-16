@@ -1,6 +1,6 @@
 {
   "navigationBarTitleText": "累计消费额",
   "usingComponents": {
-    "van-toast": "../../../vantComponents/toast/index"
+    "van-toast": "../../../../vantComponents/toast/index"
   }
 }

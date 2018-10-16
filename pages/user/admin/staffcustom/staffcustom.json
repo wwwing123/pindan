@@ -1,6 +1,6 @@
 {
   "navigationBarTitleText": "员工定制记录",
   "usingComponents": {
-    "van-toast": "../../../vantComponents/toast/index"
+    "van-toast": "../../../../vantComponents/toast/index"
   }
 }

@@ -30,8 +30,15 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
-			"list": []
+			"current": 0,
+			"list": [
+				{
+					"id": -1,
+					"name": "调试",
+					"pathName": "pages/user/admin/getcustom/getcustom",
+					"query": ""
+				}
+			]
 		}
 	}
 }

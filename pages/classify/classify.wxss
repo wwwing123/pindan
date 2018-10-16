@@ -142,20 +142,20 @@ page {
 }
 
 .shopcar .price{
-  width:300rpx;
-  text-align:right;
+  width:200rpx;
+  position:absolute;
+  right:210rpx;
+  top:0;
+  text-align:center;
   line-height:100rpx;
   font-size:10pt;
   color:#6D7379;
 }
 
 .shopcar .selectComp{
-  width:200rpx;
-  position:absolute;
-  right:210rpx;
-  top:0;
+  width:300rpx; 
   line-height:100rpx;
-  text-align:center;
+  text-align:right;
   color:#fff;
   font-size:10pt;
 }
@@ -165,7 +165,7 @@ page {
 }
 
 .shopcar .selectComp picker text{
-  width:100%;
+  width:54%;
   overflow:hidden;
   white-space:nowrap;
   display:inline-block;
@@ -173,7 +173,7 @@ page {
 }
 
 .shopcar.active .price{
-  width:300rpx;
+  width:220rpx;
 }
 
 .shopcar .price .num{

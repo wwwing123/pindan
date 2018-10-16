@@ -1,6 +1,6 @@
-const urlList = require("../../../config.js");
-const Util = require("../../../utils/util.js");
-import Toast from '../../../vantComponents/toast/toast';
+const urlList = require("../../../../config.js");
+const Util = require("../../../../utils/util.js");
+import Toast from "../../../../vantComponents/toast/toast";
 Page({
 
   /**
@@ -128,7 +128,7 @@ Page({
     }
     this.openLoading();
     wx.request({
-      url: `${urlList.getPersonOrder}?userid=${this.data.userid}&type=custom`,
+      url: `${urlList.getPersonOrder}?userid=${this.data.userid}`,
       header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
       method: 'GET',
       success: (msg) => {
@@ -136,7 +136,7 @@ Page({
         if (msg.data.code == 1) {
           const data = msg.data.data
           wx.navigateTo({
-            url: `/pages/user/stafforder/stafforder?staffId=${data.userid}&title=${data.username}定制记录`
+            url: `/pages/user/admin/stafforder/stafforder?staffId=${data.userid}&title=${data.username}定餐记录`
           })
         } else {
           Toast.fail(msg.data.msg);

@@ -12,9 +12,11 @@ const urlList = {
   finish:`${baseUrl }/api/user/finish_order/`,//取餐或放弃接口
   getPersonOrder: `${baseUrl}/api/user/get_order_list/`,//个人定餐
   getbalance: `${baseUrl}/api/user/get_balance/`,//获取个人余额
-  getAdminOrder: `${baseUrl}/api/user/admin/get_company_order/`,//管理员菜品统计
+  getAdminOrder: `${baseUrl}/api/user/admin/get_company_order/`,//管理员菜品列表
   foodcount: `${baseUrl}/api/user/admin/get_goods_statistics/`,//管理员菜品统计
   foodcount2: `${baseUrl}/api/user/admin/get_goods_statistics_v2/`,//管理员菜品统计(含总餐券)
+  getAdminCustom: `${baseUrl}/api/user/admin/get_custom_goods_order/`,//管理员定制列表
+  customcount: `${baseUrl}/api/user/admin/get_custom_goods_statistics/`,//管理员定制统计
   submitUserinfo: `${baseUrl}/api/user/perfect_info/`,//提交个人信息
   getuserinfo: `${baseUrl}/api/user/get_userinfo/`,//个人信息
   getcompany: `${baseUrl}/api/get/company/`,//获取公司信息

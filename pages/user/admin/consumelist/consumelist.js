@@ -1,6 +1,6 @@
-const urlList = require("../../../config.js");
-const Util = require("../../../utils/util.js");
-import Toast from '../../../vantComponents/toast/toast';
+const urlList = require("../../../../config.js");
+const Util = require("../../../../utils/util.js");
+import Toast from '../../../../vantComponents/toast/toast';
 Page({
 
   /**
@@ -148,7 +148,7 @@ Page({
         if (msg.data.code == 1) {
           const data = msg.data.data
           wx.navigateTo({
-            url: `/pages/user/consumetotal/consumetotal?userid=${data.userid}&name=${data.name}&title=个人月消费累计额`
+            url: `/pages/user/admin/consumetotal/consumetotal?userid=${data.userid}&name=${data.name}&title=个人月消费累计额`
           })
         }else{
           Toast.fail(msg.data.msg);

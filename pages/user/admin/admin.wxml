@@ -1,0 +1,39 @@
+<view class="list">   
+    <view class="weui-cells weui-cells_after-title">
+        <navigator url="/pages/user/admin/getorder/getorder?companyid={{companyid}}&company={{company}}&level={{level}}&authority={{authority}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+          <view class="weui-cell__hd">
+              <view class="iconfont icon-admin"></view>
+          </view>
+          <view class="weui-cell__bd">查看公司定餐</view>
+          <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+        </navigator>
+        <navigator url="/pages/user/admin/getcustom/getcustom?companyid={{companyid}}&company={{company}}&level={{level}}&authority={{authority}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+          <view class="weui-cell__hd">
+              <view class="iconfont icon-admin"></view>
+          </view>
+          <view class="weui-cell__bd">查看公司定制</view>
+          <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+        </navigator>
+        <navigator url="/pages/user/admin/stafflist/stafflist?companyid={{companyid}}&company={{company}}&level={{level}}&authority={{authority}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+          <view class="weui-cell__hd">
+              <view class="iconfont icon-consume"></view>
+          </view>
+          <view class="weui-cell__bd">员工定餐记录</view>
+          <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+        </navigator>
+        <navigator url="/pages/user/admin/staffcustom/staffcustom?companyid={{companyid}}&company={{company}}&level={{level}}&authority={{authority}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+          <view class="weui-cell__hd">
+              <view class="iconfont icon-consume"></view>
+          </view>
+          <view class="weui-cell__bd">员工定制记录</view>
+          <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+        </navigator>
+        <navigator url="/pages/user/admin/consumelist/consumelist?companyid={{companyid}}&company={{company}}&level={{level}}&authority={{authority}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+          <view class="weui-cell__hd">
+              <view class="iconfont icon-tongji"></view>
+          </view>
+          <view class="weui-cell__bd">消费累计额</view>
+          <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+        </navigator>
+    </view>  
+  </view>

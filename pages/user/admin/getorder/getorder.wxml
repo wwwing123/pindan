@@ -26,7 +26,7 @@
   </view>  
   <view class="content" wx:else>
     <view class="count">
-      <navigator url="/pages/user/foodcount/foodcount?companyid={{currentID}}&type={{TypeEn[currentType]}}">
+      <navigator url="/pages/user/admin/foodcount/foodcount?companyid={{currentID}}&type={{TypeEn[currentType]}}">
         <view class="icon-count iconfont"></view>
       </navigator>     
     </view> 
@@ -37,7 +37,7 @@
           <view class="food">菜品</view>
         </view>
         <view class="refresh-block" style="height:{{refreshHeight}}rpx"> 
-          <image  class="{{loading?'roate':(pull?'':'pull')}}" src="{{loading ?           '../../../images/getorder/icon_loading.png':'../../../images/getorder/icon_arrow.png'}}"></image>
+          <image  class="{{loading?'roate':(pull?'':'pull')}}" src="{{loading ?           '../../../images/getorder/icon_loading.png':'../../../../images/getorder/icon_arrow.png'}}"></image>
           <text  class="refreshing_text" >{{refreshing_text}}</text> 
         </view>  
         <scroll-view class="orderlist" scroll-y="true" bindscrolltolower="loadmore" bindscrolltoupper="refreshData" bindtouchstart="start" bindtouchend="end" style="bottom:{{loadMoreHeight}}rpx;height:{{windowHeight}}px" scroll-with-animation="true" scroll-top="{{scrollTop}}" scroll-with-animation="true" bindscroll="scroll">

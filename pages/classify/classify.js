@@ -370,7 +370,6 @@ Page({
             companyid,
             company
           });
-          this.getorderList(true);//true清空原数据
         } else {
           Util.errorHandle(urlList.getAdminCompany, msg.data.code);
         }

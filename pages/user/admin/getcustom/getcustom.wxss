@@ -1,0 +1,206 @@
+.container {
+   height: 100%;
+    overflow: hidden;  
+}
+
+.page__bd {
+  width: 100%;
+}
+
+.select{
+  background:#fff;
+}
+
+.page__bd .company{
+  width:260rpx;
+  display:flex;
+  font-size:11pt;
+  align-items:center;
+}
+
+.page__bd .datebox{
+  -webkit-box-flex:1;
+  -webkit-flex:1;
+  flex:1;
+  font-size:9pt;
+}
+
+.page__bd .datebox .startDate,
+.page__bd .datebox .endDate{
+  display: flex;
+  -weikit-display:flex;
+}
+
+.page__bd .datebox .date{
+  white-space: nowrap;
+}
+
+.page__bd .number{
+  width:180rpx;
+  display:flex;
+  font-size:11pt;
+}
+
+.weui-cell .comlabel{
+  flex:1;  
+  text-align:center;
+  font-size:11pt;
+}
+
+.weui-cell .compname{
+  width:180rpx;
+  display:inline-block;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  overflow:hidden;
+  vertical-align:top;
+}
+
+.foodlabel{
+  width:40px;
+  text-align:center;
+  font-size:11pt;
+}
+
+.numberlabel{
+  width:100%;
+  font-size:11pt;
+  text-align:center;
+}
+
+.weui-cell picker{
+  flex:1;
+}
+
+.content{
+  width:100%;
+}
+
+.content .title{
+  font-size:12pt;
+  color:#999;
+  width: 100%;
+  height:54rpx;
+  background:#fff;
+}
+
+.content .name{
+  display:inline-block;
+  width:25%;
+  text-align:center;
+  vertical-align:middle;
+}
+
+.content .phone{
+  display:inline-block;
+  width:25%;
+  text-align:center;
+  vertical-align:middle;
+}
+
+.content .food{
+  display:inline-block;
+  width:50%;
+  vertical-align:middle;
+  box-sizing:border-box;
+  padding-left:14.6%;
+  text-align:left; 
+}
+
+.orderlist{
+  font-size:12pt;
+}
+
+.orderlist .listobox{
+  border-bottom:1rpx solid #d9d9d9;
+}
+
+
+.nodata{
+  position:absolute;
+  width:100%;
+  left:0;
+  top:50%;
+  margin-top:-120px;
+}
+
+.nodata .icon-nodata{
+  font-size:76pt;
+  text-align:center;
+  color:#B5B5B5;
+}
+
+.nodata .tip{
+  text-align:center;
+  font-size:12pt;
+  color:#B5B5B5;
+}
+
+.icon-count{
+  font-size:25pt;
+}
+
+.content>.count{
+  position:fixed;
+  right:30rpx;
+  bottom:48rpx;
+  width:100rpx;
+  height:100rpx;
+  border-radius:50%;
+  background:#868686;
+  opacity:0.9;
+  color:#fff;
+  font-size:12pt;
+  text-align:center;
+  line-height:100rpx;
+  z-index:2;
+}
+
+
+/*下拉刷新布局*/
+.refresh-block {
+  position: relative;
+  background-color:rgba(0, 0, 0, 0.08) ;  
+  width:100%;
+  height: 0rpx;
+  max-height: 200rpx;
+  text-align: center;
+   overflow: hidden; 
+}
+.refresh-block image {
+  position: absolute;
+  left: 30%;
+  right: 0;
+  bottom: 15rpx;  
+  text-align: center;
+  width: 40rpx;  
+  height: 40rpx;
+}
+.refresh-block .refreshing_text{
+  position: absolute;
+  width: 100%;
+  left: 0;
+  right: 0;
+  bottom: 15rpx;  
+  text-align: center;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size:12pt;
+}  
+
+@-webkit-keyframes rotate{ 0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+@keyframes rotate{0%{transform:rotate(0deg);}100%{ transform:rotate(360deg);}}
+.refresh-block .roate,.loadMore-block .roate{
+   -moz-animation:rotate 1s infinite linear;
+  -webkit-animation:rotate 1s infinite linear;
+  animation:rotate 1s infinite linear;
+}
+.refresh-block .pull,.loadMore-block .pull{
+  transform: rotate(180deg) scale(1) translate(0%,0%);
+  transition: All 0.5s ease;
+}
+
+
+
+
+

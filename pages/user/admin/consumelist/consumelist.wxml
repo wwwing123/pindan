@@ -25,7 +25,7 @@
                 <view class="weui-cell__bd box" style='padding:80rpx 40rpx;'>
                   <view class='name'>{{currentName}}</view>
                   <view class='label'>月消费累计额</view>
-                  <navigator url="/pages/user/consumetotal/consumetotal?companyid={{currentID}}&name={{currentName}}&title=公司月消费累计额">
+                  <navigator url="/pages/user/admin/consumetotal/consumetotal?companyid={{currentID}}&name={{currentName}}&title=公司月消费累计额">
                     <view class="more">查看详情</view>
                   </navigator>
                 </view>           
@@ -37,7 +37,7 @@
                     <view class='label'>当月充值:{{list.recharge}}</view>
                     <view class='label'>当月误餐:{{list.frozen}}</view>
                     <view class='label'>当月消费:{{list.consume}}</view> 
-                    <navigator url="/pages/user/consumetotal/consumetotal?userid={{list.userid}}&name={{list.name}}&title=个人月消费累计额">
+                    <navigator url="/pages/user/admin/consumetotal/consumetotal?userid={{list.userid}}&name={{list.name}}&title=个人月消费累计额">
                       <view class="more">查看详情</view>
                     </navigator> 
                   </view>

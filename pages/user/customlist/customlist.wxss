@@ -47,6 +47,7 @@
   left:0;
   top:50%;
   margin-top:-120px;
+  z-index:1;
 }
 
 .nodata .icon-nodata{

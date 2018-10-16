@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "查看公司定制",
+   "disableScroll":true,
+   "usingComponents": {
+    "van-toast": "../../../../vantComponents/toast/index"
+  }
+}
