@@ -23,9 +23,9 @@
   font-size:12pt;
 }
 
-.orderlist .name,
-.orderlist .count{
-  flex:1;
+.page__bd .title>view,
+.page__bd .box>view{
+  width:24.9%;
   text-align:center;
   padding:14rpx 0;
 }

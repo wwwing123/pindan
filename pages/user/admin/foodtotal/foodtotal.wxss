@@ -6,6 +6,24 @@
   width:100%;
 }
 
+.page__bd .datebox{
+  -webkit-box-flex:1;
+  -webkit-flex:1;
+  flex:1;
+  display:flex;
+  font-size:12pt;
+}
+
+.page__bd .dateSelect{
+  font-size:12pt;
+  margin-left:30rpx;
+}
+
+.weui-cell .date{
+  text-align:center;
+  font-size:12pt;
+}
+
 .title{
   font-size:12pt;
   color:#999;
@@ -23,10 +41,9 @@
   font-size:12pt;
 }
 
-
 .page__bd .title>view,
 .page__bd .box>view{
-  width:24.9%;
+  width:19.9%;
   text-align:center;
   padding:14rpx 0;
 }

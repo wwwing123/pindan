@@ -71,7 +71,7 @@ Page({
     const year = date.getFullYear();
     const month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : '' + (date.getMonth() + 1);
     const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-    return `${year}-${month}-${day}`
+    return `${year}.${month}.${day}`
   },
 
   getdiffDays:function(start,end){
@@ -106,6 +106,7 @@ Page({
   },
 
   bindDateChange: function (e) {
+    e.detail.value = this.getFormateDate(new Date(e.detail.value))
     const startDate = e.currentTarget.dataset.type == 'startDate' ? e.detail.value : this.data.startDate;
     const endDate = e.currentTarget.dataset.type == 'endDate' ? e.detail.value : this.data.endDate;    
     this.setData({

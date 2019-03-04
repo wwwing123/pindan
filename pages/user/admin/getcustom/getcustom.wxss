@@ -3,6 +3,10 @@
     overflow: hidden;  
 }
 
+.container .weui-cell{
+  padding:10px 8px;
+}
+
 .page__bd {
   width: 100%;
 }
@@ -25,10 +29,8 @@
   font-size:9pt;
 }
 
-.page__bd .datebox .startDate,
-.page__bd .datebox .endDate{
-  display: flex;
-  -weikit-display:flex;
+.page__bd .datebox view{
+  display: inline-block;
 }
 
 .page__bd .datebox .date{

@@ -21,3 +21,12 @@ form .tip{
 .weui-input{
   color:#000;
 }
+
+.weui-cell__hd .weui-label{
+  width:160rpx;
+  text-align: right;
+}
+
+.weui-cell__bd {
+  padding-left:70rpx
+}

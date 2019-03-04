@@ -9,14 +9,18 @@
   <view class="page__bd" style="height:100%;padding-top:30rpx;">
     <view style="height:100%;">
         <view class="title">
-          <view class="name">菜名</view>
-          <view class="count">数量</view>
+          <view>菜名</view>
+          <view>单价</view>
+          <view>数量</view>
+          <view>金额</view>
         </view>
         <scroll-view class="orderlist" scroll-y style="height:100%;">
           <block wx:for="{{list}}" wx:key="id" wx:for-item="list">
               <view class="box">
-                <view class="name">{{list.name}}</view>
-                <view class="count">{{list.size}}</view>
+                <view>{{list.name}}</view>
+                <view>{{list.price}}</view>
+                <view>{{list.size}}</view>
+                <view>{{list.total}}</view>
               </view>
           </block>
         </scroll-view>

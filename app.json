@@ -17,6 +17,8 @@
     "pages/user/admin/consumelist/consumelist",
     "pages/user/admin/consumetotal/consumetotal",   
     "pages/user/admin/staffcustom/staffcustom",
+    "pages/user/admin/companytotal/companytotal",
+    "pages/user/admin/foodtotal/foodtotal",
     "pages/msg/msg",
     "pages/logs/logs"
   ],
@@ -24,7 +26,7 @@
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#222",
     "navigationBarTitleText": "品啖鲜餐饮服务",
-    "navigationBarTextStyle": "#fff"
+    "navigationBarTextStyle": "white"
   },
   "tabBar": {
     "color": "#000",

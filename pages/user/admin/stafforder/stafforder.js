@@ -19,6 +19,7 @@ Page({
     totalsize:0,
     dataUserid:'',
     ifcustom:false,
+    useTitle:''
   },
 
   /**
@@ -28,7 +29,8 @@ Page({
     this.getHeight();
     this.setData({
       dataUserid: options.staffId,
-      ifcustom: options.title.indexOf('定制') > -1 ? true : false
+      ifcustom: options.title.indexOf('定制') > -1 ? true : false,
+      useTitle: options.useTitle
     })
     this.doLoadData();
     wx.setNavigationBarTitle({

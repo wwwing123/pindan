@@ -1,0 +1,49 @@
+<view class="container" style='height:{{windowHeight}}px;'>
+  <view class="select page__bd">
+    <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+            <view class="datebox">
+              <view class='date'>请选择日期:</view>
+              <picker class="dateSelect" bindchange="bindDateChange" value="{{date}}" mode="date" fields="month">
+                <view>{{date}}</view>
+              </picker> 
+            </view>
+            <view class="refresh">
+              <button class="weui-btn mini-btn" type="primary" size="mini" bindtap="getCompanyTotal">刷新</button>
+            </view>
+        </view>
+    </view>
+  </view>  
+  <view class="content">
+    <view class="page__bd">
+        <view class='top'>
+          <view>总公司</view>
+          <view class='tip'>*本月数据每半小时统计一次</view>
+        </view>
+        <view class="listBox">
+          <view class='text'>
+            早餐:{{classification.breakfast_count}}人次,其中有{{classification.breakfast_frozen_count}}人次误餐
+            <view class='num'>{{classification.breakfast}}</view>
+            <view class='tip'>*包含误餐和消费</view>
+          </view>
+          <view class='text'>
+            午餐:{{classification.lunch_count}}人次,其中有{{classification.lunch_frozen_count}}人次误餐
+            <view class='num'>{{classification.lunch}}</view>
+            <view class='tip'>*包含误餐和消费</view>
+          </view>
+          <view class='text'>
+            晚餐:{{classification.dinner_count}}人次,其中有{{classification.dinner_frozen_count}}人次误餐
+            <view class='num'>{{classification.dinner}}</view>
+            <view class='tip'>*包含误餐和消费</view>
+          </view>
+          <view class='text'>定制:{{classification.custom_count}}人次<view class='num'>{{classification.custom}}</view></view>
+          <view class='text'>月初总余额<view class='num'>{{allBill.before_balance}}</view></view>
+          <view class='text'>该月总充值<view class='num'>{{allBill.recharge}}</view></view>
+          <view class='text'>该月总扣除<view class='num'>{{allBill.deduction}}</view></view>
+          <view class='text'>该月总误餐<view class='num'>{{allBill.frozen}}</view></view>
+          <view class='text'>该月总消费<view class='num'>{{allBill.consume}}</view></view>
+          <view class='text'>该月总剩余<view class='num'>{{allBill.after_balance}}</view></view>
+        </view>
+    </view>
+  </view>
+</view>

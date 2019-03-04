@@ -36,6 +36,10 @@ page {
   border-bottom:1px dotted #aaa;
 }
 
+.weui-media-box__title{
+  white-space:normal;
+}
+
 .classifyItem.active{
   background:#fff;
   border-left:6rpx solid #0096FF;

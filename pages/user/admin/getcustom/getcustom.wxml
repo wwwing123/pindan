@@ -14,13 +14,12 @@
           </view>
           <view class="datebox">
             <view class="startDate">
-              <view class='date'>开始日期:</view>
               <picker class="dateSelect" bindchange="bindDateChange" value="{{startDate}}" mode="date" fields="day" data-type="startDate">
                 <view>{{startDate}}</view>
               </picker>
             </view>
-            <view class="endDate"> 
-              <view class='date'>结束日期:</view>
+            <view style="padding:0 4rpx;"> ~ </view>
+            <view class="endDate">
               <picker class="dateSelect" bindchange="bindDateChange" value="{{endDate}}" mode="date" fields="day" data-type="endDate">
                 <view>{{endDate}}</view>
               </picker>

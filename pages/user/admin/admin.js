@@ -1,4 +1,5 @@
 // pages/user/admin/admin.js
+const app = getApp();
 Page({
 
   /**
@@ -19,9 +20,10 @@ Page({
       companyid: options.companyid,
       company: options.companyid,
       level: options.level,
-      authority: options.authority
+      authority: options.authority,
+      admin: app.globalData.userInformation.admin,
+      ledger: app.globalData.userInformation.ledger,
     })
-    console.log(this.data)
   },
 
   /**

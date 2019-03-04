@@ -19,7 +19,7 @@
           <view class="weui-cell__hd">
               <view class="iconfont icon-orderlist"></view>
           </view>
-          <view class="weui-cell__bd">定制变动记录</view>
+          <view class="weui-cell__bd">定制货品记录</view>
           <view class="weui-cell__ft weui-cell__ft_in-access"></view>
         </navigator>
         <navigator url="/pages/user/Information/Information" class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:if="{{userInformation.userid && !userInformation.idcard}}">
@@ -30,7 +30,7 @@
           <view class="weui-cell__ft weui-cell__ft_in-access"></view>
           <view class="tip">*请先完善个人信息后再进行点餐</view>
         </navigator>
-        <navigator url="/pages/user/admin/admin?companyid={{userInformation.companyid}}&company={{userInformation.company}}&level={{userInformation.level}}&authority={{userInformation.authority}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:if='{{userInformation.admin}}'>
+        <navigator url="/pages/user/admin/admin?companyid={{userInformation.companyid}}&company={{userInformation.company}}&level={{userInformation.level}}&authority={{userInformation.authority}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:if='{{adminOpen && userInformation.idcard}}'>
           <view class="weui-cell__hd">
               <view class="iconfont icon-admin"></view>
           </view>

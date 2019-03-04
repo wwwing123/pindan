@@ -137,7 +137,8 @@ App({
               authority: data.authority,
               userid: data.id,
               level: data.level,
-              admin: data.level != 3 ? true : false
+              admin: data.level != 3 ? true : false,
+              ledger: Boolean(data.ledger)
             }
             this.globalData.userInformation = userInformation;
             if (userInformation.idcard && userInformation.company) {

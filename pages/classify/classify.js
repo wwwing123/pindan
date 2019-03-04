@@ -118,7 +118,7 @@ Page({
       });
       return false;
     }
-    if (this.data.shopcar[kind].count>=30){
+    if (this.data.shopcar[kind].count>=999){
       this.overCount(kind);
       return false;
     }
@@ -204,7 +204,7 @@ Page({
   },
   overCount: function (kind) {
     wx.showModal({
-      content: this.data.tabs[kind] + '定餐最多只能添加30份菜式',
+      content: this.data.tabs[kind] + '定餐最多只能添加999份菜式',
       showCancel: false,
       success: function (res) {
         if (res.confirm) {

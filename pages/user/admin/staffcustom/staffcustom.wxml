@@ -30,7 +30,7 @@
                       <view class="name">{{list.name}}
                         <view class="userid">id:{{list.userid}}</view>
                       </view>
-                      <navigator url="/pages/user/admin/stafforder/stafforder?staffId={{list.userid}}&title={{list.name}}定制记录">
+                      <navigator url="/pages/user/admin/stafforder/stafforder?staffId={{list.userid}}&title={{list.name}}定制记录&useTitle=消费额">
                         <view class="more">
                           <view class="iconfont icon-list"></view>
                           <view class="text">定制记录</view>

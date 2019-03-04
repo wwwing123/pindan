@@ -1,0 +1,115 @@
+.container {
+  height: 100%;
+  position:relative;
+  background:#fff;
+  box-sizing:border-box;
+  padding-top:84rpx;
+}
+
+.page__bd {
+  width: 100%;
+}
+
+.select{
+  position:fixed;
+  top:0;
+  left:0; 
+  background:#fff;
+  height:84rpx;
+  z-index:2;
+}
+
+.page__bd .datebox{
+  -webkit-box-flex:1;
+  -webkit-flex:1;
+  flex:1;
+  display:flex;
+  font-size:12pt;
+}
+
+.page__bd .dateSelect{
+  font-size:12pt;
+  margin-left:30rpx;
+}
+
+.weui-cell .date{
+  text-align:center;
+  font-size:12pt;
+}
+
+.content{
+  width:100%;
+  padding-bottom:20rpx;
+}
+
+.content .page__bd{
+  width:100%;
+}
+
+.top{
+  position:relative;
+  height:260rpx;
+  text-align:center;
+  line-height:210rpx;
+  background: -webkit-linear-gradient(left top,#0096FF , #5FB7FA);
+}
+
+.top view{
+  color:#fff;
+  font-size:14pt; 
+}
+
+.listBox{
+  width:90%;
+  margin:0 auto;
+  position:relative;
+  top:-80rpx;
+}
+
+.listBox .text{
+  font-size:10pt;
+  color:#000;
+  padding:35rpx 20rpx;
+  box-sizing:border-box;
+  background:#fff;
+  box-shadow: 4px 4px 10px #ccc;
+  margin-top:30rpx;
+  border-radius:8rpx;
+  overflow:hidden;
+  position:relative;
+}
+
+.listBox .num{
+  color:#000;
+  position:absolute;
+  right:20rpx;
+  top:36rpx;
+}
+
+.listBox .tip{
+  position:absolute;
+  font-size:8pt;
+  color:#f00;
+  bottom:0;
+  right:20rpx;
+  text-align:center;
+}
+
+.refresh .weui-btn{
+  background:#0096FF;
+  color:#fff;
+  vertical-align: middle;
+}
+
+.top .tip{
+  position: absolute;
+  bottom:50rpx;
+  width:100%;
+  text-align: center;
+  color:#f00;
+  font-size:10pt;
+  line-height: 80rpx;
+}
+
+ 
+

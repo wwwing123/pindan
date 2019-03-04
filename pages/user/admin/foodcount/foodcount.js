@@ -1,5 +1,6 @@
 const urlList = require("../../../../config.js");
 const Util = require("../../../../utils/util.js");
+const app = getApp();
 Page({
 
   /**
@@ -32,7 +33,12 @@ Page({
           let data = msg.data.data.datas,
             list = []
           for (let i in data) {
-            list.push(data[i])
+            list.push({
+              name: data[i].name,
+              size: data[i].size,
+              price: data[i].price,
+              total: (Number(data[i].price) * Number(data[i].size)).toFixed(2)
+            })
           }
           this.setData({
             list,

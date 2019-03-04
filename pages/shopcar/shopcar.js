@@ -108,7 +108,7 @@ Page({
     if (kind == 3) {
       wx.showModal({
         title: '是否确认下单',
-        content: '定制定餐下单成功后且退出程序后不会在购物车上显示，如需查看请到定制变动记录查找',
+        content: '定制货品下单成功后且退出程序后不会在购物车上显示，如需查看请到定制货品记录查找',
         confirmText: "确定",
         cancelText: "取消",
         success: (res) => {
@@ -284,7 +284,7 @@ Page({
   //餐券不足提示
   showNoBalance:function(){
     wx.showModal({
-      content:  '您的餐券不足以支付当前定餐，请联系管理员进行充值。',
+      content:  '您的餐券不足以支付当前下单，请联系管理员进行充值。',
       showCancel: false,
       success: function (res) {
         if (res.confirm) {
@@ -323,7 +323,7 @@ Page({
     if (shopcar[kind].status != 3) {
       return false;
     }
-    if (shopcar[kind].count >= 10) {
+    if (shopcar[kind].count >= 999) {
       this.overCount(kind);
       return false;
     }
@@ -368,7 +368,7 @@ Page({
   overCount: function (kind) {
     const tabs = ["早餐", "午餐", "晚餐", "定制"]
     wx.showModal({
-      content: tabs[kind] + '定餐最多只能添加30份菜式',
+      content: tabs[kind] + '定餐最多只能添加999份菜式',
       showCancel: false,
       success: function (res) {
         if (res.confirm) {
@@ -381,7 +381,7 @@ Page({
   clearConfirm: function(){
     wx.showModal({
       title: '提示',
-      content: `清除定定餐信息后，购物车不再显示该定餐信息，如需查看记录，请到定制变动记录查看`,
+      content: `清除定制货品信息后，购物车不再显示该下单信息，如需查看记录，请到定制货品记录查看`,
       confirmText: "确定",
       cancelText: "取消",
       success: (res) => {

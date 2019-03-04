@@ -1,5 +1,5 @@
-//const baseUrl = "http://139.199.182.202";//测试地址
-const baseUrl = "https://taste.benbenlitian.net.cn";//生产地址
+const baseUrl = "http://139.199.182.202";//测试地址
+//const baseUrl = "https://taste.benbenlitian.net.cn";//生产地址
 
 const urlList = {
   login: `${baseUrl}/api/register/wx/`,//登录
@@ -25,7 +25,8 @@ const urlList = {
   getStaffComsume: `${baseUrl}/api/user/get_company_member_v2/`,//获取消费员工列表
   getCompanyBill: `${baseUrl}/api/user/get_company_month_bill/`,//获取公司月总账
   getUserBill: `${baseUrl}/api/user/get_user_month_bill/`,//获取个人用户月总账
-
+  getCompanyTotal: `${baseUrl}/api/user/admin/get_allcompany_month_bill/`,//获取总公司月累计消费
+  getfoodTotal: `${baseUrl}/api/user/admin/get_month_goods_statistics/`//获取总公司月菜品统计
 }
 
 module.exports = urlList

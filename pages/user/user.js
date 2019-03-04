@@ -9,6 +9,7 @@ Page({
    */
   data: {
     userInformation:{},
+    adminOpen:false
   },
 
   /**
@@ -35,7 +36,8 @@ Page({
       })
     }else{
       this.setData({
-        userInformation: app.globalData.userInformation
+        userInformation: app.globalData.userInformation,
+        adminOpen: app.globalData.userInformation.admin || app.globalData.userInformation.ledger
       })
     } 
     this.getbalance();

@@ -21,8 +21,8 @@ Page({
         error: '请输入正确的手机号'
       },
       idcard: {
-        required: '请输入您的身份证号',
-        error: '请输入正确的身份证号'
+        required: '请输入18位识别码',
+        error: '请输入18位的字母或数字'
       },
       companyid: {
         required: '请选择所属公司名称'

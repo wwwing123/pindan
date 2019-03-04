@@ -2,7 +2,13 @@
   <view class="select page__bd">
     <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell">
-            <view style="padding-left:10rpx;font-size:12pt;">总餐券: {{totalPrice}}</view>
+            <view class="datebox">
+              <view class='date'>请选择日期:</view>
+              <picker class="dateSelect" bindchange="bindDateChange" value="{{date}}" mode="date" fields="month">
+                <view>{{date}}</view>
+              </picker> 
+            </view>
+            <view class="totalPrice" style="padding-left:10rpx;font-size:12pt;">总消费: {{totalPrice}}</view>
         </view>
     </view>
   </view> 
@@ -10,6 +16,7 @@
     <view style="height:100%;">
         <view class="title">
           <view>菜名</view>
+          <view>菜品id</view>
           <view>单价</view>
           <view>数量</view>
           <view>金额</view>
@@ -18,6 +25,7 @@
           <block wx:for="{{list}}" wx:key="id" wx:for-item="list">
               <view class="box">
                 <view>{{list.name}}</view>
+                <view>{{list.id}}</view>
                 <view>{{list.price}}</view>
                 <view>{{list.size}}</view>
                 <view>{{list.total}}</view>
