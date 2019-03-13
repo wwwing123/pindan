@@ -141,6 +141,7 @@ App({
               ledger: Boolean(data.ledger)
             }
             this.globalData.userInformation = userInformation;
+            this.globalData.orderCompanyId = data.companyid;
             if (userInformation.idcard && userInformation.company) {
               this.globalData.getuserInfo = true;//是否完善个人信息
             }
@@ -177,6 +178,7 @@ App({
     //购物车的数据，list存放id，数量
     //count总数，total总价格
     //status定餐状态 0已放弃 1已取餐 2已下单 3未下单
+    orderCompanyId:null,
     shopcar:[
       {
         name:"breakfast",

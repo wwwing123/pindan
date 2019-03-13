@@ -4,14 +4,14 @@
     <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell">
             <view class="company">
-              <view class='comlabel'>公司:</view>
+              <view class='comlabel'>单位:</view>
               <picker bindchange="companyPickerChange" range="{{company}}">
                 <view class="{{currentID == -1 ? 'noselect' : ''}}">{{currentName}}</view>
               </picker> 
             </view>
             <view class="consumeId">
                 <view class="weui-cell__bd">
-                    <input class="weui-input" placeholder="请输入用户id" type="number" maxlength="10" value="{{userid}}" bindinput="getUserId"/>
+                    <input class="weui-input" placeholder="请输入id或姓名" maxlength="10" value="{{userid}}" bindinput="getUserId"/>
                     <button class="weui-btn mini-btn" type="primary" size="mini" bindtap="gotoStaffOrder">确定</button>
                 </view>
             </view>

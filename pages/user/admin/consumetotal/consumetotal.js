@@ -90,7 +90,7 @@ Page({
   getUserBill: function (reflesh) {
     this.openLoading();
     wx.request({
-      url: `${urlList.getUserBill}?userid=${this.data.userid}&year=${this.data.year}&month=${this.data.month}`,
+      url: `${urlList.getUserBill}?filter=${this.data.userid}&year=${this.data.year}&month=${this.data.month}`,
       header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
       method: 'GET',
       success: (msg) => {

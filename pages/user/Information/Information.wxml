@@ -30,7 +30,7 @@
       </view>
       <view class="weui-cell weui-cell_input {{errorMsg.type=='companyid' ? 'weui-cell_warn' : ''}}">
         <view class="weui-cell__hd">
-            <view class="weui-label">公司名称</view>
+            <view class="weui-label">单位名称</view>
         </view>
         <view class="weui-cell__bd">
             <picker bindchange="bindPickerChange" value="{{currentID}}" range="{{company}}" name="companyid">

@@ -98,7 +98,7 @@ Page({
   getorderList:function(reflesh){
     this.openLoading();
     wx.request({
-      url: urlList.getAdminOrder + `?page=${this.data.page}&size=${this.data.size}&companyid=${this.data.currentID}&type=${this.data.TypeEn[this.data.currentType]}`,
+      url: urlList.getAdminOrder + `?page=${this.data.page}&size=${this.data.size}&ordercompanyid=${this.data.currentID}&type=${this.data.TypeEn[this.data.currentType]}`,
       header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
       method: 'GET',
       success: (msg) => {

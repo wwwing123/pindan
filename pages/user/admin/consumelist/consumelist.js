@@ -134,13 +134,13 @@ Page({
   },
 
   gotoConsumeTotal: function () {
-    if (!this.data.userid){
-      Toast.fail('请输入用户id');
+    if (!this.data.userid || !Util.rules.nameOrId(this.data.userid)) {
+      Toast.fail('请输入用户id或者用户姓名');
       return;
     }
     this.openLoading();
     wx.request({
-      url: `${urlList.getUserBill}?userid=${this.data.userid}&year=${this.data.year}&month=${this.data.month}`,
+      url: `${urlList.getUserBill}?filter=${this.data.userid}&year=${this.data.year}&month=${this.data.month}`,
       header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
       method: 'GET',
       success: (msg) => {

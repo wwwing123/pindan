@@ -52,6 +52,10 @@ const rules = {
   },
   idcard: (value) => {
     return /^[a-zA-Z0-9]{18}$/.test(value)
+  },
+  nameOrId: (value) => {
+    // 匹配纯数字或者纯中文
+    return /^[0-9]*$/.test(value) || /^[\u4e00-\u9fa5]+$/.test(value)
   }
 }
 
@@ -138,9 +142,9 @@ const errorCode = {
   "3007": "定餐类型异常",
   "3008": "定餐时间异常",
 
-  "4001": "公司名字变更异常",
-  "4002": "公司信息删除失败",
-  "4003": "没有此公司信息"
+  "4001": "单位名字变更异常",
+  "4002": "单位信息删除失败",
+  "4003": "没有此单位信息"
 }
 
 const checkInformation = () =>{

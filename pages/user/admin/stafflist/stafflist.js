@@ -122,13 +122,13 @@ Page({
   },
 
   gotoStaffOrder: function () {
-    if (!this.data.userid) {
-      Toast.fail('请输入用户id');
+    if (!this.data.userid || !Util.rules.nameOrId(this.data.userid)) {
+      Toast.fail('请输入用户id或者用户姓名');
       return;
     }
     this.openLoading();
     wx.request({
-      url: `${urlList.getPersonOrder}?userid=${this.data.userid}`,
+      url: `${urlList.getPersonOrder}?filter=${this.data.userid}`,
       header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
       method: 'GET',
       success: (msg) => {

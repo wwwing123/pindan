@@ -64,14 +64,19 @@ Page({
       customGoods: app.globalData.customGoods,
       allFoodList: app.globalData.allFoodList,
       companyid: app.globalData.userInformation.companyid,
+      currentID: app.globalData.userInformation.companyid,
+      currentName: app.globalData.userInformation.company,
       ifAdmin: app.globalData.userInformation.admin
     })//更新最新菜单接口数据 
     this.getCompany();//获取管理员可以查看的公司
     //this.getShopcarData();//更新菜单接口数据
+    if (!this.data.classifySeleted){
+      this.setData({
+        classifySeleted: app.globalData.breakfastGoods[0].id,//更新总件数
+      });
+    }
     this.setData({
       shopcar: app.globalData.shopcar,//更新总件数
-    });
-    this.setData({
       count: this.getAllCountPrice('count'),//更新总件数
       total: this.getAllCountPrice('total').toFixed(2)//更新总价
     });
@@ -333,6 +338,7 @@ Page({
       currentID: this.data.companyid[e.detail.value],
       currentName: this.data.company[e.detail.value]
     });
+    app.globalData.orderCompanyId = this.data.currentID;
     this.getShopcarData();
     this.refreshShopcar();
     this.setData({

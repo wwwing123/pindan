@@ -10,7 +10,7 @@ Page({
     company: [],
     companyID: [],
     currentID: -1,
-    companyname: '请选择所属公司名称',
+    companyname: '请选择所属单位名称',
     messages: {
       name: {
         required: '请输入您的真实姓名',
@@ -25,7 +25,7 @@ Page({
         error: '请输入18位的字母或数字'
       },
       companyid: {
-        required: '请选择所属公司名称'
+        required: '请选择所属单位名称'
       },
     },
     showTopTips: false,
@@ -107,7 +107,6 @@ Page({
       cancelText: "取消",
       success: (res) => {
         if (res.confirm) {
-          console.log(formData)
           this.openLoading();
           wx.request({
             url: urlList.submitUserinfo,
@@ -199,6 +198,8 @@ Page({
           }
           getApp().globalData.userInformation = userInformation;
           getApp().globalData.getuserInfo = true;
+          getApp().globalData.orderCompanyId = userInformation.companyid
+          getApp().getShopcarData();//加载菜单数据
           wx.setStorageSync('userInformation', userInformation);
         } else {
           Util.errorHandle(urlList.getuserinfo, msg.data.code);

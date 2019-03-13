@@ -97,7 +97,7 @@ Page({
       return;
     }
     const list = this.data.shopcar[kind].list;
-    let data = { "type": e.currentTarget.dataset.type, "goods": [] };
+    let data = { "type": e.currentTarget.dataset.type, "goods": [], "ordercompanyid": app.globalData.orderCompanyId};
     for(let i in list){
       let obj = {
         "id": list[i].id,

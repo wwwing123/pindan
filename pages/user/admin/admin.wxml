@@ -4,14 +4,14 @@
           <view class="weui-cell__hd">
               <view class="iconfont icon-admin"></view>
           </view>
-          <view class="weui-cell__bd">查看公司定餐</view>
+          <view class="weui-cell__bd">查看单位定餐</view>
           <view class="weui-cell__ft weui-cell__ft_in-access"></view>
         </navigator>
         <navigator url="/pages/user/admin/getcustom/getcustom?companyid={{companyid}}&company={{company}}&level={{level}}&authority={{authority}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:if='{{admin}}'>
           <view class="weui-cell__hd">
               <view class="iconfont icon-admin"></view>
           </view>
-          <view class="weui-cell__bd">查看公司定制</view>
+          <view class="weui-cell__bd">查看单位定制</view>
           <view class="weui-cell__ft weui-cell__ft_in-access"></view>
         </navigator>
         <navigator url="/pages/user/admin/stafflist/stafflist?companyid={{companyid}}&company={{company}}&level={{level}}&authority={{authority}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:if='{{admin}}'>
@@ -39,14 +39,14 @@
           <view class="weui-cell__hd">
               <view class="iconfont icon-tongji"></view>
           </view>
-          <view class="weui-cell__bd">总公司消费累计额</view>
+          <view class="weui-cell__bd">总单位消费累计额</view>
           <view class="weui-cell__ft weui-cell__ft_in-access"></view>
         </navigator>
         <navigator url="/pages/user/admin/foodtotal/foodtotal" class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:if='{{ledger}}'>
           <view class="weui-cell__hd">
               <view class="iconfont icon-tongji"></view>
           </view>
-          <view class="weui-cell__bd">总公司月菜品统计</view>
+          <view class="weui-cell__bd">总单位月菜品统计</view>
           <view class="weui-cell__ft weui-cell__ft_in-access"></view>
         </navigator>
     </view>  

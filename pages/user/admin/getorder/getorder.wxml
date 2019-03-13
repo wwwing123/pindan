@@ -3,7 +3,7 @@
     <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell">
             <view class="company">
-              <view class='comlabel'>公司:</view>
+              <view class='comlabel'>单位:</view>
               <picker bindchange="companyPickerChange" range="{{company}}">
                 <view class="{{currentID == -1 ? 'noselect' : ''}}" style='font-size:11pt;'>{{currentName}}</view>
               </picker> 

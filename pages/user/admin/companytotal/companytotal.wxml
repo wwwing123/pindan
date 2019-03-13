@@ -17,7 +17,7 @@
   <view class="content">
     <view class="page__bd">
         <view class='top'>
-          <view>总公司</view>
+          <view>总单位</view>
           <view class='tip'>*本月数据每半小时统计一次</view>
         </view>
         <view class="listBox">

@@ -4,14 +4,14 @@
     <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell">
             <view class="company">
-              <view class='comlabel'>公司:</view>
+              <view class='comlabel'>单位:</view>
               <picker bindchange="companyPickerChange" range="{{company}}">
                 <view class="{{currentID == -1 ? 'noselect' : ''}}">{{currentName}}</view>
               </picker> 
             </view>
             <view class="consumeId">
                 <view class="weui-cell__bd">
-                    <input class="weui-input" placeholder="请输入用户id" type="number" maxlength="10" value="{{userid}}" bindinput="getUserId"/>
+                    <input class="weui-input" placeholder="请输入id或姓名" maxlength="10" value="{{userid}}" bindinput="getUserId"/>
                     <button class="weui-btn mini-btn" type="primary" size="mini" bindtap="gotoConsumeTotal">确定</button>
                 </view>
             </view>
@@ -25,7 +25,7 @@
                 <view class="weui-cell__bd box" style='padding:80rpx 40rpx;'>
                   <view class='name'>{{currentName}}</view>
                   <view class='label'>月消费累计额</view>
-                  <navigator url="/pages/user/admin/consumetotal/consumetotal?companyid={{currentID}}&name={{currentName}}&title=公司月消费累计额">
+                  <navigator url="/pages/user/admin/consumetotal/consumetotal?companyid={{currentID}}&name={{currentName}}&title=单位月消费累计额">
                     <view class="more">查看详情</view>
                   </navigator>
                 </view>           
