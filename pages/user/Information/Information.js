@@ -194,7 +194,7 @@ Page({
             userid: data.id,
             level: data.level,
             admin: data.level != 3 ? true : false,
-
+            ledger: Boolean(data.ledger)
           }
           getApp().globalData.userInformation = userInformation;
           getApp().globalData.getuserInfo = true;

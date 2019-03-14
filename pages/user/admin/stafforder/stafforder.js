@@ -96,7 +96,7 @@ Page({
   },
   doLoadData(currendSize, PAGE_SIZE) {
     wx.request({
-      url: `${urlList.getPersonOrder}?userid=${this.data.dataUserid}`,
+      url: `${urlList.getPersonOrder}?filter=${this.data.dataUserid}`,
       header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
       data:{
         "page": this.data.currentPage,
@@ -109,7 +109,7 @@ Page({
           let orderlist = this.data.orderlist;
           for (let i in data){
             let obj = {
-              orderdate: data[i].order_status == 2 ? Util.formatTime(new Date(data[i].created_at * 1000)) : Util.formatTime(new Date(data[i].finish_at * 1000)),
+              orderdate: Util.formatTime(new Date(data[i].created_at * 1000)),
               ordernum: data[i].order_number,
               status: this.data.orderType[data[i].order_status],
               ordertype: data[i].order_type,
