@@ -9,8 +9,34 @@ Page({
     userid: wx.getStorageSync('userid'),
     company: [],
     companyID: [],
-    currentID: -1,
-    companyname: '请选择所属单位名称',
+    currentCompID: -1,
+    department: null,
+    departmentID: null,
+    currentDepID: -1,
+    input_name: {
+      value: "",
+      disabled: false
+    },
+    input_idcard: {
+      value: "",
+      disabled: false
+    },
+    company_name: {
+      value: '请选择所属单位名称',
+      disabled: false
+    },
+    department_name: {
+      value: '请选择所属部门信息',
+      disabled: false
+    },
+    input_address: {
+      value: "",
+      disabled: false
+    },
+    input_phone: {
+      value: "",
+      disabled: false
+    },
     messages: {
       name: {
         required: '请输入您的真实姓名',
@@ -27,6 +53,9 @@ Page({
       companyid: {
         required: '请选择所属单位名称'
       },
+      departmentid: {
+        required: '请选择所属部门信息'
+      },
     },
     showTopTips: false,
     errorMsg: {
@@ -39,11 +68,39 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if(options.type == 'updateDep'){//处理信息回显
+      const userInformation = wx.getStorageSync('userInformation');
+      this.setData({
+        input_name: {
+          value: userInformation.name,
+          disabled: true
+        },
+        input_idcard: {
+          value: userInformation.idcard,
+          disabled: true
+        },
+        company_name: {
+          value: userInformation.company,
+          disabled: true
+        },
+        currentCompID: userInformation.companyid,
+        input_address: {
+          value: userInformation.address || " ",
+          disabled: true
+        },
+        input_phone: {
+          value: userInformation.phone,
+          disabled: true
+        }
+      })
+      this.getDepartment();//获取部门信息
+      return;
+    }
     //获取公司名称,id
-    this.setData({
-      userid: wx.getStorageSync('userid')
-    })
-    wx.request({
+    // this.setData({
+    //   userid: wx.getStorageSync('userid')
+    // })
+    wx.request({//获取公司信息
       url: urlList.getcompany,
       method: 'get',
       success: (msg) => {
@@ -65,13 +122,74 @@ Page({
       }
     })
   },
-  onUnload: function () {
-
-  },
-  bindPickerChange: function (e) {
+  compChange: function (e) {
     this.setData({
-      currentID: this.data.companyID[e.detail.value],
-      companyname: this.data.company[e.detail.value]
+      currentCompID: this.data.companyID[e.detail.value],
+      company_name: {
+        value: this.data.company[e.detail.value],
+        disabled: false
+      },
+      currentDepID: -1,
+      department_name: {
+        value: '请选择所属部门信息', //清空部门信息
+        disabled: false
+      }
+    });
+    this.getDepartment();
+  },
+  depChange: function (e) {
+    if (!this.data.departmentID || !this.data.departmentID[e.detail.value]) {
+      this.setData({
+        currentDepID: -1
+      })
+      return false;
+    }
+    console.log(1)   
+    this.setData({
+      currentDepID: this.data.departmentID[e.detail.value],
+      department_name: {
+        value: this.data.department[e.detail.value],
+        disabled: false
+      }
+    })
+  },
+  depTouchStart: function(){
+    //查看部门id数组是否为空
+    if(this.data.departmentID === null) {
+      this.showModal('请先选择所属单位再选择部门')
+    }
+  },
+  getDepartment: function() {
+    Util.request({
+      url: urlList.getdepartment,
+      params: {
+        companyid: this.data.currentCompID
+      },
+      method: "GET",
+      message: "正在获取部门信息…",
+      success: (msg) => {
+        let department = [], departmentID = [];
+        const data = msg.data.data;
+        if (data.length == 0){
+          this.setData({
+            department: [],
+            departmentID: []
+          })
+          this.showModal('该单位部门信息为空，请通知管理员完善公司部门信息');
+        }
+        for (let i in data) {
+          department.push(data[i].name);
+          departmentID.push(data[i].id);
+        }
+        this.setData({
+          department,
+          departmentID
+        })
+      },
+      fail: (msg) => {
+        Util.errorHandle(urlList.getdepartment, msg.data.code);
+        this.showModal('获取部门失败')
+      }
     })
   },
 
@@ -84,6 +202,13 @@ Page({
         showTopTips: false
       });
     }, 3000);
+  },
+  showModal: function (content) {
+    wx.showModal({
+      title: '提示',
+      content,
+      showCancel: false
+    })
   },
   openToast: function (text) {
     wx.showToast({
@@ -98,8 +223,10 @@ Page({
       icon: 'loading'
     });
   },
-  submitData: function (formData) {
-    
+  submitData: function (formData) {  
+    if(formData.address == ' '){
+      formData.address = '';//空的办公地址要设置为空(placeholder问题)
+    } 
     wx.showModal({
       title: '是否确认提交此信息',
       content: '个人信息一旦填写后无法修改,请再次确保自己的个人信息无误',
@@ -136,9 +263,6 @@ Page({
       }
     });
   },
-
-  
-
   formSubmit:function (e) {
     const { formData, rules, messages } = {
           formData: e.detail.value,
@@ -173,7 +297,6 @@ Page({
     this.submitData(formData);
 
   },
-
   getUserinfo: function () {
     wx.request({
       url: urlList.getuserinfo,
@@ -186,15 +309,17 @@ Page({
             name: data.name,
             idcard: data.idcard,
             company: data.company,
+            companyid: data.companyid,
+            department: data.department,
+            departmentid: data.departmentid,
             address: data.address,
             phone: data.phone,
             balance: data.balance,
-            companyid: data.companyid,
             authority: data.authority,
             userid: data.id,
             level: data.level,
             admin: data.level != 3 ? true : false,
-
+            ledger: Boolean(data.ledger)
           }
           getApp().globalData.userInformation = userInformation;
           getApp().globalData.getuserInfo = true;

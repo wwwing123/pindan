@@ -22,3 +22,8 @@ form .tip{
   color:#000;
 }
 
+.weui-label.required::before {
+   content: "*";
+   display: inline-block;
+   color:red;
+ }

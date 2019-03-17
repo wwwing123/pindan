@@ -32,7 +32,7 @@ const findcompanyId = (name, foodList) => {
 
 const rules = {
   required: (value, name) => {
-    if (name == 'companyid' && value == '-1') {
+    if ((name == 'companyid' || name == 'departmentid') && value == '-1') {
       return false;
     } else if (name == 'address' || name == 'userid'){
       return true;
@@ -157,25 +157,35 @@ const checkInformation = () =>{
   }
 }
 
-const request = function(url, params, method, message, success, fail) {
+const request = function(req,url, params, method, message, success, fail) {
+  /**
+   * req = {
+   *    url:地址
+   *    params:请求参数
+   *    method: GET|POST
+   *    message: 请求加载过程的提示信息(loading提示信息)
+   *    success: code = 1 成功回调逻辑
+   *    fail: code != 1 失败回调逻辑
+   * }
+   */
   wx.showNavigationBarLoading();
-  if (message != "") {
+  if (req.message != "") {
     wx.showLoading({
-      title: message,
+      title: req.message,
     })
   }
   wx.request({
-    url: url,
-    data: params,
+    url: req.url,
+    data: req.params,
     header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
-    method: method,
+    method: req.method,
     success: function (msg) {
       wx.hideNavigationBarLoading();
       wx.hideLoading();
       if (msg.data.code == 1) {
-        success(msg);
+        req.success(msg);//成功回调逻辑
       } else {
-        fail(msg);
+        req.fail(msg);//失败回调逻辑
       }
     },
 
@@ -186,7 +196,7 @@ const request = function(url, params, method, message, success, fail) {
       wx.showToast({
         title: '网络错误',
         duration: 3000,
-        image:'../../images/shopcar/fail.png',
+        image:'../../../images/shopcar/fail.png',
         mask: true
       });
     },

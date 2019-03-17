@@ -130,18 +130,25 @@ Page({
       title: '正在下单',
       icon: 'loading'
     });
-    Util.request(urlList.placeOrder, data, 'POST', '正在下单', (msg) => {
-      this.getbalance();
-      this.updateShopcar(kind);
-      wx.showToast({
-        title: '下单成功',
-        icon: 'success',
-        duration: 1000
-      });
-    }, (msg) => {
-      let message = msg.data.msg ? msg.data.msg : '下单异常' //提示信息
-      Util.openAlert('下单失败', message);
-      Util.errorHandle(urlList.placeOrder, msg.data.code);//异常打印
+    Util.request({
+      url: urlList.placeOrder,
+      params: data,
+      method: 'POST',
+      message: '正在下单',
+      success: (msg) => {
+        this.getbalance();
+        this.updateShopcar(kind);
+        wx.showToast({
+          title: '下单成功',
+          icon: 'success',
+          duration: 1000
+        });
+      },
+      fail: (msg) => {
+        let message = msg.data.msg ? msg.data.msg : '下单异常' //提示信息
+        Util.openAlert('下单失败', message);
+        Util.errorHandle(urlList.placeOrder, msg.data.code);//异常打印
+      } 
     })
   },
 
@@ -234,10 +241,16 @@ Page({
       cancelText: "取消",
       success: (res) => {
         if (res.confirm) {
-          Util.request(urlList.finish, data, 'POST', '正在加载数据', (msg) => {
+          Util.request({
+            url: urlList.finish,
+            params: data,
+            method: "POST",
+            message: "正在加载数据",
+            success: (msg) => {
               this.refreshShopcar(e.currentTarget.dataset.ordertype);
               this.gotoMsg(data.finish_type);
-          },(msg)=> {
+            },
+            fail: (msg) => {
               Util.errorHandle(urlList.finish, msg.data.code);//异常打印
               let message = msg.data.msg ? msg.data.msg : '接口异常' //提示信息
               wx.showToast({//异常提示toast
@@ -246,6 +259,7 @@ Page({
                 image: '../../images/shopcar/fail.png',
                 mask: true
               });
+            }
           })            
         }else{
           return false;

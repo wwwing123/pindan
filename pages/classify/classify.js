@@ -30,7 +30,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(app.globalData.breakfastGoods)
+    if (app.globalData.userInformation.departmentid == -1 && app.globalData.userInformation.companyid != -1){
+      Util.openAlert('提示','请完善部门信息后再进行点餐',function(){
+        wx.navigateTo({
+          url: `/pages/user/Information/Information?type=updateDep`
+        })
+      })
+      return;
+    }
     this.setData({
       breakfastGoods: app.globalData.breakfastGoods,
       lunchGoods: app.globalData.lunchGoods,
@@ -41,7 +48,7 @@ Page({
       currentID: app.globalData.userInformation.companyid,
       currentName: app.globalData.userInformation.company,
       ifAdmin: app.globalData.userInformation.admin,
-      classifySeleted: app.globalData.breakfastGoods[0] ? app.globalData.breakfastGoods[0].id : -1
+      //classifySeleted: app.globalData.breakfastGoods[0] ? app.globalData.breakfastGoods[0].id : -1
     });
   },
 
@@ -65,14 +72,16 @@ Page({
       allFoodList: app.globalData.allFoodList,
       companyid: app.globalData.userInformation.companyid,
       currentID: app.globalData.userInformation.companyid,
-      currentName: app.globalData.userInformation.company,
+      currentName: this.data.currentName ? this.data.currentName : app.globalData.userInformation.company,
       ifAdmin: app.globalData.userInformation.admin
     })//更新最新菜单接口数据 
     this.getCompany();//获取管理员可以查看的公司
     //this.getShopcarData();//更新菜单接口数据
-    if (!this.data.classifySeleted){
+    if (this.data.classifySeleted == -1){
+      const typename = ["breakfastGoods", "lunchGoods", "dinnerGoods", "customGoods"]
+      const classifySeleted = app.globalData[typename[this.data.activeIndex]][0]
       this.setData({
-        classifySeleted: app.globalData.breakfastGoods[0].id,//更新总件数
+        classifySeleted: classifySeleted ? classifySeleted.id : -1,
       });
     }
     this.setData({
@@ -403,5 +412,8 @@ Page({
       }
       
     }
+  },
+  checkDep: function() {
+
   }
 })

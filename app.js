@@ -64,7 +64,7 @@ App({
       "custom": { index: 3, name: "customGoods" }
     }
     //获取商品信息
-    if (this.globalData.userInformation.companyid != -1) {
+    if (this.globalData.userInformation.companyid != -1 && this.globalData.userInformation.departmentid != -1) {
       for (let i in typename) {     
         wx.request({
           url: `${this.globalData.urlList.goodsNew}?type=${i}&companyid=${this.globalData.userInformation.companyid}`,
@@ -130,10 +130,12 @@ App({
               name: data.name,
               idcard: data.idcard,
               company: data.company,
+              companyid: data.companyid,
+              department: data.department,
+              departmentid: data.departmentid,
               address: data.address,
               phone: data.phone,
               balance: data.balance,
-              companyid: data.companyid,
               authority: data.authority,
               userid: data.id,
               level: data.level,
