@@ -1,18 +1,30 @@
 <view class="container">
+  <van-toast id="van-toast" />
   <view class="select page__bd">
     <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell">
             <view class="datebox">
-              <view class='date'>请选择日期:</view>
-              <picker class="dateSelect" bindchange="bindDateChange" value="{{date}}" mode="date" fields="month">
-                <view>{{date}}</view>
-              </picker> 
+              <view class="startDate">
+                <picker class="dateSelect" bindchange="bindDateChange" value="{{startDate}}" mode="date" fields="day" data-type="startDate">
+                  <view>{{startDate}}</view>
+                </picker>
+              </view>
+              <view style="padding:0 4rpx;"> ~ </view>
+              <view class="endDate">
+                <picker class="dateSelect" bindchange="bindDateChange" value="{{endDate}}" mode="date" fields="day" data-type="endDate">
+                  <view>{{endDate}}</view>
+                </picker>
+              </view> 
             </view>
             <view class="totalPrice" style="padding-left:10rpx;font-size:12pt;">总消费: {{totalPrice}}</view>
         </view>
     </view>
-  </view> 
-  <view class="page__bd" style="height:100%;padding-top:30rpx;">
+  </view>
+  <view  class="nodata" wx:if="{{list.length==0}}">   
+    <view class="iconfont icon-nodata"></view>
+    <view class="tip">暂无统计数据</view>
+  </view>  
+  <view class="page__bd" style="height:100%;padding-top:30rpx;" wx:else>
     <view style="height:100%;">
         <view class="title">
           <view>菜名</view>
@@ -21,8 +33,8 @@
           <view>数量</view>
           <view>金额</view>
         </view>
-        <scroll-view class="orderlist" scroll-y style="height:100%;">
-          <block wx:for="{{list}}" wx:key="id" wx:for-item="list">
+        <scroll-view class="orderlist" scroll-y="true" style="height:{{windowHeight}}px">
+          <block wx:for="{{list}}" wx:key="list.id" wx:for-item="list">
               <view class="box">
                 <view>{{list.name}}</view>
                 <view>{{list.id}}</view>

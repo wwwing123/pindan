@@ -1,3 +1,7 @@
 {
-  "navigationBarTitleText": "总单位月菜品统计"
+  "navigationBarTitleText": "总单位菜品统计",
+  "disableScroll": true,
+  "usingComponents": {
+    "van-toast": "../../../../vantComponents/toast/index"
+  }
 }

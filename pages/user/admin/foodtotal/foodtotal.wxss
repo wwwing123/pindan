@@ -14,15 +14,14 @@
   font-size:12pt;
 }
 
-.page__bd .dateSelect{
-  font-size:12pt;
-  margin-left:30rpx;
+.page__bd .datebox view{
+  display: inline-block;
 }
 
-.weui-cell .date{
+/* .weui-cell .date{
   text-align:center;
   font-size:12pt;
-}
+} */
 
 .title{
   font-size:12pt;
@@ -46,4 +45,24 @@
   width:19.9%;
   text-align:center;
   padding:14rpx 0;
+}
+
+.nodata{
+  position:absolute;
+  width:100%;
+  left:0;
+  top:50%;
+  margin-top:-120px;
+}
+
+.nodata .icon-nodata{
+  font-size:76pt;
+  text-align:center;
+  color:#B5B5B5;
+}
+
+.nodata .tip{
+  text-align:center;
+  font-size:12pt;
+  color:#B5B5B5;
 }
