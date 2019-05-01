@@ -7,6 +7,7 @@
     "pages/user/Information/Information",
     "pages/user/orderlist/orderlist",
     "pages/user/customlist/customlist",
+    "pages/user/orderdetail/orderdetail",
     "pages/user/admin/admin",
     "pages/user/admin/getorder/getorder",
     "pages/user/admin/getcustom/getcustom",

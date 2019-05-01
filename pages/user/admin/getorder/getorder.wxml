@@ -32,6 +32,7 @@
     </view> 
     <view class="page__bd">
         <view class="title">
+          <view class="userid">用户id</view>
           <view class="name">姓名</view>
           <view class="phone">手机号</view>
           <view class="food">菜品</view>
@@ -44,6 +45,7 @@
           <view class="content" bindtouchmove="move" style="">
             <block wx:for="{{list}}" wx:key="id" wx:for-item="list">
                 <view class="listobox">
+                    <view class="userid">{{list.userid}}</view>
                     <view class="name">{{list.name}}</view>
                     <view class="phone">{{list.phone}}</view>
                     <view class="food">

@@ -147,6 +147,16 @@ Page({
       showTop:true
     });
 
+  },
+
+  goDetail: function (e) {
+    if(this.data.ifcustom) {//定制不跳转
+      return;
+    }
+    let data = JSON.stringify(e.currentTarget.dataset.orderdetail);
+    wx.navigateTo({
+      url: `/pages/user/orderdetail/orderdetail?orderDetail=${data}`
+    })
   }
 
 

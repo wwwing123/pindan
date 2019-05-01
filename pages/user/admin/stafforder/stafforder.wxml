@@ -5,7 +5,7 @@
     </view> 
     <view class="page__bd" wx:else>
         <scroll-view class="weui-form-preview" scroll-y="true"  bindscrolltolower="loadmore" bindtouchstart="start" bindtouchend="end" style="bottom:{{loadMoreHeight}}rpx;height:{{windowHeight}}px;background:#EEEEEE;" scroll-top="{{scrollTop}}" scroll-with-animation="true" bindscroll="scrolling">
-          <view class="content" wx:for="{{orderlist}}" wx:key="ordernum" wx:for-item="orderlist">
+          <view class="content" wx:for="{{orderlist}}" wx:key="ordernum" wx:for-item="orderlist" bindtap="goDetail" data-orderDetail="{{orderlist}}">
             <view class="weui-form-preview__hd">
                 <view class="weui-form-preview__label">{{useTitle}}</view>
                 <view class="weui-form-preview__value_in-hd">{{orderlist.totalprice}}</view>

@@ -132,6 +132,13 @@ Page({
       showTop:true
     });
 
+  },
+
+  goDetail: function(e){
+    let data = JSON.stringify(e.currentTarget.dataset.orderdetail);
+    wx.navigateTo({
+      url: `/pages/user/orderdetail/orderdetail?orderDetail=${data}`     
+    })
   }
 
 

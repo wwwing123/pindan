@@ -30,7 +30,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(app.globalData.breakfastGoods)
+    console.log(app.globalData.userInformation.companyid)
     this.setData({
       breakfastGoods: app.globalData.breakfastGoods,
       lunchGoods: app.globalData.lunchGoods,
@@ -64,12 +64,16 @@ Page({
       customGoods: app.globalData.customGoods,
       allFoodList: app.globalData.allFoodList,
       companyid: app.globalData.userInformation.companyid,
-      currentID: app.globalData.userInformation.companyid,
-      currentName: app.globalData.userInformation.company,
+      
       ifAdmin: app.globalData.userInformation.admin
     })//更新最新菜单接口数据 
     this.getCompany();//获取管理员可以查看的公司
-    //this.getShopcarData();//更新菜单接口数据
+    if (this.currentID === -1 || this.currentName === '') {
+      this.setData({
+        currentID: app.globalData.userInformation.companyid,
+        currentName: app.globalData.userInformation.company,
+      });
+    }
     if (!this.data.classifySeleted){
       this.setData({
         classifySeleted: app.globalData.breakfastGoods[0].id,//更新总件数
@@ -351,7 +355,7 @@ Page({
   },
 
   getCompany: function () {
-    if(!this.data.ifAdmin){
+    if(!this.data.ifAdmin || this.data.companyid == -1){
       return;
     }
     wx.request({

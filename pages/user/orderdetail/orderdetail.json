@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "定单详情",
+  "usingComponents": {
+    "van-card": "../../../vantComponents/card/index"
+  }
+}

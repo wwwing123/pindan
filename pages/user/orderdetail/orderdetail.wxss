@@ -1,0 +1,86 @@
+.page {
+  background:#eee;
+  padding-bottom:20rpx;
+}
+
+.orderInfo,.goodlist,.price {
+  margin-top:10px;
+  padding:0 40rpx;
+  background:#fff;
+}
+
+.price .weui-form-preview__value{
+  color: #FF4040;
+  font-size:18pt;
+}
+
+.orderInfo .title,
+.goodlist .title {
+  color:#333;
+  font-size:12pt;
+  border-bottom:1px solid #eee;
+  line-height:100rpx;
+}
+
+.weui-form-preview__bd{
+  padding:10px 0;
+  font-size:12pt;
+  text-align: left;
+  line-height: 72rpx;
+}
+
+.goodlist{
+  padding-bottom:40rpx;
+}
+
+
+
+.footerLabel {
+  display:inline-block;
+  font-size:14px;
+}
+
+.footerPrice {
+  display:inline-block;
+  width:150rpx;
+  font-size:14px;
+  color:#FF4040;
+  text-align:right;
+}
+
+.goodlist .list {
+  margin-top: 20rpx;
+  background:#eee;
+  padding:20rpx 30rpx;
+  font-size:18pt;
+}
+
+.foodName {
+  font-size:18pt;
+  position:relative;
+}
+
+.foodPrice {
+  position:absolute;
+  color:#FF4040;
+  right:0;
+  top:0;
+}
+
+.foodCount{
+  margin-top:10rpx;
+  text-align: right;
+  font-size:12pt;
+}
+
+.foodTotal {
+  position: relative;
+}
+
+.total {
+  position:absolute;
+  right:0;
+  top:0;
+  color:#FF4040;
+}
+
