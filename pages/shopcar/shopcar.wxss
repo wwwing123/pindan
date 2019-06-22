@@ -84,6 +84,10 @@
 .tr .name{
   width:54%;
 }
+.tr .name .discount{
+  font-size:10pt;
+  color:#FF4040;
+}
 
 .tr .name.th,
 .tr .name.td{
@@ -114,22 +118,55 @@
 .reduceCart{
   width:40rpx;
   height:40rpx;
-  position:absolute;
   color:#0096FF;
   font-size:16pt;
   text-align:center;
-  top:0;
-
 }
 
-.addCart{
-  right:0;
+.table .tr .count {
+  display: flex;
+  align-items: flex-start;
 }
 
-.reduceCart{
-  left:0;
+.table .tr .price {
+  line-height: 60rpx;
 }
 
-table tr .count{
+.table .tr .count .num {
+  line-height: 60rpx;
+  flex:1;
+}
+
+.reflesh {
+  position:fixed;
+  right:30rpx;
+  bottom:48rpx;
+  width:100rpx;
+  height:100rpx;
+  border-radius:50%;
+  background:#868686;
+  opacity:0.9;
+  color:#fff;
+  font-size:12pt;
+  text-align:center;
+  line-height:100rpx;
+  z-index:2;
+}
+
+.icon-reflesh{
+  font-size:25pt;
+}
+
+/* .table .tr .count.discountBar{
   position:relative;
+  line-height: 90rpx;
 }
+
+.table .discountBar .reduceCart,
+.table .discountBar .addCart{
+  top:6px;
+}
+
+.table .tr .discountPrice {
+  line-height: 90rpx;
+} */

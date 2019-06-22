@@ -1,5 +1,6 @@
 const Util = require("../../utils/util.js");
 const urlList = require("../../config.js");
+import Toast from '../../vantComponents/toast/toast';
 
 const app = getApp();
 Page({
@@ -63,8 +64,7 @@ Page({
       dinnerGoods: app.globalData.dinnerGoods,
       customGoods: app.globalData.customGoods,
       allFoodList: app.globalData.allFoodList,
-      companyid: app.globalData.userInformation.companyid,
-      
+      companyid: app.globalData.userInformation.companyid,      
       ifAdmin: app.globalData.userInformation.admin
     })//更新最新菜单接口数据 
     this.getCompany();//获取管理员可以查看的公司
@@ -113,7 +113,8 @@ Page({
     }    
     let kind = e.currentTarget.dataset.type,
         shopcar = this.data.shopcar, 
-        id = e.currentTarget.dataset.id;
+        id = e.currentTarget.dataset.id,
+        discount_size = e.currentTarget.dataset.discount_size;
     // if (shopcar[kind].status != 3) {
     //   return false;
     // }
@@ -135,6 +136,9 @@ Page({
       shopcar[kind].list[id] = 1;
     }else{
       shopcar[kind].list[id] += 1;
+    }
+    if (discount_size === shopcar[kind].list[id]) {
+      this.discountTip(discount_size) //弹出提示 超出按原价计算
     }
     this.totalCount(kind);
     this.setData({
@@ -169,10 +173,27 @@ Page({
     let shopcarlist = shopcar[kind].list;
     for (let i in shopcarlist) {
       const goodsItem = Util.findFoods(i, allFoodList);
-      const price = goodsItem.price;
+      const price = goodsItem.price,
+      discount_size = goodsItem.discount_size,
+      discount_price = goodsItem.discount_price;
+      if (discount_size > 0) {
+        // 计算公式
+        /* 三种情况
+            * 总价 = 优惠价*优惠数量+原价*（数量-优惠数量）
+            * 总价 = 优惠价*优惠数量
+            * 总价 = 原价*数量
+        */
+        if (discount_size < shopcarlist[i]) {
+          total += discount_price * discount_size + price * (shopcarlist[i] - discount_size)
+        } else {
+          total += discount_price * shopcarlist[i]
+        }
+      } else {
+        total += price * shopcarlist[i]
+      }
       count += shopcarlist[i]
-      total += price * shopcarlist[i]
     }
+    
     shopcar[kind].count = count;
     shopcar[kind].total = total.toFixed(2);
       
@@ -206,7 +227,9 @@ Page({
         name: goodsItem.name,
         price: goodsItem.price,
         description: goodsItem.illustration,
-        source: goodsItem.img
+        source: goodsItem.img,
+        discount_size: goodsItem.discount_size,
+        discount_price: goodsItem.discount_price,
       }
     })
     this.Modal.showModal();
@@ -343,6 +366,7 @@ Page({
       currentName: this.data.company[e.detail.value]
     });
     app.globalData.orderCompanyId = this.data.currentID;
+    app.globalData.orderCompanyName = this.data.currentName;
     this.getShopcarData();
     this.refreshShopcar();
     this.setData({
@@ -407,5 +431,12 @@ Page({
       }
       
     }
+  },
+
+  discountTip: function(num) {
+    Toast({
+      message: `优惠商品只优惠${num}份,超出按原价计算`,
+      duration: 1500,
+    });
   }
 })

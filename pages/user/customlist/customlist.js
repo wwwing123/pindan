@@ -104,7 +104,7 @@ Page({
               id: data[i].id,
               remain: data[i].remain
             };
-            obj.foods = (data[i].order_type == 0 || data[i].order_type == 1) ? data[i].illustration : JSON.parse(data[i].illustration);
+            obj.foods = (data[i].order_type == 0 || data[i].order_type == 1) ? data[i].illustration : this.foodsHandler(JSON.parse(data[i].illustration));
             orderlist.push(obj);
           }
           this.setData({
@@ -133,6 +133,29 @@ Page({
       showTop:true
     });
 
+  },
+  foodsHandler(foodslist) {
+    let list = [];
+    foodslist.forEach((item) => {
+      if (item.discount_size > 0) {
+        if (item.discount_size >= item.count) {
+          item.price = item.discount_price;
+          item.name = `${item.name}(优)`;
+          list.push(item);
+        } else {
+          const handitem = JSON.parse(JSON.stringify(item));
+          item.count = item.count - item.discount_size;
+          list.push(item);
+          handitem.count = item.discount_size;
+          handitem.price = item.discount_price;
+          handitem.name = `${item.name}(优)`;
+          list.push(handitem);
+        }
+      } else {
+        list.push(item)
+      }
+    })
+    return list;
   }
 
 

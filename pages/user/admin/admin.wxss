@@ -7,7 +7,7 @@ page{
   margin-top:20rpx;
 }
 
-.icon-userinfo,.icon-orderlist,.icon-admin,.icon-consume,.icon-tongji{
+.icon-userinfo,.icon-orderlist,.icon-admin,.icon-consume,.icon-tongji,.icon-menu{
   font-size:14pt;
   margin-right:10pt;
   color:#0096FF;

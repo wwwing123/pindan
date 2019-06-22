@@ -16,10 +16,11 @@
     "pages/user/admin/stafflist/stafflist",
     "pages/user/admin/stafforder/stafforder",
     "pages/user/admin/consumelist/consumelist",
-    "pages/user/admin/consumetotal/consumetotal",   
+    "pages/user/admin/consumetotal/consumetotal",
     "pages/user/admin/staffcustom/staffcustom",
     "pages/user/admin/companytotal/companytotal",
     "pages/user/admin/foodtotal/foodtotal",
+    "pages/user/admin/foodlist/foodlist",
     "pages/msg/msg",
     "pages/logs/logs"
   ],
@@ -61,5 +62,6 @@
         "text": "个人中心"
       }
     ]
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

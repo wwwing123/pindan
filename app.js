@@ -142,6 +142,7 @@ App({
             }
             this.globalData.userInformation = userInformation;
             this.globalData.orderCompanyId = data.companyid;
+            this.globalData.orderCompanyName = data.company;
             if (userInformation.idcard && userInformation.company) {
               this.globalData.getuserInfo = true;//是否完善个人信息
             }
@@ -179,6 +180,7 @@ App({
     //count总数，total总价格
     //status定餐状态 0已放弃 1已取餐 2已下单 3未下单
     orderCompanyId:null,
+    orderCompanyName: null,
     shopcar:[
       {
         name:"breakfast",

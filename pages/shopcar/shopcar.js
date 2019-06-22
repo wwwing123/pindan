@@ -1,5 +1,6 @@
 const Util = require("../../utils/util.js");
 const urlList = require("../../config.js");
+import Toast from '../../vantComponents/toast/toast';
 const app = getApp();
 Page({
 
@@ -8,7 +9,8 @@ Page({
    */
   data: {
     shopcar: [],
-    allFoodList:[]     
+    allFoodList:[],
+    refleshClick: true     
   },
 
   /**
@@ -63,6 +65,8 @@ Page({
         obj.price = item.price;
         obj.id = item.id;
         obj.name = item.name;
+        obj.discount_price = item.discount_price;
+        obj.discount_size = item.discount_size;
         list.push(obj)
       }
       shopcar[j].list = list;
@@ -319,7 +323,8 @@ Page({
     }
     let kind = e.currentTarget.dataset.type,
       shopcar = app.globalData.shopcar,
-      id = e.currentTarget.dataset.id;
+      id = e.currentTarget.dataset.id,
+      discount_size = e.currentTarget.dataset.discount_size;
     if (shopcar[kind].status != 3) {
       return false;
     }
@@ -331,6 +336,9 @@ Page({
       shopcar[kind].list[id] = 1;
     } else {
       shopcar[kind].list[id] += 1;
+    }
+    if (discount_size === shopcar[kind].list[id]) {
+      this.discountTip(discount_size) //弹出提示 超出按原价计算
     }
     this.totalCount(kind);
     this.IntegrationData();
@@ -357,9 +365,25 @@ Page({
     let shopcarlist = shopcar[kind].list;
     for (let i in shopcarlist) {
       const goodsItem = Util.findFoods(i, allFoodList);
-      const price = goodsItem.price;
+      const price = goodsItem.price,
+      discount_size = goodsItem.discount_size,
+      discount_price = goodsItem.discount_price;
+      if (discount_size > 0) {
+        // 计算公式
+        /* 三种情况
+            * 总价 = 优惠价*优惠数量+原价*（数量-优惠数量）
+            * 总价 = 优惠价*优惠数量
+            * 总价 = 原价*数量
+        */
+        if (discount_size < shopcarlist[i]) {
+          total += discount_price * discount_size + price * (shopcarlist[i] - discount_size)
+        } else {
+          total += discount_price * shopcarlist[i]
+        }
+      } else {
+        total += price * shopcarlist[i]
+      }
       count += shopcarlist[i]
-      total += price * shopcarlist[i]
     }
     shopcar[kind].count = count;
     shopcar[kind].total = total.toFixed(2);
@@ -392,8 +416,55 @@ Page({
         }
       }
     });
-  }
-  
-
-  
+  },
+  discountTip: function (num) {
+    Toast({
+      message: `优惠商品只优惠${num}份,超出按原价计算`,
+      duration:1500,
+    });
+  },
+  reflesh: function () {
+    if (!this.data.refleshClick) {
+      Toast({
+        message: `点击过于频繁，请稍后再试！`,
+        duration: 1000
+      });
+      return;
+    }
+    const typename = {
+      "breakfast": { index: 0, name: "breakfastGoods" },
+      "lunch": { index: 1, name: "lunchGoods" },
+      "dinner": { index: 2, name: "dinnerGoods" }
+    }
+    wx.showLoading({
+      title: '数据加载中',
+      icon: 'loading'
+    });
+    for (let i in typename) {
+      wx.request({
+        url: `${urlList.getUnfinishedOrder}?type=${i}`,
+        header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
+        method: 'GET',
+        success: (msg) => {
+          wx.hideLoading();
+          if (msg.data.code == 6) {
+            const kind = typename[i].index
+            if (app.globalData.shopcar[kind].status == 2) {
+              this.refreshShopcar(kind);
+            }
+          } else {
+            Util.errorHandle(urlList.getUnfinishedOrder, msg.data.code);
+          }
+        }
+      })
+    }
+    this.setData({
+      refleshClick: false
+    })
+    setTimeout(() => {
+      this.setData({
+        refleshClick: true
+      })
+    },5000)
+  } 
 })

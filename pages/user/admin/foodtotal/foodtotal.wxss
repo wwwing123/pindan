@@ -66,3 +66,7 @@
   font-size:12pt;
   color:#B5B5B5;
 }
+
+.page__bd .box>view text {
+  color:red;
+}

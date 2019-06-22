@@ -37,6 +37,7 @@ Page({
               name: data[i].name,
               size: data[i].size,
               price: data[i].price,
+              isdiscount: Boolean(data[i].isdiscount),
               total: (Number(data[i].price) * Number(data[i].size)).toFixed(2)
             })
           }

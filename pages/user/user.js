@@ -63,6 +63,7 @@ Page({
         if (msg.data.code == 1) {
           let userInformation = this.data.userInformation;
           userInformation.balance = msg.data.data.balancce;
+          app.globalData.userInformation.balance = userInformation.balance
           this.setData({
             userInformation
           })

@@ -12,6 +12,8 @@
 	"appid": "wx48f6b8eb475538fb",
 	"projectname": "pindan",
 	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,

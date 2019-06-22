@@ -30,3 +30,7 @@
   text-align:center;
   padding:14rpx 0;
 }
+
+.page__bd .box>view text {
+  color:red;
+}

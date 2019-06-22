@@ -199,6 +199,7 @@ Page({
           getApp().globalData.userInformation = userInformation;
           getApp().globalData.getuserInfo = true;
           getApp().globalData.orderCompanyId = userInformation.companyid
+          getApp().globalData.orderCompanyName = userInformation.company
           getApp().getShopcarData();//加载菜单数据
           wx.setStorageSync('userInformation', userInformation);
         } else {

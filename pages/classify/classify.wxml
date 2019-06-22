@@ -1,4 +1,5 @@
-<view class="container">   
+<view class="container">
+<van-toast id="van-toast" />   
   <view class="page__bd">
       <view class="weui-tab">
           <view class="weui-navbar">
@@ -32,13 +33,18 @@
                           </view>
                           <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                               <view class="weui-media-box__title">{{foods.name}}</view>
-                              <view class="weui-media-box__desc">{{foods.price}}</view>
+                              <view wx:if="{{foods.discount_size>0}}" class="weui-media-box__desc">{{foods.discount_price}}</view>
+                              <view class="weui-media-box__desc {{foods.discount_size>0 ? 'discount-price' : ''}}">{{foods.price}}</view>
+                          </view>
+                          <view wx:if="{{foods.discount_size>0}}" class="discount">
+                            <view class="discount_icon icon-discount iconfont"></view>
+                            每单限{{foods.discount_size}}份优惠
                           </view>
                           <view class="countBar">
                             <view class="reduceCart icon-jian iconfont {{!shopcar[0].list[foods.id] ? 'hide' : ''}}" catchtap="tapReduceCart" data-id="{{foods.id}}" data-price="foods.price" data-type="0">
                             </view>
                             <view class="count">{{shopcar[0].list[foods.id]}}</view>
-                            <view class="addCart icon-jia iconfont" catchtap="tapAddCart" data-id="{{foods.id}}" data-type="0">
+                            <view class="addCart icon-jia iconfont" catchtap="tapAddCart" data-id="{{foods.id}}" data-discount_size="{{foods.discount_size}}" data-type="0">
                             </view>             
                           </view>
                         </view>
@@ -70,13 +76,18 @@
                           </view>
                           <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                               <view class="weui-media-box__title">{{foods.name}}</view>
-                              <view class="weui-media-box__desc">{{foods.price}}</view>
+                              <view wx:if="{{foods.discount_size>0}}" class="weui-media-box__desc">{{foods.discount_price}}</view>
+                              <view class="weui-media-box__desc {{foods.discount_size>0 ? 'discount-price' : ''}}">{{foods.price}}</view>
+                          </view>
+                          <view wx:if="{{foods.discount_size>0}}" class="discount">
+                            <view class="discount_icon icon-discount iconfont"></view>
+                            每单限{{foods.discount_size}}份优惠
                           </view>
                           <view class="countBar">
                             <view class="reduceCart icon-jian iconfont {{!shopcar[1].list[foods.id] ? 'hide' : ''}}" catchtap="tapReduceCart" data-id="{{foods.id}}" data-price="foods.price" data-type="1">
                             </view>
                             <view class="count">{{shopcar[1].list[foods.id]}}</view>
-                            <view class="addCart icon-jia iconfont" catchtap="tapAddCart" data-id="{{foods.id}}" data-type="1">
+                            <view class="addCart icon-jia iconfont" catchtap="tapAddCart" data-id="{{foods.id}}" data-discount_size="{{foods.discount_size}}" data-type="1">
                             </view>             
                           </view>
                         </view>
@@ -108,13 +119,18 @@
                           </view>
                           <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                               <view class="weui-media-box__title">{{foods.name}}</view>
-                              <view class="weui-media-box__desc">{{foods.price}}</view>
+                              <view wx:if="{{foods.discount_size>0}}" class="weui-media-box__desc">{{foods.discount_price}}</view>
+                              <view class="weui-media-box__desc {{foods.discount_size>0 ? 'discount-price' : ''}}">{{foods.price}}</view>
+                          </view>
+                          <view wx:if="{{foods.discount_size>0}}" class="discount">
+                            <view class="discount_icon icon-discount iconfont"></view>
+                            每单限{{foods.discount_size}}份优惠
                           </view>
                           <view class="countBar">
                             <view class="reduceCart icon-jian iconfont {{!shopcar[2].list[foods.id] ? 'hide' : ''}}" catchtap="tapReduceCart" data-id="{{foods.id}}" data-price="foods.price" data-type="2">
                             </view>
                             <view class="count">{{shopcar[2].list[foods.id]}}</view>
-                            <view class="addCart icon-jia iconfont" catchtap="tapAddCart" data-id="{{foods.id}}" data-type="2">
+                            <view class="addCart icon-jia iconfont" catchtap="tapAddCart" data-id="{{foods.id}}" data-discount_size="{{foods.discount_size}}" data-type="2">
                             </view>             
                           </view>
                         </view>
@@ -141,13 +157,18 @@
                           </view>
                           <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                               <view class="weui-media-box__title">{{foods.name}}</view>
-                              <view class="weui-media-box__desc">{{foods.price}}</view>
+                              <view wx:if="{{foods.discount_size>0}}" class="weui-media-box__desc">{{foods.discount_price}}</view>
+                              <view class="weui-media-box__desc {{foods.discount_size>0 ? 'discount-price' : ''}}">{{foods.price}}</view>
+                          </view>
+                          <view wx:if="{{foods.discount_size>0}}" class="discount">
+                            <view class="discount_icon icon-discount iconfont"></view>
+                            每单限{{foods.discount_size}}份优惠
                           </view>
                           <view class="countBar">
                             <view class="reduceCart icon-jian iconfont {{!shopcar[3].list[foods.id] ? 'hide' : ''}}" catchtap="tapReduceCart" data-id="{{foods.id}}" data-price="foods.price" data-type="3">
                             </view>
                             <view class="count">{{shopcar[3].list[foods.id]}}</view>
-                            <view class="addCart icon-jia iconfont" catchtap="tapAddCart" data-id="{{foods.id}}" data-type="3">
+                            <view class="addCart icon-jia iconfont" catchtap="tapAddCart" data-id="{{foods.id}}" data-discount_size="{{foods.discount_size}}" data-type="3">
                             </view>             
                           </view>
                         </view>
@@ -184,8 +205,15 @@
             <view class="name">{{foodsSeleted.name}}</view>
             <view class="info">{{foodsSeleted.description}}</view>
             <view class="addCart">
-              <view class="price">{{foodsSeleted.price}}</view>
-              <view class="add" data-id="{{foodsSeleted.id}}" catchtap="tapAddCart" data-cart="1" data-type="{{activeIndex}}">加入购物车</view>
+              <view class="price">
+                <view wx:if="{{foodsSeleted.discount_size>0}}">{{foodsSeleted.discount_price}}</view>
+                <view class="{{foodsSeleted.discount_size>0 ? 'discount-price' : ''}}">{{foodsSeleted.price}}</view>
+              </view>              
+              <view class="add" data-id="{{foodsSeleted.id}}" data-discount_size="{{foodsSeleted.discount_size}}" catchtap="tapAddCart" data-cart="1" data-type="{{activeIndex}}">加入购物车</view>
+            </view>
+            <view wx:if="{{foodsSeleted.discount_size>0}}" class="discount">
+              <view class="discount_icon icon-discount iconfont"></view>
+              每单限{{foodsSeleted.discount_size}}份优惠
             </view>
           </view>            
       </view>

@@ -157,11 +157,11 @@ page {
 }
 
 .shopcar .selectComp{
-  width:300rpx; 
+  width:60%;
+  padding:0 50rpx; 
   line-height:100rpx;
-  text-align:right;
   color:#fff;
-  font-size:10pt;
+  font-size:14pt;
 }
 
 .shopcar .selectComp picker{
@@ -169,7 +169,7 @@ page {
 }
 
 .shopcar .selectComp picker text{
-  width:54%;
+  width:65%;
   overflow:hidden;
   white-space:nowrap;
   display:inline-block;

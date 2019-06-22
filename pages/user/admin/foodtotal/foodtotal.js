@@ -158,6 +158,7 @@ Page({
               id: `${data[i].id}(${this.data.foodType[data[i].order_type]})`,
               size: data[i].size,
               price: data[i].price,
+              isdiscount: Boolean(data[i].isdiscount),
               total: (Number(data[i].price) * Number(data[i].size)).toFixed(2)
             })
           }

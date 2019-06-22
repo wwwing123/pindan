@@ -36,7 +36,7 @@
         <scroll-view class="orderlist" scroll-y="true" style="height:{{windowHeight}}px">
           <block wx:for="{{list}}" wx:key="list.id" wx:for-item="list">
               <view class="box">
-                <view>{{list.name}}</view>
+                <view>{{list.name}}<text>{{list.isdiscount ? '(优)' : ''}}</text></view>
                 <view>{{list.id}}</view>
                 <view>{{list.price}}</view>
                 <view>{{list.size}}</view>

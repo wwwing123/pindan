@@ -1,6 +1,6 @@
 {
   "usingComponents": {
     "dialog": "/components/dialog",
-    "van-toast": "../../vantComponents/toast/index"
+    "van-toast": "../../../../vantComponents/toast/index"
   }
 }

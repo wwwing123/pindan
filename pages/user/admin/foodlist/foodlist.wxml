@@ -1,0 +1,75 @@
+<view class="container">
+<van-toast id="van-toast" />   
+  <view class="page__bd">
+      <view class="weui-tab">
+          <view class="weui-navbar">
+              <block wx:for="{{tabs}}" wx:key="*this">
+                  <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick" style="background:#fff">
+                      <view class="weui-navbar__title">{{item}}</view>
+                  </view>
+              </block>
+              <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);width:24.99%;"></view>
+          </view>
+          <view class="weui-tab__panel">
+              <view class="weui-tab__content" wx:for="{{classifyList}}" wx:for-index="idx" wx:for-item="foodlist" wx:key="id" hidden="{{activeIndex != idx}}">
+                <view class="main">
+                  <scroll-view class="classifySelect" scroll-y="true">
+                    <view class="classifyItem {{classifySeleted==classify.id ? 'active' : ''}}" wx:for="{{foodlist}}" wx:for-item="classify" wx:key="classifid" data-id="{{classify.id}}" bindtap="tapClassify" wx:if="{{classify.goodslist.length>0}}">
+                      {{classify.name}}
+                    </view>
+                  </scroll-view>
+                  <view class="foodSelect">
+                    <block wx:for="{{foodlist}}" wx:key="foodid" wx:for-item="goods">
+                      <scroll-view class="foodSelectItem {{classifySeleted!=goods.id ? 'hide' : ''}}" scroll-y="ture">
+                      <view class="foods" wx:for="{{goods.goodslist}}" wx:key="id" wx:for-item="foods">
+                        <view class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" data-id="{{foods.id}}">
+                          <view class="weui-media-box__hd weui-media-box__hd_in-appmsg" catchtap='_onShowModal' data-id="{{foods.id}}">
+                              <image class="weui-media-box__thumb" src="{{foods.img}}" />
+                          </view>
+                          <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                              <view class="weui-media-box__title">{{foods.name}}</view>
+                              <view wx:if="{{foods.discount_size>0}}" class="weui-media-box__desc">{{foods.discount_price}}</view>
+                              <view class="weui-media-box__desc {{foods.discount_size>0 ? 'discount-price' : ''}}">{{foods.price}}</view>
+                          </view>
+                          <view wx:if="{{foods.discount_size>0}}" class="discount">
+                            <view class="discount_icon icon-discount iconfont"></view>
+                            每单限{{foods.discount_size}}份优惠
+                          </view>
+                        </view>
+                      </view>
+                      </scroll-view>
+                    </block>
+                  </view>
+                </view>
+              </view>
+          </view>
+      </view>
+  </view>
+  <view class="shopcar">
+    <view class="selectComp">
+      <picker bindchange="companyPickerChange" range="{{company}}">
+        <text>{{currentName}}</text>
+      </picker> 
+    </view>
+  </view>
+  <dialog id="modal">    
+      <view class='modal-body'>
+          <image src="{{foodsSeleted.source}}"></image>
+          <view class="descript">
+            <view class="name">{{foodsSeleted.name}}</view>
+            <view class="info">{{foodsSeleted.description}}</view>
+            <view class="addCart">
+              <view class="price">
+                <view wx:if="{{foodsSeleted.discount_size>0}}">{{foodsSeleted.discount_price}}</view>
+                <view class="{{foodsSeleted.discount_size>0 ? 'discount-price' : ''}}">{{foodsSeleted.price}}</view>
+              </view>              
+              <view class="add" data-id="{{foodsSeleted.id}}" data-discount_size="{{foodsSeleted.discount_size}}" catchtap="tapAddCart" data-cart="1" data-type="{{activeIndex}}">加入购物车</view>
+            </view>
+            <view wx:if="{{foodsSeleted.discount_size>0}}" class="discount">
+              <view class="discount_icon icon-discount iconfont"></view>
+              每单限{{foodsSeleted.discount_size}}份优惠
+            </view>
+          </view>            
+      </view>
+  </dialog> 
+</view>

@@ -1,4 +1,5 @@
 <view class="container">
+  <van-toast id="van-toast" />
   <view class="empty" wx:if="{{shopcar[0].count<=0 && shopcar[1].count<=0 && shopcar[2].count<=0 && shopcar[3].count<=0}}" >
     <view class="iconfont icon-gouwuche1"></view>
     <view class="text">购物车还是空的</view>
@@ -20,13 +21,16 @@
               <view class="th">单价</view>
           </view>
           <view class="tr" wx:for="{{shopcar[0].list}}" wx:key="id" wx:for-item="foods">
-              <view class="td name">{{foods.name}}</view>
-              <view class="td count" style="position:relative;">
-                {{foods.count}}
-                <view class="reduceCart icon-jian iconfont" catchtap="tapReduceCart" data-id="{{foods.id}}" data-price="foods.price" data-type="0" wx:if="{{shopcar[0].status==3}}"></view>
-                <view class="addCart icon-jia iconfont" catchtap="tapAddCart" data-id="{{foods.id}}" data-type="0" wx:if="{{shopcar[0].status==3}}"></view>
+              <view class="td name">
+                {{foods.name}}
+                <view class="discount" wx:if="{{foods.discount_size>0}}">含{{foods.count > foods.discount_size ? foods.discount_size : foods.count}}份优惠商品，优惠价:{{foods.discount_price}}</view>
               </view>
-              <view class="td">{{foods.price}}</view>
+              <view class="td count {{foods.discount_size>0 ? 'discountBar' : ''}}" style="position:relative;">
+                <view class="reduceCart icon-jian iconfont" catchtap="tapReduceCart" data-id="{{foods.id}}" data-price="foods.price" data-type="0" wx:if="{{shopcar[0].status==3}}"></view>
+                <view class="num">{{foods.count}}</view>
+                <view class="addCart icon-jia iconfont" catchtap="tapAddCart" data-id="{{foods.id}}" data-discount_size="{{foods.discount_size}}" data-type="0" wx:if="{{shopcar[0].status==3}}"></view>
+              </view>
+              <view class="td price {{foods.discount_size>0 ? 'discountPrice' : ''}}">{{foods.price}}</view>
           </view>
           <view class="total">总计: {{shopcar[0].total}}</view>   
       </view>
@@ -51,13 +55,16 @@
               <view class="th">单价</view>
           </view>
           <view class="tr" wx:for="{{shopcar[1].list}}" wx:key="id" wx:for-item="foods">
-              <view class="td name">{{foods.name}}</view>
-              <view class="td count" style="position:relative;">
-                {{foods.count}}
-                <view class="reduceCart icon-jian iconfont" catchtap="tapReduceCart" data-id="{{foods.id}}" data-price="foods.price" data-type="1" wx:if="{{shopcar[1].status==3}}"></view>
-                <view class="addCart icon-jia iconfont" catchtap="tapAddCart" data-id="{{foods.id}}" data-type="1" wx:if="{{shopcar[1].status==3}}"></view>
+              <view class="td name">
+                {{foods.name}}
+                <view class="discount" wx:if="{{foods.discount_size>0}}">含{{foods.count > foods.discount_size ? foods.discount_size : foods.count}}份优惠商品，优惠价:{{foods.discount_price}}</view>
               </view>
-              <view class="td">{{foods.price}}</view>
+              <view class="td count {{foods.discount_size>0 ? 'discountBar' : ''}}" style="position:relative;">
+                <view class="reduceCart icon-jian iconfont" catchtap="tapReduceCart" data-id="{{foods.id}}" data-price="foods.price" data-type="1" wx:if="{{shopcar[1].status==3}}"></view>
+                <view class="num">{{foods.count}}</view>
+                <view class="addCart icon-jia iconfont" catchtap="tapAddCart" data-id="{{foods.id}}" data-discount_size="{{foods.discount_size}}" data-type="1" wx:if="{{shopcar[1].status==3}}"></view>
+              </view>
+              <view class="td price {{foods.discount_size>0 ? 'discountPrice' : ''}}">{{foods.price}}</view>
           </view>
           <view class="total">总计: {{shopcar[1].total}}</view>   
       </view>
@@ -82,13 +89,16 @@
               <view class="th">单价</view>
           </view>
           <view class="tr" wx:for="{{shopcar[2].list}}" wx:key="id" wx:for-item="foods">
-              <view class="td name">{{foods.name}}</view>
-              <view class="td count" style="position:relative;">
-                {{foods.count}}
-                <view class="reduceCart icon-jian iconfont" catchtap="tapReduceCart" data-id="{{foods.id}}" data-price="foods.price" data-type="2" wx:if="{{shopcar[2].status==3}}"></view>
-                <view class="addCart icon-jia iconfont" catchtap="tapAddCart" data-id="{{foods.id}}" data-type="2" wx:if="{{shopcar[2].status==3}}"></view>
+              <view class="td name">
+                {{foods.name}}
+                <view class="discount" wx:if="{{foods.discount_size>0}}">含{{foods.count > foods.discount_size ? foods.discount_size : foods.count}}份优惠商品，优惠价:{{foods.discount_price}}</view>
               </view>
-              <view class="td">{{foods.price}}</view>
+              <view class="td count {{foods.discount_size>0 ? 'discountBar' : ''}}" style="position:relative;">
+                <view class="reduceCart icon-jian iconfont" catchtap="tapReduceCart" data-id="{{foods.id}}" data-price="foods.price" data-type="2" wx:if="{{shopcar[2].status==3}}"></view>
+                <view class="num">{{foods.count}}</view>
+                <view class="addCart icon-jia iconfont" catchtap="tapAddCart" data-id="{{foods.id}}" data-discount_size="{{foods.discount_size}}" data-type="2" wx:if="{{shopcar[2].status==3}}"></view>
+              </view>
+              <view class="td price {{foods.discount_size>0 ? 'discountPrice' : ''}}">{{foods.price}}</view>
           </view>
           <view class="total">总计: {{shopcar[2].total}}</view>   
       </view>
@@ -113,13 +123,16 @@
               <view class="th">单价</view>
           </view>
           <view class="tr" wx:for="{{shopcar[3].list}}" wx:key="id" wx:for-item="foods">
-              <view class="td name">{{foods.name}}</view>
-              <view class="td count" style="position:relative;">
-                {{foods.count}}
-                <view class="reduceCart icon-jian iconfont" catchtap="tapReduceCart" data-id="{{foods.id}}" data-price="foods.price" data-type="3" wx:if="{{shopcar[3].status==3}}"></view>
-                <view class="addCart icon-jia iconfont" catchtap="tapAddCart" data-id="{{foods.id}}" data-type="3" wx:if="{{shopcar[3].status==3}}"></view>
+              <view class="td name">
+                {{foods.name}}
+                <view class="discount" wx:if="{{foods.discount_size>0}}">含{{foods.count > foods.discount_size ? foods.discount_size : foods.count}}份优惠商品，优惠价:{{foods.discount_price}}</view>
               </view>
-              <view class="td">{{foods.price}}</view>
+              <view class="td count {{foods.discount_size>0 ? 'discountBar' : ''}}" style="position:relative;">
+                <view class="reduceCart icon-jian iconfont" catchtap="tapReduceCart" data-id="{{foods.id}}" data-price="foods.price" data-type="3" wx:if="{{shopcar[3].status==3}}"></view>
+                <view class="num">{{foods.count}}</view>
+                <view class="addCart icon-jia iconfont" catchtap="tapAddCart" data-id="{{foods.id}}" data-discount_size="{{foods.discount_size}}" data-type="3" wx:if="{{shopcar[3].status==3}}"></view>
+              </view>
+              <view class="td price {{foods.discount_size>0 ? 'discountPrice' : ''}}">{{foods.price}}</view>
           </view>
           <view class="total">总计: {{shopcar[3].total}}</view>   
       </view>
@@ -129,5 +142,7 @@
       </view>
     </view>
   </view>
-  
+  <view class="reflesh" wx:if="{{(shopcar[0].count>0 && shopcar[0].status == 2) || (shopcar[1].count>0 && shopcar[1].status == 2) || (shopcar[2].count>0 && shopcar[2].status == 2)}}" bindtap="reflesh">
+    <view class="icon-reflesh iconfont"></view>   
+  </view>  
 </view>
