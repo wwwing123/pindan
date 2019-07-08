@@ -27,7 +27,8 @@ const urlList = {
   getCompanyBill: `${baseUrl}/api/user/get_company_month_bill/`,//获取公司月总账
   getUserBill: `${baseUrl}/api/user/get_user_month_bill/`,//获取个人用户月总账
   getCompanyTotal: `${baseUrl}/api/user/admin/get_allcompany_month_bill/`,//获取总公司月累计消费
-  getfoodTotal: `${baseUrl}/api/user/admin/get_goods_statistics/`//获取总公司月菜品统计
+  getfoodTotal: `${baseUrl}/api/user/admin/get_goods_statistics/`,//获取总公司月菜品统计
+  getfoodCompanyTotal: `${baseUrl}/api/user/admin/get_company_goods_statistics/`//获取所选公司月菜品统计
 }
 
 
@@ -51,7 +52,8 @@ const urlList = {
   "pages/user/admin/staffcustom/staffcustom",// 员工定制记录
   "pages/user/admin/companytotal/companytotal",// 总单位消费累计额
   "pages/user/admin/foodtotal/foodtotal",// 总单位菜品统计
-
+  "pages/user/admin/foodtotal/foodtotal",// 总单位菜品统计
+  "pages/user/admin/foodcompanytotal/foodcompanytotal",// 获取所选公司菜品统计
   */
 
 module.exports = urlList

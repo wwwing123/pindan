@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "单位菜品统计",
+   "disableScroll":true,
+   "usingComponents": {
+    "van-toast": "../../../../vantComponents/toast/index",
+    "van-dialog": "../../../../vantComponents/dialog/index",
+    "van-search": "../../../../vantComponents/search/index"
+  }
+}

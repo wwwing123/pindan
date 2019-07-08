@@ -42,6 +42,13 @@
           <view class="weui-cell__bd">查看当前菜单</view>
           <view class="weui-cell__ft weui-cell__ft_in-access"></view>
         </navigator>
+        <navigator url="/pages/user/admin/foodcompanytotal/foodcompanytotal?companyid={{companyid}}&company={{company}}&level={{level}}&authority={{authority}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:if='{{admin}}'>
+          <view class="weui-cell__hd">
+              <view class="iconfont icon-tongji"></view>
+          </view>
+          <view class="weui-cell__bd">单位菜品统计</view>
+          <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+        </navigator>
         <navigator url="/pages/user/admin/companytotal/companytotal" class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:if='{{ledger}}'>
           <view class="weui-cell__hd">
               <view class="iconfont icon-tongji"></view>

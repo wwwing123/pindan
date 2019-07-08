@@ -21,6 +21,7 @@
     "pages/user/admin/companytotal/companytotal",
     "pages/user/admin/foodtotal/foodtotal",
     "pages/user/admin/foodlist/foodlist",
+    "pages/user/admin/foodcompanytotal/foodcompanytotal",
     "pages/msg/msg",
     "pages/logs/logs"
   ],
