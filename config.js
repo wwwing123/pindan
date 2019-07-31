@@ -1,5 +1,5 @@
-//const baseUrl = "http://139.199.182.202";//测试地址
-const baseUrl = "https://taste.benbenlitian.net.cn";//生产地址
+const baseUrl = "http://193.112.7.67";//测试地址
+//const baseUrl = "https://taste.benbenlitian.net.cn";//生产地址
 
 const urlList = {
   login: `${baseUrl}/api/register/wx/`,//登录
@@ -20,7 +20,7 @@ const urlList = {
   submitUserinfo: `${baseUrl}/api/user/perfect_info/`,//提交个人信息
   getuserinfo: `${baseUrl}/api/user/get_userinfo/`,//个人信息
   getcompany: `${baseUrl}/api/get/company/`,//获取公司信息
-  department: `${baseUrl}/api/get/department/`,//获取部门信息
+  getdepartment: `${baseUrl}/api/get/department/`,//获取部门信息
   getAdminCompany: `${baseUrl}/api/user/get_authority/`,//获取管理员查看的公司
   getStaff: `${baseUrl}/api/get_company_member/`,//获取员工列表
   getStaffComsume: `${baseUrl}/api/user/get_company_member_v2/`,//获取消费员工列表

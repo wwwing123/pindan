@@ -42,7 +42,7 @@ Page({
       currentID: app.globalData.userInformation.companyid,
       currentName: app.globalData.userInformation.company,
       ifAdmin: app.globalData.userInformation.admin,
-      classifySeleted: app.globalData.breakfastGoods[0] ? app.globalData.breakfastGoods[0].id : -1
+      //classifySeleted: app.globalData.breakfastGoods[0] ? app.globalData.breakfastGoods[0].id : -1
     });
   },
 
@@ -64,10 +64,15 @@ Page({
       dinnerGoods: app.globalData.dinnerGoods,
       customGoods: app.globalData.customGoods,
       allFoodList: app.globalData.allFoodList,
-      companyid: app.globalData.userInformation.companyid,      
+      companyid: app.globalData.userInformation.companyid,
+      currentID: app.globalData.userInformation.companyid,
+      currentName: this.data.currentName ? this.data.currentName : app.globalData.userInformation.company,      
       ifAdmin: app.globalData.userInformation.admin
     })//更新最新菜单接口数据 
     this.getCompany();//获取管理员可以查看的公司
+    // if (this.data.classifySeleted == -1) {
+    //   const typename = ["breakfastGoods", "lunchGoods", "dinnerGoods", "customGoods"]
+    //   const classifySeleted = app.globalData[typename[this.data.activeIndex]][0]
     if (this.currentID === -1 || this.currentName === '') {
       this.setData({
         currentID: app.globalData.userInformation.companyid,
@@ -76,7 +81,7 @@ Page({
     }
     if (!this.data.classifySeleted){
       this.setData({
-        classifySeleted: app.globalData.breakfastGoods[0].id,//更新总件数
+        classifySeleted: classifySeleted ? classifySeleted.id : -1,
       });
     }
     this.setData({
@@ -432,7 +437,6 @@ Page({
       
     }
   },
-
   discountTip: function(num) {
     Toast({
       message: `优惠商品只优惠${num}份,超出按原价计算`,

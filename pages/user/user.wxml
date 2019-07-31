@@ -67,6 +67,13 @@
             <view class="weui-cell__hd">
                 <image src="{{icon}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
             </view>
+            <view class="weui-cell__bd company">部门信息</view>
+            <view class="weui-cell__ft">{{userInformation.department}}</view>
+        </view>
+        <view class="weui-cell">
+            <view class="weui-cell__hd">
+                <image src="{{icon}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+            </view>
             <view class="weui-cell__bd address">办公地址</view>
             <view class="weui-cell__ft">{{userInformation.address}}</view>
         </view>
