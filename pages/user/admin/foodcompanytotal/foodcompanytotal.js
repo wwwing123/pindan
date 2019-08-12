@@ -24,8 +24,16 @@ Page({
     windowHeight: 0,
     companyid: [],//公司id数组
     company: [],//公司名称数组
-    currentID: null,//当前公司id
-    currentName: null,//当前公司名称
+    currentComID: null,//当前公司id
+    currentDepID: null,//当前部门id
+    currentComName: null,//当前公司名称
+    currentDepName: null,//当前部门名称
+    departmentID: [], //部门id数组
+    comDepArr: [
+      [],
+      []
+    ],
+    comDepVal: [0, 0],
     popupShow: false,
     searchKey: '',
     fliterList: []
@@ -151,18 +159,20 @@ Page({
     if (!this.checkdiff()) {
       return;
     }
-    console.log(this.data.reqStartTime);
-    console.log(this.data.reqEndTime);
-    Util.request(
-      urlList.getfoodCompanyTotal,
-      { 
-        starttime: this.data.reqStartTime, 
-        endtime: this.data.reqEndTime,
-        companyid: this.data.currentID
-      },
-      'GET',
-      '数据加载中',
-      (msg) => {
+    let params = {
+      starttime: this.data.reqStartTime,
+      endtime: this.data.reqEndTime,
+      companyid: this.data.currentComID
+    }
+    if (this.data.currentDepID) {
+      params.departmentid = this.data.currentDepID
+    }
+    Util.request({
+      url: urlList.getfoodCompanyTotal,
+      params,
+      method: "GET",
+      message: "数据加载中",
+      success: (msg) => {
         let data = msg.data.data.datas,
           list = []
         for (let i in data) {
@@ -185,10 +195,10 @@ Page({
         }
 
       },
-      (msg) => {
+      fail: (msg) => {
         Util.errorHandle(urlList.getfoodTotal, msg.data.code);
       }
-    )
+    })
   },
 
   getCompany: function () {
@@ -199,32 +209,93 @@ Page({
       success: (msg) => {
         if (msg.data.code == 1) {
           let company = [], companyid = [];
+          let comDepArr = this.data.comDepArr;
           const data = msg.data.data;
           for (let i in data) {
             company.push(data[i].name);
             companyid.push(data[i].id);
+            comDepArr[0].push(data[i].name)
           }
           this.setData({
             companyid,
             company,
-            currentID: companyid[0],
-            currentName: company[0]
+            currentComID: companyid[0],
+            currentComName: company[0],
+            comDepArr,
           });
-          this.getFoodTotal();//true清空原数据
+          this.getdepartment(true);
         } else {
           Util.errorHandle(urlList.getAdminCompany, msg.data.code);
         }
       }
     })
   },
-  companyPickerChange: function (e) {
+  getdepartment: function (noReflesh) {
+    Util.request({
+      url: urlList.getdepartment,
+      params: {
+        companyid: this.data.currentComID
+      },
+      method: "GET",
+      message: "正在获取部门信息…",
+      success: (msg) => {
+        let department = [], departmentID = [''];
+        let comDepArr = this.data.comDepArr
+        const data = msg.data.data;
+        if (data.length == 0) {
+          comDepArr[1] = []
+          this.setData({
+            comDepArr,
+            departmentID: []
+          })
+          return;
+        }
+        comDepArr[1] = ['']
+        for (let i in data) {
+          comDepArr[1].push(data[i].name);
+          departmentID.push(data[i].id);
+        }
+        this.setData({
+          comDepArr,
+          departmentID,
+          currentDepName: comDepArr[1][0],
+          currentDepID: departmentID[0]
+        })
+        if (noReflesh) {
+          this.getFoodTotal(true);//true清空原数据
+        }
+      },
+      fail: (msg) => {
+        Util.errorHandle(urlList.getdepartment, msg.data.code);
+        this.showModal('获取部门失败')
+      }
+    })
+  },
+  comColumnChange(e) {
+    console.log(e.detail)
+    if (e.detail.column === 1) {
+      return;
+    } else {
+      this.setData({
+        comDepVal: [e.detail.value, 0]
+      })
+    }
     this.setData({
-      currentID: this.data.companyid[e.detail.value],
-      currentName: this.data.company[e.detail.value],
+      currentComID: this.data.companyid[e.detail.value],
+    });
+    this.getdepartment()
+  },
+  companyPickerChange: function (e) {
+    console.log(e.detail)
+    this.setData({
+      currentComID: this.data.companyid[e.detail.value[0]],
+      currentComName: this.data.company[e.detail.value[0]],
+      currentDepID: this.data.departmentID[e.detail.value[1]],
+      currentDepName: this.data.comDepArr[1][e.detail.value[1]],
       list: [],
       page: 1
     });
-    this.getFoodTotal();
+    this.getFoodTotal(true);
     this.getHeight();
   },
 

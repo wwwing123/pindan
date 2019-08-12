@@ -10,8 +10,16 @@ Page({
     level:null,//等级
     companyid:[],//公司id数组
     company: [],//公司名称数组
-    currentID:null,//当前公司id
-    currentName: null,//当前公司名称
+    currentComID:null,//当前公司id
+    currentDepID: null,//当前部门id
+    currentComName: null,//当前公司名称
+    currentDepName: null,//当前部门名称
+    departmentID: [], //部门id数组
+    comDepArr: [
+      [],
+      []
+    ],
+    comDepVal:[0,0],
     Type:['早餐','午餐','晚餐'],//餐类数组
     TypeEn: ['breakfast', 'lunch', 'dinner'],//餐类数组
     currentType: 0,//当前餐类
@@ -53,13 +61,6 @@ Page({
 
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-    
-  },
-
   getHeight() {
     let _this = this;
     wx.getSystemInfo({
@@ -98,7 +99,7 @@ Page({
   getorderList:function(reflesh){
     this.openLoading();
     wx.request({
-      url: urlList.getAdminOrder + `?page=${this.data.page}&size=${this.data.size}&ordercompanyid=${this.data.currentID}&type=${this.data.TypeEn[this.data.currentType]}`,
+      url: urlList.getAdminOrder + `?page=${this.data.page}&size=${this.data.size}&ordercompanyid=${this.data.currentComID}${this.data.currentDepID ? '&departmentid=' + this.data.currentDepID : ''}&type=${this.data.TypeEn[this.data.currentType]}`,
       header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
       method: 'GET',
       success: (msg) => {
@@ -128,28 +129,89 @@ Page({
       success:(msg) => {
         if(msg.data.code==1){
           let company = [], companyid = [];
+          let comDepArr = this.data.comDepArr;
           const data = msg.data.data;
           for (let i in data) {
             company.push(data[i].name);
             companyid.push(data[i].id);
+            comDepArr[0].push(data[i].name)
           }
           this.setData({
             companyid,
             company,
-            currentID: companyid[0],
-            currentName: company[0]
+            currentComID: companyid[0],
+            currentComName: company[0],
+            comDepArr,
           });
-          this.getorderList(true);//true清空原数据
+          this.getdepartment(true);
         }else{
           Util.errorHandle(urlList.getAdminCompany, msg.data.code);
         }        
       }
     })
   },
-  companyPickerChange: function (e) {
+  getdepartment: function (noReflesh){
+    Util.request({
+      url: urlList.getdepartment,
+      params: {
+        companyid: this.data.currentComID
+      },
+      method: "GET",
+      message: "正在获取部门信息…",
+      success: (msg) => {
+        let department = [], departmentID = [''];
+        let comDepArr = this.data.comDepArr
+        const data = msg.data.data;
+        if (data.length == 0) {
+          comDepArr[1] = []
+          this.setData({
+            comDepArr,
+            departmentID: []
+          })
+          return;
+        }
+        comDepArr[1] = ['']
+        for (let i in data) {
+          comDepArr[1].push(data[i].name);
+          departmentID.push(data[i].id);
+        }
+        this.setData({
+          comDepArr,
+          departmentID,
+          currentDepName: comDepArr[1][0],
+          currentDepID: departmentID[0]
+        })
+        if (noReflesh) {
+          this.getorderList(true);//true清空原数据
+        }
+      },
+      fail: (msg) => {
+        Util.errorHandle(urlList.getdepartment, msg.data.code);
+        this.showModal('获取部门失败')
+      }
+    })
+  },
+  comColumnChange(e) {
+    console.log(e.detail)
+    if (e.detail.column === 1) {
+      return;
+    } else {
+      this.setData({
+        comDepVal: [e.detail.value, 0]
+      })
+    }
     this.setData({
-      currentID: this.data.companyid[e.detail.value],
-      currentName: this.data.company[e.detail.value],
+      currentComID: this.data.companyid[e.detail.value],
+    });
+    this.getdepartment()
+  },
+  companyPickerChange: function (e) {
+    console.log(e.detail)
+    this.setData({
+      currentComID: this.data.companyid[e.detail.value[0]],
+      currentComName: this.data.company[e.detail.value[0]],
+      currentDepID: this.data.departmentID[e.detail.value[1]],
+      currentDepName: this.data.comDepArr[1][e.detail.value[1]],
       list:[],
       page:1
     });
@@ -278,9 +340,11 @@ Page({
   },
   loadFinish: function () {
     this.setData({
-        refreshHeight: 0,
-        loadMoreHeight: 0,
-        loading: false
-      })
+      refreshHeight: 0,
+      loadMoreHeight: 0,
+      loading: false
+    })
   },
+
+
 })

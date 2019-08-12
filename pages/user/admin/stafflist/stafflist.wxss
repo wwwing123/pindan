@@ -30,6 +30,25 @@
   font-size:12pt;
 }
 
+.weui-cell .comValue {
+  display: inline-block;
+  font-size:11pt;
+  width:100rpx;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  overflow:hidden;
+  vertical-align: middle;
+}
+
+.weui-cell .compname{
+  width:180rpx;
+  display:inline-block;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  overflow:hidden;
+  vertical-align:top;
+}
+
 .page__bd .consumeId{
   width:60%;
   display:flex;

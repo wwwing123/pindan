@@ -3,10 +3,10 @@
     <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell">
           <view class="company">
-            <view class='comlabel'>单位:</view>
-            <picker bindchange="companyPickerChange" range="{{company}}">
-              <view class="{{currentID == -1 ? 'noselect' : ''}}" style='font-size:11pt;' class="compname">{{currentName}}</view>
-            </picker> 
+            <picker bindchange="companyPickerChange" range="{{comDepArr}}" mode="multiSelector" bindcolumnchange="comColumnChange" value="{{comDepVal}}">
+              <view class="{{currentID == -1 ? 'noselect' : ''}} comValue">{{currentComName}}</view>
+              <view class="{{currentID == -1 ? 'noselect' : ''}} comValue">{{currentDepName}}</view>
+            </picker>
           </view>
           <view class="number">
             <view class='numberlabel'>总消费: {{totalPrice}}</view>

@@ -99,6 +99,22 @@
   line-height:36rpx;
 }
 
+.weui-cell .comlabel{
+  width:40px;
+  text-align:center;
+  font-size:12pt;
+}
+
+.weui-cell .comValue {
+  display: inline-block;
+  font-size:11pt;
+  width:100rpx;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  overflow:hidden;
+  vertical-align: middle;
+}
+
 
 
 
