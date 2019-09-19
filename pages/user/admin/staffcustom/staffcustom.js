@@ -136,7 +136,7 @@ Page({
         if (msg.data.code == 1) {
           const data = msg.data.data
           wx.navigateTo({
-            url: `/pages/user/admin/stafforder/stafforder?staffId=${data.userid}&title=${data.username}定制记录`
+            url: `/pages/user/admin/stafforder/stafforder?staffId=${data.userid}&title=${data.username}定制记录&useTitle=消费额`
           })
         } else {
           Toast.fail(msg.data.msg);

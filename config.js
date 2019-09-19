@@ -1,4 +1,4 @@
-//const baseUrl = "http://139.199.182.202";//测试地址
+//const baseUrl = "http://193.112.7.67";//测试地址
 const baseUrl = "https://taste.benbenlitian.net.cn";//生产地址
 
 const urlList = {

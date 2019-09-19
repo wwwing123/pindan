@@ -20,12 +20,12 @@
                     <view class="weui-form-preview__value">{{orderlist.ordernum}}</view>
                 </view>
                 <view class="weui-form-preview__item">
-                    <view class="weui-form-preview__label">定餐类型</view>
-                    <view class="weui-form-preview__value">{{orderlist.orderTypeName}}</view>
+                    <view class="weui-form-preview__label">定餐类型(状态)</view>
+                    <view class="weui-form-preview__value">{{orderlist.orderTypeName}}({{orderlist.status}})</view>
                 </view>
                 <view class="weui-form-preview__item">
-                    <view class="weui-form-preview__label">定餐状态</view>
-                    <view class="weui-form-preview__value">{{orderlist.status}}</view>
+                    <view class="weui-form-preview__label">定餐公司</view>
+                    <view class="weui-form-preview__value">{{companyName}}</view>
                 </view>
                 <view class="weui-form-preview__item">
                     <view class="weui-form-preview__label">商品</view>
