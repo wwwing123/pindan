@@ -10,6 +10,7 @@ Page({
   data: {
     orderlist:[],
     orderType:['误餐','完成','进行中'],
+    companyName: '',
     loadMoreHeight:0,
     windowHeight:0,
     scrollTop:0,//滚动高度
@@ -123,7 +124,8 @@ Page({
           }
           this.setData({
             orderlist,
-            totalsize: msg.data.data.totalsize
+            totalsize: msg.data.data.totalsize,
+            companyName: msg.data.data.companyname
           })
         }else{
           Util.errorHandle(urlList.getPersonOrder, msg.data.code);

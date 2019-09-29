@@ -166,8 +166,13 @@ Page({
           comDepArr[1] = []
           this.setData({
             comDepArr,
-            departmentID: []
+            departmentID: [],
+            currentDepName: '',
+            currentDepID: ''
           })
+          if (noReflesh) {
+            this.getorderList(true);//true清空原数据
+          }
           return;
         }
         comDepArr[1] = ['']
@@ -178,8 +183,8 @@ Page({
         this.setData({
           comDepArr,
           departmentID,
-          currentDepName: comDepArr[1][0],
-          currentDepID: departmentID[0]
+          currentDepName: comDepArr[1][0] || '',
+          currentDepID: departmentID[0] || ''
         })
         if (noReflesh) {
           this.getorderList(true);//true清空原数据
@@ -210,8 +215,8 @@ Page({
     this.setData({
       currentComID: this.data.companyid[e.detail.value[0]],
       currentComName: this.data.company[e.detail.value[0]],
-      currentDepID: this.data.departmentID[e.detail.value[1]],
-      currentDepName: this.data.comDepArr[1][e.detail.value[1]],
+      currentDepID: this.data.departmentID[e.detail.value[1]] || '',
+      currentDepName: this.data.comDepArr[1][e.detail.value[1]] || '',
       list:[],
       page:1
     });

@@ -99,8 +99,13 @@ Page({
           comDepArr[1] = []
           this.setData({
             comDepArr,
-            departmentID: []
+            departmentID: [],
+            currentDepName: '',
+            currentDepID: ''
           })
+          if (noReflesh) {
+            this.getStaffList(true);//true清空原数据
+          }
           return;
         }
         comDepArr[1] = ['']
@@ -111,8 +116,8 @@ Page({
         this.setData({
           comDepArr,
           departmentID,
-          currentDepName: comDepArr[1][0],
-          currentDepID: departmentID[0]
+          currentDepName: comDepArr[1][0] || '',
+          currentDepID: departmentID[0] || ''
         })
         if (noReflesh) {
           this.getStaffList(true);//true清空原数据
@@ -143,8 +148,8 @@ Page({
     this.setData({
       currentComID: this.data.companyid[e.detail.value[0]],
       currentComName: this.data.company[e.detail.value[0]],
-      currentDepID: this.data.departmentID[e.detail.value[1]],
-      currentDepName: this.data.comDepArr[1][e.detail.value[1]],
+      currentDepID: this.data.departmentID[e.detail.value[1]] || '',
+      currentDepName: this.data.comDepArr[1][e.detail.value[1]] || '',
       list: [],
       page: 1
     });
@@ -206,7 +211,7 @@ Page({
         if (msg.data.code == 1) {
           const data = msg.data.data
           wx.navigateTo({
-            url: `/pages/user/admin/stafforder/stafforder?staffId=${data.userid}&title=${data.username}定制记录`
+            url: `/pages/user/admin/stafforder/stafforder?staffId=${data.userid}&title=${data.username}定制记录&useTitle=消费额`
           })
         } else {
           Toast.fail(msg.data.msg);

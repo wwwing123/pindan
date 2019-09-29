@@ -5,7 +5,7 @@
             <view class="company">
               <picker bindchange="companyPickerChange" range="{{comDepArr}}" mode="multiSelector" bindcolumnchange="comColumnChange" value="{{comDepVal}}">
                 <view class="{{currentID == -1 ? 'noselect' : ''}} comValue">{{currentComName}}</view>
-                <view class="{{currentID == -1 ? 'noselect' : ''}} comValue">{{currentDepName}}</view>
+                <view class="{{currentID == -1 ? 'noselect' : ''}} comValue" wx:if="{{currentDepName}}">{{currentDepName}}</view>
               </picker> 
             </view>
             <view class="number">
