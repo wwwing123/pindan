@@ -144,37 +144,37 @@ Page({
     }
     console.log(this.data.reqStartTime);
     console.log(this.data.reqEndTime);
-    Util.request(
-      urlList.getfoodTotal,
-      { starttime: this.data.reqStartTime, endtime: this.data.reqEndTime},
-      'GET',
-      '数据加载中',
-      (msg) => {
-          let data = msg.data.data.datas,
-            list = []
-          for (let i in data) {
-            list.push({
-              name: data[i].name,
-              id: `${data[i].id}(${this.data.foodType[data[i].order_type]})`,
-              size: data[i].size,
-              price: data[i].price,
-              isdiscount: Boolean(data[i].isdiscount),
-              total: (Number(data[i].price) * Number(data[i].size)).toFixed(2)
-            })
-          }
-          this.setData({
-            list,
-            totalPrice: msg.data.data.statistics
-          })
-          if (list.length == 0){
-            Toast.fail('所选时间段数据为空');
-          }
-          
+    Util.request({
+      url: urlList.getfoodTotal,
+      params: {
+        starttime: this.data.reqStartTime,
+        endtime: this.data.reqEndTime
       },
-      (msg) => {
-        Util.errorHandle(urlList.getfoodTotal, msg.data.code);
+      method: "GET",
+      message: "数据加载中",
+      success: (msg) => {
+        let data = msg.data.data.datas,
+          list = []
+        for (let i in data) {
+          list.push({
+            name: data[i].name,
+            id: `${data[i].id}(${this.data.foodType[data[i].order_type]})`,
+            size: data[i].size,
+            price: data[i].price,
+            isdiscount: Boolean(data[i].isdiscount),
+            total: (Number(data[i].price) * Number(data[i].size)).toFixed(2)
+          })
+        }
+        this.setData({
+          list,
+          totalPrice: msg.data.data.statistics
+        })
+        if (list.length == 0) {
+          Toast.fail('所选时间段数据为空');
+        }
+
       }
-    )
+    })
     // wx.showLoading({
     //   title: '数据加载中',
     //   icon: 'loading'
