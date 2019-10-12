@@ -255,7 +255,7 @@ Page({
           }
           return;
         }
-        comDepArr[1] = ['']
+        comDepArr[1] = []
         for (let i in data) {
           comDepArr[1].push(data[i].name);
           departmentID.push(data[i].id);
