@@ -21,13 +21,14 @@ Page({
     this.setData({
       companyid: options.companyid,
       starttime: options.starttime,
-      endtime: options.endtime
+      endtime: options.endtime,
+      currentDepID: options.currentDepID,
     });
     this.getcustomcount();
   },
   getcustomcount: function () {
     wx.request({
-      url: `${urlList.customcount}?companyid=${this.data.companyid}&starttime=${this.data.starttime}&endtime=${this.data.endtime}`,
+      url: `${urlList.customcount}?companyid=${this.data.companyid}&starttime=${this.data.starttime}&endtime=${this.data.endtime}&departmentid=${this.data.currentDepID}`,
       header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
       method: 'GET',
       success: (msg) => {

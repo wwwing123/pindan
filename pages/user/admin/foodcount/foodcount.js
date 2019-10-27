@@ -9,6 +9,7 @@ Page({
   data: {
     companyid:null,
     Type:null,
+    currentDepID: '',
     list:[],
     totalPrice:"0.00"
   },
@@ -19,13 +20,14 @@ Page({
   onLoad: function (options) {
     this.setData({
       companyid: options.companyid,
-      Type: options.type
+      Type: options.type,
+      currentDepID: options.currentDepID
     });
     this.getordercount();
   },
   getordercount: function () {
     wx.request({
-      url: `${urlList.foodcount2}?companyid=${this.data.companyid}&type=${this.data.Type}`,
+      url: `${urlList.foodcount2}?companyid=${this.data.companyid}&type=${this.data.Type}&departmentid=${this.data.currentDepID}`,
       header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
       method: 'GET',
       success: (msg) => {

@@ -226,7 +226,7 @@ Page({
       method: "GET",
       message: "正在获取部门信息…",
       success: (msg) => {
-        let department = [], departmentID = [''];
+        let department = [], departmentID = [];
         let comDepArr = this.data.comDepArr
         const data = msg.data.data;
         if (data.length == 0) {

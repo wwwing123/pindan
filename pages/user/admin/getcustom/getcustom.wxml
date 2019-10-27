@@ -33,7 +33,7 @@
   </view>  
   <view class="content" wx:else>
     <view class="count">
-      <navigator url="/pages/user/admin/customcount/customcount?companyid={{currentID}}&starttime={{reqStartTime}}&endtime={{reqEndTime}}">
+      <navigator url="/pages/user/admin/customcount/customcount?companyid={{currentComID}}&starttime={{reqStartTime}}&endtime={{reqEndTime}}&currentDepID={{currentDepID}}">
         <view class="icon-count iconfont"></view>
       </navigator>     
     </view> 

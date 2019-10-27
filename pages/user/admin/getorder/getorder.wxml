@@ -26,7 +26,7 @@
   </view>  
   <view class="content" wx:else>
     <view class="count">
-      <navigator url="/pages/user/admin/foodcount/foodcount?companyid={{currentID}}&type={{TypeEn[currentType]}}">
+      <navigator url="/pages/user/admin/foodcount/foodcount?companyid={{currentComID}}&type={{TypeEn[currentType]}}&currentDepID={{currentDepID}}">
         <view class="icon-count iconfont"></view>
       </navigator>     
     </view> 
