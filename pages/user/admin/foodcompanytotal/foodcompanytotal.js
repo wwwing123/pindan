@@ -239,7 +239,7 @@ Page({
       method: "GET",
       message: "正在获取部门信息…",
       success: (msg) => {
-        let department = [], departmentID = [];
+        let department = [], departmentID = ['-1'];
         let comDepArr = this.data.comDepArr
         const data = msg.data.data;
         if (data.length == 0) {
@@ -255,7 +255,7 @@ Page({
           }
           return;
         }
-        comDepArr[1] = []
+        comDepArr[1] = ['全部']
         for (let i in data) {
           comDepArr[1].push(data[i].name);
           departmentID.push(data[i].id);
