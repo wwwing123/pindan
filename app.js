@@ -42,6 +42,9 @@ App({
                   icon: 'loading',
                   mask: true
                 });
+                wx.hideTabBar({
+                  animation: false
+                })
                 this.getUserinfo();
               } else {
                 this.globalData.Util.errorHandle(this.globalData.urlList.login, msg.data.code);
@@ -158,6 +161,9 @@ App({
     })
     getUserPromise.then(() => {
       wx.hideLoading();
+      wx.showTabBar({
+        animation: false
+      })
       this.getShopcarData();
     });     
   },
