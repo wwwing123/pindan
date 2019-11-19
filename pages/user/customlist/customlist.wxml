@@ -27,6 +27,14 @@
                     <view class="weui-form-preview__label">定餐状态</view>
                     <view class="weui-form-preview__value">{{orderlist.status}}</view>
                 </view>
+                <view class="weui-form-preview__item" wx:if="{{orderlist.courier_address}}">
+                    <view class="weui-form-preview__label">收货地址</view>
+                    <view class="weui-form-preview__value">{{orderlist.courier_address}}</view>
+                </view>
+                <view class="weui-form-preview__item" wx:if="{{orderlist.courier_address}}">
+                    <view class="weui-form-preview__label">快递单号</view>
+                    <view class="weui-form-preview__value">{{orderlist.courier_number}}</view>
+                </view>
                 <view class="weui-form-preview__item">
                     <view class="weui-form-preview__label">商品</view>
                     <view class="weui-form-preview__value" wx:if="{{orderlist.ordertype==1 || orderlist.ordertype==0}}">{{orderlist.foods}}</view>

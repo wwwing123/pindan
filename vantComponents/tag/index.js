@@ -1,9 +1,21 @@
-import { create } from '../common/create';
-
-create({
-  props: {
-    type: String,
-    mark: Boolean,
-    plain: Boolean
-  }
+import { VantComponent } from '../common/component';
+VantComponent({
+    props: {
+        size: String,
+        mark: Boolean,
+        color: String,
+        plain: Boolean,
+        round: Boolean,
+        textColor: String,
+        type: {
+            type: String,
+            value: 'default'
+        },
+        closeable: Boolean
+    },
+    methods: {
+        onClose() {
+            this.$emit('close');
+        }
+    }
 });

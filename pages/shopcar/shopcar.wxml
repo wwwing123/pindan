@@ -1,5 +1,24 @@
 <view class="container">
+  <van-dialog id="van-dialog" />
   <van-toast id="van-toast" />
+  <van-dialog
+    use-slot
+    title="请填写收货地址"
+    show="{{ show }}"
+    bind:close="onClose"
+    bind:confirm="diaconfig"
+  >
+    <view style="font-size:10pt;color:#f00;text-align:center;">*收货地址可不填写，不填写则默认送到公司</view>
+    <van-field
+      value="{{ courierAddress }}"
+      clearable
+      label="收货地址"
+      placeholder="请输入收货地址"
+      title-width="150rpx"
+      input-align="left"
+      bind:change="addressChange"
+    />
+  </van-dialog>
   <view class="empty" wx:if="{{shopcar[0].count<=0 && shopcar[1].count<=0 && shopcar[2].count<=0 && shopcar[3].count<=0}}" >
     <view class="iconfont icon-gouwuche1"></view>
     <view class="text">购物车还是空的</view>

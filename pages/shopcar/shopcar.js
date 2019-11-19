@@ -1,6 +1,8 @@
 const Util = require("../../utils/util.js");
 const urlList = require("../../config.js");
 import Toast from '../../vantComponents/toast/toast';
+import Dialog from '../../vantComponents/dialog/dialog';
+
 const app = getApp();
 Page({
 
@@ -10,7 +12,10 @@ Page({
   data: {
     shopcar: [],
     allFoodList:[],
-    refleshClick: true     
+    refleshClick: true,
+    courierAddress: '',
+    show: false,
+    customSubmit: {}
   },
 
   /**
@@ -46,6 +51,12 @@ Page({
   toClassify:function(){
     wx.switchTab({
       url: '/pages/classify/classify'
+    })
+  },
+
+  addressChange(value) {
+    this.setData({
+      courierAddress: value.detail
     })
   },
 
@@ -120,26 +131,66 @@ Page({
       data["goods"].push(obj);
     }
     if (kind == 3) {
-      wx.showModal({
-        title: '是否确认下单',
-        content: '定制货品下单成功后且退出程序后不会在购物车上显示，如需查看请到定制货品记录查找',
-        confirmText: "确定",
-        cancelText: "取消",
-        success: (res) => {
-          if (res.confirm) {
-            this.placeOrder(data,kind);
-          } else {
-            return false;
-          }
-        }
-      });
+      this.setData({
+        show: true,
+        customSubmit: data,
+        courierAddress: '',
+      })
     }else{
       this.placeOrder(data,kind);
-    } 
-    
+    }
+  },
+
+  customReq() {
+    // wx.showModal({
+    //   title: '是否确认下单',
+    //   content: '定制货品下单成功后且退出程序后不会在购物车上显示，如需查看请到定制货品记录查找',
+    //   confirmText: "确定",
+    //   cancelText: "取消",
+    //   success: (res) => {
+    //     if (res.confirm) {
+    //       this.placeOrder(this.data.customSubmit,3);
+    //     } else {
+    //       return false;
+    //     }
+    //   }
+    // });
+    Dialog.confirm({
+      title: '是否确认下单',
+      message: '定制货品下单成功后且退出程序后不会在购物车上显示，如需查看请到定制货品记录查找'
+    }).then(() => {
+      this.placeOrder(this.data.customSubmit, 3);
+    })
+  },
+
+  //定制填写快递单号确认
+  diaconfig () {
+    if (this.data.courierAddress) {
+      Dialog.confirm({
+        title: '请确认收货地址',
+        message: this.data.courierAddress
+      }).then(() => {
+        this.customReq()
+      }).catch(() => {
+
+      });
+    } else {
+      this.customReq()
+    }
+  },
+
+  //定制填写快递单号取消
+  diacencal() {
+
+  },
+
+  //定制填写快递单号取消
+  diacencal () {
+
   },
   //下单请求函数
   placeOrder: function (data,kind){
+    data.courierAddress = this.data.courierAddress
     wx.showLoading({
       title: '正在下单',
       icon: 'loading'
@@ -490,5 +541,8 @@ Page({
         refleshClick: true
       })
     },5000)
-  } 
+  },
+  onClose() {
+    this.setData({ close: false });
+  },
 })

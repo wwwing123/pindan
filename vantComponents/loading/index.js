@@ -1,18 +1,32 @@
-import { create } from '../common/create';
-
-create({
-  props: {
-    size: {
-      type: String,
-      value: '30px'
+import { VantComponent } from '../common/component';
+import { addUnit } from '../common/utils';
+VantComponent({
+    props: {
+        color: String,
+        vertical: Boolean,
+        type: {
+            type: String,
+            value: 'circular'
+        },
+        size: {
+            type: String,
+            observer: 'setSizeWithUnit'
+        },
+        textSize: {
+            type: String,
+            observer: 'setTextSizeWithUnit'
+        }
     },
-    type: {
-      type: String,
-      value: 'circular'
-    },
-    color: {
-      type: String,
-      value: '#c9c9c9'
+    methods: {
+        setSizeWithUnit(size) {
+            this.setData({
+                sizeWithUnit: addUnit(size)
+            });
+        },
+        setTextSizeWithUnit(size) {
+            this.set({
+                textSizeWithUnit: addUnit(size)
+            });
+        }
     }
-  }
 });

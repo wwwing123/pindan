@@ -102,7 +102,9 @@ Page({
               orderTypeName: Util.ordertype[data[i].order_type],
               totalprice: data[i].order_type == 1 ? `+${data[i].balance_change}` : `-${data[i].balance_change}`,
               id: data[i].id,
-              remain: data[i].remain
+              remain: data[i].remain,
+              courier_address: data[i].courier_address,
+              courier_number: data[i].courier_number,
             };
             obj.foods = (data[i].order_type == 0 || data[i].order_type == 1) ? data[i].illustration : this.foodsHandler(JSON.parse(data[i].illustration));
             orderlist.push(obj);

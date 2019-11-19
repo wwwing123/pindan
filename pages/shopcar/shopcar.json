@@ -1,5 +1,7 @@
 {
   "usingComponents": {
-    "van-toast": "../../vantComponents/toast/index"
+    "van-toast": "../../vantComponents/toast/index",
+    "van-field": "../../vantComponents/field/index",
+    "van-dialog": "../../vantComponents/dialog/index"
   }
 }

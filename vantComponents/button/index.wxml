@@ -1,30 +1,52 @@
+<wxs src="../wxs/utils.wxs" module="utils" />
+
 <button
-  class="custom-class van-button {{ classes }}"
-  disabled="{{ disabled }}"
-  hover-class="button-hover"
-  open-type="{{ openType }}"
-  app-parameter="{{ appParameter }}"
-  hover-stop-propagation="{{ hoverStopPropagation }}"
-  hover-start-time="{{ hoverStartTime }}"
-  hover-stay-time="{{ hoverStayTime }}"
+  id="{{ id }}"
+  class="custom-class {{ utils.bem('button', [type, size, { block, round, plain, square, loading, disabled, hairline, unclickable: disabled || loading }]) }} {{ hairline ? 'van-hairline--surround' : '' }}"
+  hover-class="van-button--active hover-class"
   lang="{{ lang }}"
+  style="{{ style }} {{ customStyle }}"
+  open-type="{{ openType }}"
+  business-id="{{ businessId }}"
   session-from="{{ sessionFrom }}"
   send-message-title="{{ sendMessageTitle }}"
   send-message-path="{{ sendMessagePath }}"
   send-message-img="{{ sendMessageImg }}"
   show-message-card="{{ showMessageCard }}"
-  bind:tap="onClick"
-  bindcontact="bindcontact"
-  bindgetuserinfo="bindgetuserinfo"
-  bindgetphonenumber="bindgetphonenumber"
-  binderror="binderror"
-  bindopensetting="bindopensetting"
+  app-parameter="{{ appParameter }}"
+  aria-label="{{ ariaLabel }}"
+  bindtap="onClick"
+  bindgetuserinfo="bindGetUserInfo"
+  bindcontact="bindContact"
+  bindgetphonenumber="bindGetPhoneNumber"
+  binderror="bindError"
+  bindlaunchapp="bindLaunchApp"
+  bindopensetting="bindOpenSetting"
 >
-  <van-loading
-    wx:if="{{ loading }}"
-    size="20px"
-    custom-class="loading-class"
-    color="{{ type === 'default' ? '#c9c9c9' : '#fff' }}"
-  />
-  <slot wx:else></slot>
+  <block wx:if="{{ loading }}">
+    <van-loading
+      custom-class="loading-class"
+      size="{{ loadingSize }}"
+      type="{{ loadingType }}"
+      color="{{ type === 'default' ? '#c9c9c9' : 'white' }}"
+    />
+    <view
+      wx:if="{{ loadingText }}"
+      class="van-button__loading-text"
+    >
+      {{ loadingText }}
+    </view>
+  </block>
+  <block wx:else>
+    <van-icon
+      wx:if="{{ icon }}"
+      size="1.2em"
+      name="{{ icon }}"
+      class="van-button__icon"
+      custom-style="line-height: inherit;"
+    />
+    <view class="van-button__text">
+      <slot />
+    </view>
+  </block>
 </button>

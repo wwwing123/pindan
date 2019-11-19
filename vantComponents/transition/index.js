@@ -1,13 +1,13 @@
-import { create } from '../common/create';
+import { VantComponent } from '../common/component';
 import { transition } from '../mixins/transition';
-
-create({
-  mixins: [transition(true)],
-
-  props: {
-    name: {
-      type: String,
-      value: 'fade'
-    }
-  }
+VantComponent({
+    classes: [
+        'enter-class',
+        'enter-active-class',
+        'enter-to-class',
+        'leave-class',
+        'leave-active-class',
+        'leave-to-class'
+    ],
+    mixins: [transition(true)]
 });

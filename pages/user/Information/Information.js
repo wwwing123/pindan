@@ -223,7 +223,7 @@ Page({
       icon: 'loading'
     });
   },
-  submitData: function (formData) {  
+  submitConfig: function (formData) {  
     if(formData.address == ' '){
       formData.address = '';//空的办公地址要设置为空(placeholder问题)
     } 
@@ -235,28 +235,11 @@ Page({
       success: (res) => {
         if (res.confirm) {
           this.openLoading();
-          wx.request({
-            url: urlList.submitUserinfo,
-            method:"POST",
-            header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
-            data: formData,
-            success: (msg) => {
-              if(msg.data.code == 1){
-                wx.hideLoading();
-                this.openToast('已完成');
-                this.getUserinfo();
-                setTimeout(() => {
-                  wx.switchTab({
-                    url: "/pages/user/user"
-                  })
-                }, 1500)
-              }else{
-                wx.hideLoading();
-                this.openToast('提交失败');
-                Util.errorHandle(urlList.submitUserinfo, msg.data.code);
-              }  
-            }
-          })
+          if (!wx.getStorageSync('userid')) {
+            this.getSessionKey(formData)
+          } else {
+            this.submitData(formData)
+          }
         } else {
           return false;
         }
@@ -294,7 +277,7 @@ Page({
       }
     }
     console.log("检验成功");
-    this.submitData(formData);
+    this.submitConfig(formData);
 
   },
   getUserinfo: function () {
@@ -332,7 +315,64 @@ Page({
         }
       }
     });
-  }
+  },
+  getSessionKey: function (formData) {
+    const that = this
+    wx.login({
+      success: res => {
+        let data = {
+          code: res.code,
+          appid: 'wx48f6b8eb475538fb',
+          secret: '8f07853ccc608ae00d88c8efb6ad6cd8'
+        }
+        if (res.code) {
+          wx.request({
+            url: urlList.login,
+            data: data,
+            method: 'POST',
+            header: { 'Content-Type': 'application/json' },
+            success: function (msg) {
+              if (msg.data.code == 1) {
+                wx.setStorageSync('session_key', msg.data.data.et)
+                wx.setStorageSync('userid', msg.data.data.userid)
+                that.submitData(formData)
+              } else {
+                console.log(msg.data.msg)
+              }
+            }
+          })
+        } else {
+          console.log('获取用户登录态失败！' + res.errMsg)
+        }
+      }
+    });
+  },
+  submitData(formData) {
+    wx.request({
+      url: urlList.submitUserinfo,
+      method:"POST",
+      header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
+      data: formData,
+      success: (msg) => {
+        if(msg.data.code == 1){
+          wx.hideLoading();
+          this.openToast('已完成');
+          this.getUserinfo();
+          setTimeout(() => {
+            wx.switchTab({
+              url: "/pages/user/user"
+            })
+          }, 1500)
+        }else{
+          wx.hideLoading();
+          if (msg.data.msg) {
+            this.openToast(msg.data.msg);
+          } 
+          Util.errorHandle(urlList.submitUserinfo, msg.data.code);
+        }  
+      }
+    })
+  },
 
 
 

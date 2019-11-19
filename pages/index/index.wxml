@@ -1,5 +1,76 @@
 <view class="container">
-  <image src="{{indexImage}}" mode="widthFix"></image>
+  <van-toast id="van-toast" />
+  <van-dialog id="van-dialog" />
+  <view class="imgBox" wx:if="{{indexImage.length !== 0}}">
+    <image src="{{indexImage[0].img}}" mode="widthFix"></image>
+  </view>
+  <view class="imgBox">
+    <view class="inputBox">
+      <van-divider contentPosition="center" customStyle="padding-top:40rpx;font-size: 12pt;">申请合作</van-divider>
+      <van-cell-group>
+        <van-field
+          value="{{ cooperate.name }}"
+          required
+          clearable
+          label="姓名"
+          placeholder="请输入姓名"
+          title-width="150rpx"
+          input-align="left"
+          error-message="{{ errorText.name }}"
+          bind:change="nameChange"
+        />
+        <van-field
+          value="{{ cooperate.phone }}"
+          label="手机号"
+          required
+          clearable
+          placeholder="请输入手机号"
+          type="number"
+          title-width="150rpx"
+          error-message="{{ errorText.phone }}"
+          bind:change="phoneChange"
+        />
+        <van-field
+          value="{{ cooperate.company }}"
+          clearable
+          label="公司名称"
+          placeholder="请输入公司名称"
+          title-width="150rpx"
+          bind:change="companyChange"
+        />
+        <van-field
+          value="{{ cooperate.address }}"
+          clearable
+          label="地址"
+          required
+          placeholder="请输入地址"
+          title-width="150rpx"
+          bind:change="addressChange"
+          error-message="{{ errorText.address }}"
+        />
+      </van-cell-group>
+      <van-button round type="info" bindtap="submitData" color="#0096FF" custom-style="width:80%;margin:40rpx auto;" custom-class="applyBtn">立即申请</van-button>
+    </view>
+  </view>
+  <view class="imgBox" wx:for="{{indexImage}}" wx:key="id" wx:for-item="imgItem">
+    <image src="{{imgItem.img}}" mode="widthFix" wx:if="{{index !== 0}}"></image>
+  </view>
+  
+  <van-dialog
+  use-slot
+  title="请确认自己的个人信息无误"
+  show="{{ show }}"
+  show-cancel-button
+  bind:close="onClose"
+  bind:confirm="diaconfig"
+>
+  <view style='padding:30rpx;'>
+    <view>姓名：{{cooperate.name}}</view>
+    <view>手机号：{{cooperate.phone}}</view>
+    <view>公司名称：{{cooperate.company}}</view>
+    <view>公司地址：{{cooperate.address}}</view>
+  </view>
+  </van-dialog>
   <dialog id="modal">    
       <view class='modal-body'> 
         <view class="top">

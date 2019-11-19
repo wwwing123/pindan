@@ -1,36 +1,51 @@
-import { create } from '../common/create';
-
-create({
-  field: true,
-
-  classes: ['node-class'],
-
-  props: {
-    loading: Boolean,
-    disabled: Boolean,
-    checked: {
-      type: Boolean,
-      observer(value) {
-        this.setData({ value });
-      }
+import { VantComponent } from '../common/component';
+import { BLUE, GRAY_DARK } from '../common/color';
+VantComponent({
+    field: true,
+    classes: ['node-class'],
+    props: {
+        checked: null,
+        loading: Boolean,
+        disabled: Boolean,
+        activeColor: String,
+        inactiveColor: String,
+        size: {
+            type: String,
+            value: '30px'
+        },
+        activeValue: {
+            type: null,
+            value: true
+        },
+        inactiveValue: {
+            type: null,
+            value: false
+        }
     },
-    size: {
-      type: String,
-      value: '30px'
+    watch: {
+        checked(value) {
+            const loadingColor = this.getLoadingColor(value);
+            this.setData({ value, loadingColor });
+        }
+    },
+    created() {
+        const { checked: value } = this.data;
+        const loadingColor = this.getLoadingColor(value);
+        this.setData({ value, loadingColor });
+    },
+    methods: {
+        getLoadingColor(checked) {
+            const { activeColor, inactiveColor } = this.data;
+            return checked ? activeColor || BLUE : inactiveColor || GRAY_DARK;
+        },
+        onClick() {
+            const { activeValue, inactiveValue } = this.data;
+            if (!this.data.disabled && !this.data.loading) {
+                const checked = this.data.checked === activeValue;
+                const value = checked ? inactiveValue : activeValue;
+                this.$emit('input', value);
+                this.$emit('change', value);
+            }
+        }
     }
-  },
-
-  attached() {
-    this.setData({ value: this.data.checked });
-  },
-
-  methods: {
-    onClick() {
-      if (!this.data.disabled && !this.data.loading) {
-        const checked = !this.data.checked;
-        this.$emit('input', checked);
-        this.$emit('change', checked);
-      }
-    }
-  }
 });

@@ -1,10 +1,10 @@
-import { create } from '../common/create';
-
-create({
-  props: {
-    border: {
-      type: Boolean,
-      value: true
+import { VantComponent } from '../common/component';
+VantComponent({
+    props: {
+        title: String,
+        border: {
+            type: Boolean,
+            value: true
+        }
     }
-  }
 });

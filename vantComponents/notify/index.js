@@ -1,43 +1,55 @@
-import { create } from '../common/create';
-
-create({
-  props: {
-    text: String,
-    color: {
-      type: String,
-      value: '#fff'
+import { VantComponent } from '../common/component';
+import { WHITE } from '../common/color';
+VantComponent({
+    props: {
+        message: String,
+        background: String,
+        type: {
+            type: String,
+            value: 'danger'
+        },
+        color: {
+            type: String,
+            value: WHITE
+        },
+        duration: {
+            type: Number,
+            value: 3000
+        },
+        zIndex: {
+            type: Number,
+            value: 110
+        },
+        safeAreaInsetTop: {
+            type: Boolean,
+            value: false
+        }
     },
-    backgroundColor: {
-      type: String,
-      value: '#e64340'
-    },
-    duration: {
-      type: Number,
-      value: 3000
+    methods: {
+        show() {
+            const { duration, onOpened } = this.data;
+            clearTimeout(this.timer);
+            this.setData({
+                show: true
+            }, onOpened);
+            if (duration > 0 && duration !== Infinity) {
+                this.timer = setTimeout(() => {
+                    this.hide();
+                }, duration);
+            }
+        },
+        hide() {
+            const { onClose } = this.data;
+            clearTimeout(this.timer);
+            this.setData({
+                show: false
+            }, onClose);
+        },
+        onTap(event) {
+            const { onClick } = this.data;
+            if (onClick) {
+                onClick(event.detail);
+            }
+        }
     }
-  },
-
-  methods: {
-    show() {
-      const { duration } = this.data;
-
-      clearTimeout(this.timer);
-      this.setData({
-        show: true
-      });
-
-      if (duration > 0 && duration !== Infinity) {
-        this.timer = setTimeout(() => {
-          this.hide();
-        }, duration);
-      }
-    },
-
-    hide() {
-      clearTimeout(this.timer);
-      this.setData({
-        show: false
-      });
-    }
-  }
 });

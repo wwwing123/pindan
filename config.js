@@ -3,8 +3,9 @@ const baseUrl = "https://taste.benbenlitian.net.cn";//生产地址
 
 const urlList = {
   login: `${baseUrl}/api/register/wx/`,//登录
-  indexImg:`${baseUrl}/api/get/ad/`,//首页大图
+  indexImg:`${baseUrl}/api/get/ads/`,//首页大图
   indexNotice: `${baseUrl}/api/get/notice/`,//首页公告
+  indexCooperation: `${baseUrl}/api/edit/cooperation_info/`,//首页申请合作
   goodsOld: `${baseUrl}/api/get/goodslist/`,//商品信息
   goodsNew: `${baseUrl}/api/get/relationship_goodslist/`,//新版商品信息（拼上公司字段）
   getUnfinishedOrder: `${baseUrl}/api/user/get_curr_order/`,//个人未完成定餐

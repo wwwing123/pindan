@@ -1,5 +1,9 @@
 {
   "usingComponents": {
-    "dialog": "/components/dialog"
+    "dialog": "/components/dialog",
+    "van-field": "../../vantComponents/field/index",
+    "van-button": "../../vantComponents/button/index",
+    "van-divider": "../../vantComponents/divider/index",
+    "van-dialog": "../../vantComponents/dialog/index"
   }
 }
