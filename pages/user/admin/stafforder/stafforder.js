@@ -97,7 +97,7 @@ Page({
   },
   doLoadData(currendSize, PAGE_SIZE) {
     wx.request({
-      url: `${urlList.getPersonOrder}?filter=${this.data.dataUserid}`,
+      url: `${urlList.getPersonOrder}?userid=${this.data.dataUserid}`,
       header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
       data:{
         "page": this.data.currentPage,
@@ -120,6 +120,8 @@ Page({
               remain: data[i].remain,
               courier_address: data[i].courier_address,
               courier_number: data[i].courier_number,
+              courier_uname: data[i].courier_uname,
+              courier_uphone: data[i].courier_uphone,
             };
             obj.foods = (data[i].order_type == 0 || data[i].order_type == 1) ? data[i].illustration : this.foodsHandler(JSON.parse(data[i].illustration));
             orderlist.push(obj);

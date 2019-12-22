@@ -105,6 +105,8 @@ Page({
               remain: data[i].remain,
               courier_address: data[i].courier_address,
               courier_number: data[i].courier_number,
+              courier_uname: data[i].courier_uname,
+              courier_uphone: data[i].courier_uphone,
             };
             obj.foods = (data[i].order_type == 0 || data[i].order_type == 1) ? data[i].illustration : this.foodsHandler(JSON.parse(data[i].illustration));
             orderlist.push(obj);

@@ -14,6 +14,11 @@ Page({
     allFoodList:[],
     refleshClick: true,
     courierAddress: '',
+    courierUname: '',
+    courierUphone: '',
+    errorUname: '',
+    errorUphone: '',
+    errorAddress: '',
     show: false,
     customSubmit: {}
   },
@@ -54,6 +59,16 @@ Page({
     })
   },
 
+  uNameChange(value) {
+    this.setData({
+      courierUname: value.detail
+    })
+  },
+  uPhoneChange(value) {
+    this.setData({
+      courierUphone: value.detail
+    })
+  },
   addressChange(value) {
     this.setData({
       courierAddress: value.detail
@@ -135,6 +150,11 @@ Page({
         show: true,
         customSubmit: data,
         courierAddress: '',
+        courierUname: '',
+        courierUphone: '',
+        errorUname: '',
+        errorUphone: '',
+        errorAddress: '',
       })
     }else{
       this.placeOrder(data,kind);
@@ -164,19 +184,68 @@ Page({
   },
 
   //定制填写快递单号确认
-  diaconfig () {
-    if (this.data.courierAddress) {
-      Dialog.confirm({
-        title: '请确认收货地址',
-        message: this.data.courierAddress
-      }).then(() => {
-        this.customReq()
-      }).catch(() => {
+  diaconfig (action,done) {
+    action.detail.dialog.stopLoading()
+    if (this.data.courierAddress || this.data.courierUname || this.data.courierUphone) {
+      if (this.validateCourier()) {
+        Dialog.confirm({
+          title: '请确认个人信息',
+          messageAlign: 'left',
+          message: `收货人：${this.data.courierUname}\n收货电话：${this.data.courierUphone}\n收货地址：${this.data.courierAddress}`
+        }).then(() => {
+          this.customReq()
+        }).catch(() => {
 
-      });
+        });
+        this.setData({
+          show: false,
+        })
+      }
     } else {
+      this.setData({
+        show: false,
+      })
       this.customReq()
     }
+  },
+
+
+  //收货信息校验
+  validateCourier () {
+    const flag = true;
+    if (this.data.courierAddress || this.data.courierUname || this.data.courierUphone) {
+      if (!this.data.courierUname) {
+        this.setData({
+          errorUname: '请输入收货人'
+        })
+        return false
+      } else {
+        this.setData({
+          errorUname: ''
+        })
+      }
+      if (!this.data.courierUphone) {
+        this.setData({
+          errorUphone: '请输入收货电话'
+        })
+        return false
+      } else {
+        this.setData({
+          errorUphone: ''
+        })
+      }
+      if (!this.data.courierAddress) {
+        this.setData({
+          errorAddress: '请输入收货地址'
+        })
+        return false
+      } else {
+        this.setData({
+          errorAddress: ''
+        })
+      }
+    }
+    return flag;
   },
 
   //定制填写快递单号取消
@@ -191,6 +260,8 @@ Page({
   //下单请求函数
   placeOrder: function (data,kind){
     data.courierAddress = this.data.courierAddress
+    data.courierUname = this.data.courierUname
+    data.courierUphone = this.data.courierUphone
     wx.showLoading({
       title: '正在下单',
       icon: 'loading'
@@ -544,5 +615,5 @@ Page({
   },
   onClose() {
     this.setData({ close: false });
-  },
+  }
 })

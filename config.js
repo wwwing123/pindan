@@ -1,5 +1,5 @@
-//const baseUrl = "http://193.112.7.67";//测试地址
-const baseUrl = "https://taste.benbenlitian.net.cn";//生产地址
+const baseUrl = "http://193.112.7.67";//测试地址
+//const baseUrl = "https://taste.benbenlitian.net.cn";//生产地址
 
 const urlList = {
   login: `${baseUrl}/api/register/wx/`,//登录
@@ -24,7 +24,8 @@ const urlList = {
   getdepartment: `${baseUrl}/api/get/department/`,//获取部门信息
   getAdminCompany: `${baseUrl}/api/user/get_authority/`,//获取管理员查看的公司
   getStaff: `${baseUrl}/api/get_company_member/`,//获取员工列表
-  getStaffComsume: `${baseUrl}/api/user/get_company_member_v2/`,//获取消费员工列表
+  getCustmuseList: `${baseUrl}/api/user/get_company_member_v3/`,//获取员工定餐记录列表
+  getStaffComsume: `${baseUrl}/api/user/get_company_member_v4/`,//获取消费员工列表
   getCompanyBill: `${baseUrl}/api/user/get_company_month_bill/`,//获取公司月总账
   getUserBill: `${baseUrl}/api/user/get_user_month_bill/`,//获取个人用户月总账
   getCompanyTotal: `${baseUrl}/api/user/admin/get_allcompany_month_bill/`,//获取总公司月累计消费

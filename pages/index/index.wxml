@@ -1,8 +1,9 @@
 <view class="container">
   <van-toast id="van-toast" />
   <van-dialog id="van-dialog" />
-  <view class="imgBox" wx:if="{{indexImage.length !== 0}}">
-    <image src="{{indexImage[0].img}}" mode="widthFix"></image>
+  
+  <view class="imgBox" wx:for="{{indexImage}}" wx:key="id" wx:for-item="imgItem">
+    <image src="{{imgItem.img}}" mode="widthFix"></image>
   </view>
   <view class="imgBox">
     <view class="inputBox">
@@ -52,9 +53,10 @@
       <van-button round type="info" bindtap="submitData" color="#0096FF" custom-style="width:80%;margin:40rpx auto;" custom-class="applyBtn">立即申请</van-button>
     </view>
   </view>
-  <view class="imgBox" wx:for="{{indexImage}}" wx:key="id" wx:for-item="imgItem">
-    <image src="{{imgItem.img}}" mode="widthFix" wx:if="{{index !== 0}}"></image>
-  </view>
+  <!-- <view class="imgBox" wx:if="{{indexImage.length !== 0}}">
+    <image src="{{indexImage[0].img}}" mode="widthFix"></image>
+  </view> -->
+  
   
   <van-dialog
   use-slot

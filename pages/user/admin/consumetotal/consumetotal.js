@@ -25,8 +25,8 @@ Page({
     this.getHeight();
     this.dateInit();
     this.setData({
-      companyid: options.companyid,
-      userid: options.userid,
+      companyid: options.companyid || '',
+      userid: options.userid || '',
       name: options.name
     });
     if (this.data.companyid) {

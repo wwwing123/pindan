@@ -83,6 +83,20 @@ Page({
       message: '正在提交数据…',
       success: (msg) => {
         if (msg.data.code == 1) {
+          this.setData({
+            cooperate: {
+              name: '',
+              phone: '',
+              company: '',
+              address: ''
+            },
+            errorText: {
+              name: '',
+              phone: '',
+              company: '',
+              address: ''
+            }
+          })
           Dialog.alert({
             title: '申请成功！',
             message: '后面会有专人客服的电话联系，请留意客服的电话~'

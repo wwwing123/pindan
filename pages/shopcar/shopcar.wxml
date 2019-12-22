@@ -3,12 +3,37 @@
   <van-toast id="van-toast" />
   <van-dialog
     use-slot
-    title="请填写收货地址"
+    title="请填写收货信息"
     show="{{ show }}"
     bind:close="onClose"
     bind:confirm="diaconfig"
+    showConfirmButton="false"
+    async-close="true"
   >
-    <view style="font-size:10pt;color:#f00;text-align:center;">*收货地址可不填写，不填写则默认送到公司</view>
+    <view style="font-size:10pt;color:#f00;text-align:left;padding:0 16px;">*收货信息可不填写，不填写则默认送到单位</view>
+    <view style="font-size:10pt;color:#f00;text-align:left;padding:0 16px;">*收货信息一旦填写，填写完整方可进行下一步</view>
+    <view style="font-size:10pt;color:#f00;text-align:left;padding:0 16px;">*快递需要自己承担费用</view>
+    <van-field
+      value="{{ courierUname }}"
+      clearable
+      label="收货人"
+      placeholder="请输入收货人"
+      title-width="150rpx"
+      input-align="left"
+      bind:change="uNameChange"
+      error-message="{{ errorUname }}"
+    />
+    <van-field
+      value="{{ courierUphone }}"
+      clearable
+      label="收货电话"
+      placeholder="请输入收货电话"
+      type='number'
+      title-width="150rpx"
+      input-align="left"
+      bind:change="uPhoneChange"
+      error-message="{{ errorUphone }}"
+    />
     <van-field
       value="{{ courierAddress }}"
       clearable
@@ -17,6 +42,7 @@
       title-width="150rpx"
       input-align="left"
       bind:change="addressChange"
+      error-message="{{ errorAddress }}"
     />
   </van-dialog>
   <view class="empty" wx:if="{{shopcar[0].count<=0 && shopcar[1].count<=0 && shopcar[2].count<=0 && shopcar[3].count<=0}}" >

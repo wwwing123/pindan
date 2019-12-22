@@ -12,7 +12,7 @@
             <view class="consumeId">
                 <view class="weui-cell__bd">
                     <input class="weui-input" placeholder="请输入id或姓名" maxlength="10" value="{{userid}}" bindinput="getUserId"/>
-                    <button class="weui-btn mini-btn" type="primary" size="mini" bindtap="gotoConsumeTotal">确定</button>
+                    <button class="weui-btn mini-btn" type="primary" size="mini" bindtap="gotoConsumeTotal">{{btnText}}</button>
                 </view>
             </view>
         </view>
@@ -37,7 +37,7 @@
                     <view class='label'>当月充值:{{list.recharge}}</view>
                     <view class='label'>当月误餐:{{list.frozen}}</view>
                     <view class='label'>当月消费:{{list.consume}}</view> 
-                    <navigator url="/pages/user/admin/consumetotal/consumetotal?userid={{list.userid}}&name={{list.name}}&title=个人月消费累计额&companyid={{currentComID}}">
+                    <navigator url="/pages/user/admin/consumetotal/consumetotal?userid={{list.userid}}&name={{list.name}}&title=个人月消费累计额">
                       <view class="more">查看详情</view>
                     </navigator> 
                   </view>

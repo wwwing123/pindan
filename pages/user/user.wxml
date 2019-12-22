@@ -53,7 +53,7 @@
             <view class="weui-cell__hd">
                 <image src="{{icon}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
             </view>
-            <view class="weui-cell__bd">识别码</view>
+            <view class="weui-cell__bd">信用码</view>
             <view class="weui-cell__ft">{{userInformation.idcard}}</view>
         </view>
         <view class="weui-cell">

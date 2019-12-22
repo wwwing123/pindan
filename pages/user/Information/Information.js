@@ -47,7 +47,7 @@ Page({
         error: '请输入正确的手机号'
       },
       idcard: {
-        required: '请输入18位识别码',
+        required: '请输入18位信用码',
         error: '请输入18位的字母或数字'
       },
       companyid: {
@@ -235,7 +235,7 @@ Page({
       success: (res) => {
         if (res.confirm) {
           this.openLoading();
-          if (!wx.getStorageSync('userid')) {
+          if (!formData.userid) {
             this.getSessionKey(formData)
           } else {
             this.submitData(formData)
@@ -335,6 +335,7 @@ Page({
               if (msg.data.code == 1) {
                 wx.setStorageSync('session_key', msg.data.data.et)
                 wx.setStorageSync('userid', msg.data.data.userid)
+                formData.userid = msg.data.data.userid
                 that.submitData(formData)
               } else {
                 console.log(msg.data.msg)

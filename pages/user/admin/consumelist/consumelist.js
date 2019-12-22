@@ -26,7 +26,8 @@ Page({
     list: [],
     userid:null,
     year:'',
-    month:''
+    month:'',
+    btnText: '确定'
   },
 
   /**
@@ -172,7 +173,7 @@ Page({
   getStaffList: function (reflesh){
     this.openLoading();
     wx.request({
-      url: urlList.getStaffComsume + `?page=${this.data.page}&size=${this.data.size}&companyid=${this.data.currentComID}${this.data.currentDepID ? '&departmentid=' + this.data.currentDepID : ''}`,
+      url: urlList.getStaffComsume + `?page=${this.data.page}&size=${this.data.size}&filter=${this.data.userid || ''}&companyid=${this.data.currentComID}${this.data.currentDepID ? '&departmentid=' + this.data.currentDepID : ''}`,
       header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
       method: 'GET',
       success: (msg) => {
@@ -184,6 +185,9 @@ Page({
             list: list.concat(data),
             totalsize: msg.data.data.totalsize
           });
+          if (!this.data.list.length) {
+            Toast.fail('暂无查到记录');
+          }
         } else {
           Util.errorHandle(urlList.getStaffComsume, msg.data.code);
         }
@@ -209,27 +213,42 @@ Page({
   },
 
   gotoConsumeTotal: function () {
-    if (!this.data.userid || !Util.rules.nameOrId(this.data.userid)) {
-      Toast.fail('请输入用户id或者用户姓名');
-      return;
-    }
-    this.openLoading();
-    wx.request({
-      url: `${urlList.getUserBill}?filter=${this.data.userid}&year=${this.data.year}&month=${this.data.month}`,
-      header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
-      method: 'GET',
-      success: (msg) => {
-        wx.hideLoading();
-        if (msg.data.code == 1) {
-          const data = msg.data.data
-          wx.navigateTo({
-            url: `/pages/user/admin/consumetotal/consumetotal?userid=${data.userid}&name=${data.name}&title=个人月消费累计额`
-          })
-        }else{
-          Toast.fail(msg.data.msg);
-        }
+    if (this.data.btnText == '确定') {
+      if (!this.data.userid || !Util.rules.nameOrId(this.data.userid)) {
+        Toast.fail('请输入用户id或者用户姓名');
+        return;
       }
-    })
+      this.setData({
+        list: [],
+        page: 1,
+        btnText: '还原'
+      })
+    } else {
+      this.setData({
+        list: [],
+        page: 1,
+        userid: '',
+        btnText: '确定'
+      })
+    }
+    this.getStaffList(true);
+    // this.openLoading();
+    // wx.request({
+    //   url: `${urlList.getUserBill}?userid=${this.data.userid}&year=${this.data.year}&month=${this.data.month}`,
+    //   header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
+    //   method: 'GET',
+    //   success: (msg) => {
+    //     wx.hideLoading();
+    //     if (msg.data.code == 1) {
+    //       const data = msg.data.data
+    //       wx.navigateTo({
+    //         url: `/pages/user/admin/consumetotal/consumetotal?userid=${data.userid}&name=${data.name}&title=个人月消费累计额`
+    //       })
+    //     }else{
+    //       Toast.fail(msg.data.msg);
+    //     }
+    //   }
+    // })
   },
 
   getUserId:function(e){

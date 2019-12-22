@@ -28,6 +28,14 @@
                     <view class="weui-form-preview__value">{{orderlist.status}}</view>
                 </view>
                 <view class="weui-form-preview__item" wx:if="{{orderlist.courier_address}}">
+                    <view class="weui-form-preview__label">收货人</view>
+                    <view class="weui-form-preview__value">{{orderlist.courier_uname}}</view>
+                </view>
+                <view class="weui-form-preview__item" wx:if="{{orderlist.courier_address}}">
+                    <view class="weui-form-preview__label">收货电话</view>
+                    <view class="weui-form-preview__value">{{orderlist.courier_uphone}}</view>
+                </view>
+                <view class="weui-form-preview__item" wx:if="{{orderlist.courier_address}}">
                     <view class="weui-form-preview__label">收货地址</view>
                     <view class="weui-form-preview__value">{{orderlist.courier_address}}</view>
                 </view>

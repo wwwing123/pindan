@@ -25,6 +25,7 @@ Page({
     page:1,
     list: [],
     userid: null,
+    btnText: '确定'
   },
 
   /**
@@ -159,7 +160,7 @@ Page({
   getStaffList: function (reflesh){
     this.openLoading();
     wx.request({
-      url: urlList.getStaff + `?page=${this.data.page}&size=${this.data.size}&companyid=${this.data.currentComID}${this.data.currentDepID ? '&departmentid=' + this.data.currentDepID : ''}`,
+      url: urlList.getCustmuseList + `?page=${this.data.page}&size=${this.data.size}&filter=${this.data.userid || ''}&companyid=${this.data.currentComID}${this.data.currentDepID ? '&departmentid=' + this.data.currentDepID : ''}`,
       header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
       method: 'GET',
       success: (msg) => {
@@ -171,6 +172,9 @@ Page({
             list: list.concat(data),
             totalsize: msg.data.data.totalsize
           });
+          if (!this.data.list.length) {
+            Toast.fail('暂无查到记录');
+          }
         } else {
           Util.errorHandle(urlList.getStaff, msg.data.code);
         }
@@ -197,27 +201,42 @@ Page({
   },
 
   gotoStaffOrder: function () {
-    if (!this.data.userid || !Util.rules.nameOrId(this.data.userid)) {
-      Toast.fail('请输入用户id或者用户姓名');
-      return;
-    }
-    this.openLoading();
-    wx.request({
-      url: `${urlList.getPersonOrder}?filter=${this.data.userid}`,
-      header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
-      method: 'GET',
-      success: (msg) => {
-        wx.hideLoading();
-        if (msg.data.code == 1) {
-          const data = msg.data.data
-          wx.navigateTo({
-            url: `/pages/user/admin/stafforder/stafforder?staffId=${data.userid}&title=${data.username}定餐记录&useTitle=消费餐券`
-          })
-        } else {
-          Toast.fail(msg.data.msg);
-        }
+    if (this.data.btnText == '确定') {
+      if (!this.data.userid || !Util.rules.nameOrId(this.data.userid)) {
+        Toast.fail('请输入用户id或者用户姓名');
+        return;
       }
-    })
+      this.setData({
+        list: [],
+        page: 1,
+        btnText: '还原'
+      })
+    } else {
+      this.setData({
+        list: [],
+        page: 1,
+        userid: '',
+        btnText: '确定'
+      })
+    }
+    this.getStaffList(true)
+    // this.openLoading();
+    // wx.request({
+    //   url: `${urlList.getCustmuseList}?filter=${this.data.userid}`,
+    //   header: { userid: wx.getStorageSync('userid'), et: wx.getStorageSync('session_key') },
+    //   method: 'GET',
+    //   success: (msg) => {
+    //     wx.hideLoading();
+    //     if (msg.data.code == 1) {
+    //       const data = msg.data.data
+    //       // wx.navigateTo({
+    //       //   url: `/pages/user/admin/stafforder/stafforder?staffId=${data.userid}&title=${data.username}定餐记录&useTitle=消费餐券`
+    //       // })
+    //     } else {
+    //       Toast.fail(msg.data.msg);
+    //     }
+    //   }
+    // })
   },
 
   getUserId: function (e) {

@@ -19,10 +19,10 @@
       </view>
       <view class="weui-cell weui-cell_input {{errorMsg.type=='idcard' ? 'weui-cell_warn' : ''}}">
         <view class="weui-cell__hd">
-            <view class="weui-label required">识别码</view>
+            <view class="weui-label required">信用码</view>
         </view>
         <view class="weui-cell__bd">
-            <input class="weui-input" name="idcard" placeholder="请输入18位识别码" maxlength="18" value="{{input_idcard.value}}" disabled="{{input_idcard.disabled}}"/>
+            <input class="weui-input" name="idcard" placeholder="请输入18位信用码" maxlength="18" value="{{input_idcard.value}}" disabled="{{input_idcard.disabled}}"/>
         </view>
         <view class="weui-cell__ft" wx:if="{{errorMsg.type=='idcard'}}">
             <icon type="warn" size="23" color="#E64340"></icon>

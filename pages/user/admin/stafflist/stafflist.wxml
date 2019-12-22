@@ -12,7 +12,7 @@
             <view class="consumeId">
                 <view class="weui-cell__bd">
                     <input class="weui-input" placeholder="请输入id或姓名" maxlength="10" value="{{userid}}" bindinput="getUserId"/>
-                    <button class="weui-btn mini-btn" type="primary" size="mini" bindtap="gotoStaffOrder">确定</button>
+                    <button class="weui-btn mini-btn" type="primary" size="mini" bindtap="gotoStaffOrder">{{btnText}}</button>
                 </view>
             </view>
         </view>
