@@ -145,7 +145,8 @@ App({
               userid: data.id,
               level: data.level,
               admin: data.level != 3 ? true : false,
-              ledger: Boolean(data.ledger)
+              ledger: Boolean(data.ledger),
+              rechargeLevel: data.recharge_level,
             }
             this.globalData.userInformation = userInformation;
             this.globalData.orderCompanyId = data.companyid;

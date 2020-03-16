@@ -23,6 +23,9 @@ const urlList = {
   getcompany: `${baseUrl}/api/get/company/`,//获取公司信息
   getdepartment: `${baseUrl}/api/get/department/`,//获取部门信息
   getAdminCompany: `${baseUrl}/api/user/get_authority/`,//获取管理员查看的公司
+  getRechargeCompany: `${baseUrl}/api/user/get_recharge_authority/`,//获取充值扣钱管理员查看的公司
+  addBalance: `${baseUrl}/api/user/admin/add_balance/`,//余额充值
+  subBalance: `${baseUrl}/api/user/admin/sub_balance/`,//余额扣除
   getStaff: `${baseUrl}/api/get_company_member/`,//获取员工列表
   getCustmuseList: `${baseUrl}/api/user/get_company_member_v3/`,//获取员工定餐记录列表
   getStaffComsume: `${baseUrl}/api/user/get_company_member_v4/`,//获取消费员工列表

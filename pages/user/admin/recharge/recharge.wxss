@@ -1,0 +1,206 @@
+.container {
+  height: 100%;
+  padding-top:116rpx;
+  background:#DFDEDC; 
+}
+
+.page__bd {
+  width: 100%;
+}
+
+.select{
+  position:fixed;
+  top:0;
+  left:0; 
+  background:#fff;
+  z-index:2;
+}
+
+.page__bd .company{
+  -webkit-box-flex:1;
+  -webkit-flex:1;
+  flex:1;
+  display:flex;
+  font-size:12pt;
+}
+
+.weui-cell .comlabel{
+  width:40px;
+  text-align:center;
+  font-size:12pt;
+}
+
+.weui-cell .comValue {
+  display: inline-block;
+  font-size:11pt;
+  width:100rpx;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  overflow:hidden;
+  vertical-align: middle;
+}
+
+.weui-cell .compname{
+  width:180rpx;
+  display:inline-block;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  overflow:hidden;
+  vertical-align:top;
+}
+
+.page__bd .consumeId{
+  width:60%;
+  display:flex;
+  font-size:12pt;
+}
+
+.consumeId .weui-cell__bd{
+  display:flex;
+  align-items:center;
+}
+
+.consumeId .weui-input{ 
+  flex:1;
+  border-bottom:1px solid #ccc;
+  height:auto;
+  min-height:auto;
+}
+
+.consumeId .weui-btn{
+  margin:0;
+  width:160rpx;
+  background:#0096FF;
+  color:#fff;
+}
+
+
+.content{
+  width:100%;
+  background:#DFDEDC;
+  padding-bottom:20rpx;
+}
+
+.listbox{
+  width:92%;
+  border-radius:18rpx;
+  margin:0 auto;
+  margin-top:30rpx;
+  position:relative;
+  overflow:hidden;
+  box-shadow: 4px 4px 10px #ccc;
+}
+
+.listbox .title{
+  width:100%;
+  height:120rpx;
+  background:#0096FF;
+  box-sizing:border-box;
+  padding:20rpx 30rpx;
+}
+
+.listbox .title .circle{
+  display:inline-block;
+  width:80rpx;
+  height:80rpx;
+  border-radius:50%;
+  background:#fff;
+  line-height:80rpx;
+  text-align: center;
+  vertical-align:middle; 
+}
+
+.icon-account{
+  font-size:20pt;
+  color:#0096FF; 
+}
+
+.listbox .name{
+  display:inline-block;
+  font-size:13pt;
+  margin-left:40rpx;
+  color:#fff;
+  vertical-align:middle;
+}
+
+.listbox .userid{
+  display:inline-block;
+  font-size:9pt;
+  color:#fff;
+  vertical-align:text-bottom;
+  line-height:36rpx;
+}
+
+.listbox .more{
+  position:absolute;
+  top:34rpx;
+  right:30rpx;
+  font-size:12pt;
+  color:#fff;
+}
+
+.listbox .more .icon-list{
+  display:inline-block;
+  font-size:16pt;
+  vertical-align:middle;
+}
+
+.listbox .more .text{
+  display:inline-block;
+  margin-left:5rpx;
+  vertical-align:middle;
+}
+
+
+
+.listbox .bottom{
+  display:flex;
+  display:-webkit-flex;
+  text-align:center;
+  height:270rpx;
+  border-bottom-left-radius:18rpx;
+  border-bottom-right-radius:18rpx;
+}
+
+.listbox .bottom .balance{
+  flex:1;
+  background:#fff;
+}
+
+.listbox .bottom .balance view:nth-child(1){
+  font-size:22pt;
+  padding-top:60rpx;
+}
+
+.listbox .bottom .balance view:nth-child(2){
+  font-size:12pt;
+  color:#ADADAD;
+}
+
+.listbox .bottom .phone{
+  width:270rpx;
+  background:#F2F2F2;
+  font-size:12pt;
+  /* line-height: 40px; */
+}
+
+.listbox .bottom .phone view:nth-child(1){
+  font-size:14pt;
+  color:#0096FF;
+  padding-top:28px;
+}
+
+.listbox .bottom .phone view:nth-child(2){
+  font-size:14pt;
+  margin-top:16px;
+  color:#0096FF;
+}
+
+.listbox .bottom .phone .icon-more{
+  display:inline-block;
+  /* margin-left:20rpx; */
+  font-size:8pt;
+  vertical-align:middle;
+  line-height: auto;
+}
+

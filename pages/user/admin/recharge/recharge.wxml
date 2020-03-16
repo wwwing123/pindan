@@ -1,0 +1,105 @@
+<view class="container">
+  <van-toast id="van-toast" />
+  <van-dialog
+    use-slot
+    title="{{dialog.title}}"
+    show="{{ dialog.show }}"
+    bind:confirm="diaConfig"
+    bind:cancel="diaClose"
+    showCancelButton="true"
+    async-close="true"
+  >
+    <van-field
+      value="{{ dialog.name }}"
+      clearable
+      label="用户名"
+      type='text'
+      title-width="150rpx"
+      input-align="left"
+      readonly="true"
+    />
+    <van-field
+      value="{{ dialog.balance }}"
+      clearable
+      label="剩余数量"
+      type='text'
+      title-width="150rpx"
+      input-align="left"
+      readonly="true"
+    />
+    <van-field
+      value="{{ balance }}"
+      clearable
+      label="数量"
+      placeholder="请填写数量"
+      type='digit'
+      title-width="150rpx"
+      input-align="left"
+      bind:change="balanceChange"
+      error-message="{{ errorBalance }}"
+    />
+    <van-field
+      value="{{ remark }}"
+      clearable
+      label="备注"
+      placeholder="非必填"
+      type='text'
+      title-width="150rpx"
+      input-align="left"
+      bind:change="remarkChange"
+      error-message="{{ errorRemark }}"
+      autosize="true"
+    />
+  </van-dialog>
+  <view class="select page__bd">
+    <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+            <view class="company">
+              <picker bindchange="companyPickerChange" range="{{comDepArr}}" mode="multiSelector" bindcolumnchange="comColumnChange" value="{{comDepVal}}">
+              <view class="{{currentID == -1 ? 'noselect' : ''}} comValue">{{currentComName}}</view>
+              <view class="{{currentID == -1 ? 'noselect' : ''}} comValue" wx:if="{{currentDepName}}">{{currentDepName}}</view>
+            </picker>
+            </view>
+            <view class="consumeId">
+                <view class="weui-cell__bd">
+                    <input class="weui-input" placeholder="请输入id或姓名" maxlength="10" value="{{userid}}" bindinput="getUserId"/>
+                    <button class="weui-btn mini-btn" type="primary" size="mini" bindtap="gotoStaffOrder">{{btnText}}</button>
+                </view>
+            </view>
+        </view>
+    </view>
+  </view> 
+  <view class="content">
+    <view class="page__bd">
+        <scroll-view class="orderlist" scroll-y="true" bindscrolltolower="loadmore" style="bottom:{{loadMoreHeight}}rpx;height:{{windowHeight}}px" scroll-with-animation="true" scroll-top="{{scrollTop}}" scroll-with-animation="true" >
+            <block wx:for="{{list}}" wx:key="userid" wx:for-item="list">
+                <view class="listbox">
+                    <view class="title">
+                      <view class="circle">
+                        <view class="iconfont icon-account"></view>
+                      </view>
+                      <view class="name">{{list.name}}
+                        <view class="userid">id:{{list.userid}}</view>
+                      </view>
+                      <view class="more">
+                        <!-- <view class="iconfont icon-list"></view> -->
+                        <view class="text">{{list.phone}}</view>
+                        <!-- <view class="iconfont icon-more"></view> -->
+                      </view>
+                    </view>
+                    <view class="bottom">
+                      <view class="balance">
+                        <view>{{list.balance}}</view>
+                        <view>剩余餐券</view>
+                      </view>
+                      <view class="phone">
+                        <view bindtap="showModel" data-balance="{{list.balance}}" data-name="{{list.name}}" data-userid="{{list.userid}}" data-title="余额充值" data-type="add">充值</view>
+                        <view bindtap="showModel" data-balance="{{list.balance}}" data-name="{{list.name}}" data-userid="{{list.userid}}" data-title="余额扣除" data-type="sub">扣除</view>
+                      </view>
+                    </view>
+                </view>
+            </block>
+        </scroll-view>
+    </view>
+  </view>
+</view>

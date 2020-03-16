@@ -35,10 +35,11 @@
 			"current": 0,
 			"list": [
 				{
-					"id": -1,
+					"id": 0,
 					"name": "调试",
-					"pathName": "pages/user/admin/getcustom/getcustom",
-					"query": ""
+					"pathName": "pages/user/admin/recharge/recharge",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

@@ -37,7 +37,7 @@ Page({
     }else{
       this.setData({
         userInformation: app.globalData.userInformation,
-        adminOpen: app.globalData.userInformation.admin || app.globalData.userInformation.ledger
+        adminOpen: app.globalData.userInformation.admin || app.globalData.userInformation.ledger || app.globalData.userInformation.rechargeLevel != 3
       })
     } 
     this.getbalance();

@@ -63,5 +63,12 @@
           <view class="weui-cell__bd">总单位菜品统计</view>
           <view class="weui-cell__ft weui-cell__ft_in-access"></view>
         </navigator>
+        <navigator url="/pages/user/admin/recharge/recharge?companyid={{companyid}}&company={{company}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:if='{{rechargeLevel != 3}}'>
+          <view class="weui-cell__hd">
+              <view class="iconfont icon-consume"></view>
+          </view>
+          <view class="weui-cell__bd">单位充扣</view>
+          <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+        </navigator>
     </view>  
   </view>
