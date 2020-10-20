@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "微信充值",
+  "usingComponents": {
+    "van-field": "../../vantComponents/field/index",
+    "van-button": "../../vantComponents/button/index",
+    "van-divider": "../../vantComponents/divider/index",
+    "van-dialog": "../../vantComponents/dialog/index"
+  }
+}

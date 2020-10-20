@@ -24,7 +24,7 @@ Page({
     let allPrice = /\d+\.?\d*/.exec(orderDetail.totalprice)
     let totalprice = allPrice && allPrice[0];
     orderDetail.totalprice = totalprice;
-    if (orderDetail.ordertype != 1 && orderDetail.ordertype != 0) {
+    if (orderDetail.ordertype != 1 && orderDetail.ordertype != 0 && orderDetail.ordertype != 6) {
       for (let i in orderDetail.foods) {
         orderDetail.foods[i].total = (Number(orderDetail.foods[i].count) * Number(orderDetail.foods[i].price)).toFixed(2)
       }

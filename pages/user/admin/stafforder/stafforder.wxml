@@ -21,7 +21,8 @@
                 </view>
                 <view class="weui-form-preview__item">
                     <view class="weui-form-preview__label">类型(状态)</view>
-                    <view class="weui-form-preview__value">{{orderlist.orderTypeName}}({{orderlist.status}})</view>
+                    <view class="weui-form-preview__value" wx:if="{{orderlist.ordertype != 6}}">{{orderlist.orderTypeName}}({{orderlist.status}})</view>
+                    <view class="weui-form-preview__value" wx:else>充值（<view class="iconfont icon-weixin"></view>微信充值）({{orderlist.status}})</view>
                 </view>
                 <view class="weui-form-preview__item">
                     <view class="weui-form-preview__label">定餐单位</view>
@@ -45,7 +46,7 @@
                 </view>
                 <view class="weui-form-preview__item">
                     <view class="weui-form-preview__label">商品</view>
-                    <view class="weui-form-preview__value" wx:if="{{orderlist.ordertype==1 || orderlist.ordertype==0}}">{{orderlist.foods}}</view>
+                    <view class="weui-form-preview__value" wx:if="{{orderlist.ordertype==1 || orderlist.ordertype==0 || orderlist.ordertype==6}}">{{orderlist.foods}}</view>
                     <view class="weui-form-preview__value" wx:else>
                       <view wx:for="{{orderlist.foods}}" wx:key="id" wx:for-item="foods">{{foods.name}} × {{foods.count}}</view>
                     </view>                    

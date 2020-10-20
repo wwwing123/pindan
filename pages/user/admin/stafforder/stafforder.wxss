@@ -74,3 +74,8 @@
 .weui-form-preview__item{
   line-height: 60rpx;
 }
+
+.icon-weixin {
+  color: #1AAD19;
+  display: inline-block;
+}

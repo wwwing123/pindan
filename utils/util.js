@@ -207,7 +207,7 @@ const request = function(req,url, params, method, message, success, fail) {
   })
 }
 
-const ordertype = ['扣除','充值','早餐','午餐','晚餐','定制'];
+const ordertype = ['扣除','充值','早餐','午餐','晚餐','定制', '充值（微信充值）'];
 
 
 module.exports = {

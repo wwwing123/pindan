@@ -39,6 +39,7 @@
           <view class='text'>定制:{{classification.custom_count}}人次<view class='num'>{{classification.custom}}</view></view>
           <view class='text'>月初总余额<view class='num'>{{allBill.before_balance}}</view></view>
           <view class='text'>该月总充值<view class='num'>{{allBill.recharge}}</view></view>
+          <view class='text'>该月总微信充值<view class='num'>{{allBill.recharge_wx}}</view></view>
           <view class='text'>该月总扣除<view class='num'>{{allBill.deduction}}</view></view>
           <view class='text'>该月总误餐<view class='num'>{{allBill.frozen}}</view></view>
           <view class='text'>该月总消费<view class='num'>{{allBill.consume}}</view></view>

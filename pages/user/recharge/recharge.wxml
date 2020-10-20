@@ -1,0 +1,57 @@
+<view class="page">
+	<van-dialog id="van-dialog" theme="round-button" />
+  <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">{{errorText}}</view>
+	<view wx:if="{{ !finlish }}">
+		<!-- <van-cell-group>
+			<van-field value="{{ money }}" required clearable label="充值金额" placeholder="请输入充值金额" title-width="150rpx" input-align="left" error-message="{{ errorText }}" bind:change="moneyChange" type="number" />
+		</van-cell-group> -->
+    <view class="payText">充值金额</view>
+    <view class="payBox">
+      <view class="mtip">￥</view>
+      <input class="moneyInput" name="money" value="{{money}}" type="digit" bindinput="moneyChange"/>
+    </view>
+    <view class="tipBox">
+			<view class="tip">1.单次充值金额不能超过500.00元</view>
+			<view class="tip">2.如遇充值问题可通过定单号联系管理员进行处理</view>
+      <view class="tip">3.如遇充值成功后仍显示支付失败可稍等几秒后再查询</view>
+		</view>
+    <button class="weui-btn" type="primary" style="margin-top: 20rpx;" bind:tap="recharge">立即支付</button>
+    <button class="weui-btn" type="default" bind:tap="back">返回</button>
+	</view>
+	<view class="weui-msg" wx:else>
+    <view wx:if="{{ status == 'SUCCESS'}}">
+      <view class="weui-msg__icon-area">
+        <icon type="success" size="93"></icon>
+      </view>
+      <view class="weui-msg__text-area">
+        <view class="weui-msg__title">支付成功</view>
+        <view class="payTotal">{{ money }}</view>
+        <view class="weui-msg__title">订单号:{{orderId}}<view bind:tap="copy" class="copyTip">复制</view></view>
+      </view>
+      <view class="weui-msg__opr-area">
+        <view class="weui-btn-area">
+          <button class="weui-btn" type="default" bind:tap="back">返回</button>
+        </view>
+      </view>
+    </view>
+    <view wx:else>
+      <view class="weui-msg__icon-area">
+        <icon type="warn" size="93"></icon>
+      </view>
+      <view class="weui-msg__text-area">
+        <view class="weui-msg__title">支付失败</view>
+        <view class="weui-msg__title">订单号:{{orderId}}<view bind:tap="copy" class="copyTip">复制</view></view>
+        <view class="weui-msg__desc" style="text-align:left;">
+          <view>1.如遇充值问题可通过定单号联系管理员进行处理</view>
+          <view>2.如遇充值成功后仍显示支付失败可稍等几秒后再查询</view>
+        </view>
+      </view>
+      <view class="weui-msg__opr-area">
+        <view class="weui-btn-area">
+          <button class="weui-btn" type="primary" bind:tap="getOrderPayment">再次查询充值结果</button>
+          <button class="weui-btn" type="default" bind:tap="back">返回</button>
+        </view>
+      </view>
+    </view>
+	</view>
+</view>

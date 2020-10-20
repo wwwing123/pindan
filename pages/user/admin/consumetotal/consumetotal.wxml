@@ -23,6 +23,7 @@
           <view class='text'>定制:{{data.custom_count}}人次<view class='num'>{{data.custom}}</view></view>
           <view class='text'>月初总余额<view class='num'>{{data.before_balance}}</view></view>
           <view class='text'>该月总充值<view class='num'>{{data.recharge}}</view></view>
+          <view class='text'>该月总微信充值<view class='num'>{{data.recharge_wx}}</view></view>
           <view class='text'>该月总扣除<view class='num'>{{data.deduction}}</view></view>
           <view class='text'>该月总误餐<view class='num'>{{data.frozen}}</view></view>
           <view class='text'>该月总消费<view class='num'>{{data.consume}}</view></view>

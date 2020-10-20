@@ -18,7 +18,7 @@
           <view class="weui-cell__hd">
               <view class="iconfont icon-consume"></view>
           </view>
-          <view class="weui-cell__bd">员工定餐记录</view>
+          <view class="weui-cell__bd">员工流水记录</view>
           <view class="weui-cell__ft weui-cell__ft_in-access"></view>
         </navigator>
         <navigator url="/pages/user/admin/staffcustom/staffcustom?companyid={{companyid}}&company={{company}}&level={{level}}&authority={{authority}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:if='{{admin}}'>

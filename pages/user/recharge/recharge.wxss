@@ -1,0 +1,50 @@
+.page{
+  padding:60rpx 40rpx 20rpx;
+}
+
+.payText {
+  font-size: 11pt;
+  text-align: left;
+  margin-bottom: 20rpx;
+}
+
+.rechargeBtn {
+  margin-top: 20rpx;
+  width:100%;
+}
+
+.tipBox {
+  margin-top: 20rpx;
+}
+
+.tipBox .tip{
+  font-size:10pt;
+  color:#999;
+}
+.moneyInput {
+  font-size: 26pt;
+  font-weight: 800;
+  text-align: left;
+  display: inline-block;
+  vertical-align: middle;
+  width: 80%;
+  height: 80rpx;
+}
+.payBox .mtip{
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 13pt;
+}
+
+.payTotal {
+  font-size: 26pt;
+  font-weight: 800;
+  text-align: center;
+}
+
+.copyTip {
+  display: inline-block;
+  font-size: 12pt;
+  color: #0096FF;
+  margin-left: 10rpx;
+}

@@ -1,5 +1,5 @@
-const baseUrl = "http://193.112.7.67";//测试地址
-//const baseUrl = "https://taste.benbenlitian.net.cn";//生产地址
+//const baseUrl = "http://193.112.7.67";//测试地址
+const baseUrl = "https://taste.benbenlitian.net.cn";//生产地址
 
 const urlList = {
   login: `${baseUrl}/api/register/wx/`,//登录
@@ -27,13 +27,15 @@ const urlList = {
   addBalance: `${baseUrl}/api/user/admin/add_balance/`,//余额充值
   subBalance: `${baseUrl}/api/user/admin/sub_balance/`,//余额扣除
   getStaff: `${baseUrl}/api/get_company_member/`,//获取员工列表
-  getCustmuseList: `${baseUrl}/api/user/get_company_member_v3/`,//获取员工定餐记录列表
+  getCustmuseList: `${baseUrl}/api/user/get_company_member_v3/`,//获取员工流水记录列表
   getStaffComsume: `${baseUrl}/api/user/get_company_member_v4/`,//获取消费员工列表
   getCompanyBill: `${baseUrl}/api/user/get_company_month_bill/`,//获取公司月总账
   getUserBill: `${baseUrl}/api/user/get_user_month_bill/`,//获取个人用户月总账
   getCompanyTotal: `${baseUrl}/api/user/admin/get_allcompany_month_bill/`,//获取总公司月累计消费
   getfoodTotal: `${baseUrl}/api/user/admin/get_goods_statistics/`,//获取总公司月菜品统计
-  getfoodCompanyTotal: `${baseUrl}/api/user/admin/get_company_goods_statistics/`//获取所选公司月菜品统计
+  getfoodCompanyTotal: `${baseUrl}/api/user/admin/get_company_goods_statistics/`,//获取所选公司月菜品统计
+  payment: `${baseUrl}/api/user/pay/unifiedorder/`,//支付接口
+  getOrderPayment: `${baseUrl}/api/wx/order/query/`,//查询支付状态
 }
 
 
@@ -50,8 +52,8 @@ const urlList = {
   "pages/user/orderlist/orderlist",//定单详情
   "pages/user/admin/foodcount/foodcount",// 菜品统计
   "pages/user/admin/customcount/customcount",// 定制统计
-  "pages/user/admin/stafflist/stafflist",// 员工定餐记录
-  "pages/user/admin/stafforder/stafforder",// XXX定餐记录（员工的个人定餐或者定餐）
+  "pages/user/admin/stafflist/stafflist",// 员工流水记录
+  "pages/user/admin/stafforder/stafforder",// XXX流水记录（员工的个人定餐或者定餐）
   "pages/user/admin/consumelist/consumelist",// 累计消费额
   "pages/user/admin/consumetotal/consumetotal",// 个人或公司月消费累计额 
   "pages/user/admin/staffcustom/staffcustom",// 员工定制记录

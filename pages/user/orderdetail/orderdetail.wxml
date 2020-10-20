@@ -29,7 +29,7 @@
           </view>
         </view>
       </view>
-      <view class="goodlist" wx:if="{{orderDetail.ordertype != 1 && orderDetail.ordertype != 0}}">
+      <view class="goodlist" wx:if="{{orderDetail.ordertype != 1 && orderDetail.ordertype != 0 && orderDetail.ordertype != 6}}">
         <view class="title">定单商品</view>
         <view class="content">
           <!-- <view class="list" wx:for="{{orderDetail.foods}}" wx:key="id" wx:for-item="food">

@@ -9,6 +9,7 @@
     "pages/user/customlist/customlist",
     "pages/user/orderdetail/orderdetail",
     "pages/user/admin/admin",
+    "pages/user/recharge/recharge",
     "pages/user/admin/getorder/getorder",
     "pages/user/admin/getcustom/getcustom",
     "pages/user/admin/foodcount/foodcount",

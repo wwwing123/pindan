@@ -115,7 +115,7 @@ Page({
               status: this.data.orderType[data[i].order_status],
               ordertype: data[i].order_type,
               orderTypeName: Util.ordertype[data[i].order_type],
-              totalprice: data[i].order_type == 1 ? `+${data[i].balance_change}` : `-${data[i].balance_change}`,
+              totalprice: (data[i].order_type == 1 || data[i].order_type == 6)  ? `+${data[i].balance_change}` : `-${data[i].balance_change}`,
               id: data[i].id,
               remain: data[i].remain,
               courier_address: data[i].courier_address,
@@ -123,7 +123,7 @@ Page({
               courier_uname: data[i].courier_uname,
               courier_uphone: data[i].courier_uphone,
             };
-            obj.foods = (data[i].order_type == 0 || data[i].order_type == 1) ? data[i].illustration : this.foodsHandler(JSON.parse(data[i].illustration));
+            obj.foods = (data[i].order_type == 0 || data[i].order_type == 1 || data[i].order_type == 6) ? data[i].illustration : this.foodsHandler(JSON.parse(data[i].illustration));
             orderlist.push(obj);
           }
           this.setData({
